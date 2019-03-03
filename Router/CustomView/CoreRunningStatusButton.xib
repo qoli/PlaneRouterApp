@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CoreRunningStatusButton" customModule="Router" customModuleProvider="target">
+            <connections>
+                <outlet property="button" destination="gNQ-AV-eiu" id="Zm8-45-ejS"/>
+                <outlet property="imageButton" destination="OSI-va-4PU" id="jAP-eD-Y74"/>
+            </connections>
+        </placeholder>
+        <view contentMode="scaleToFill" id="Cbo-uF-r9b">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="64"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNQ-AV-eiu">
+                    <rect key="frame" x="54" y="18" width="79" height="28"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                    <state key="normal" title="CoreRunning">
+                        <color key="titleColor" name="textBrown"/>
+                    </state>
+                    <connections>
+                        <action selector="tapAction:" destination="-1" eventType="touchUpInside" id="raf-fy-reQ"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkOn" translatesAutoresizingMaskIntoConstraints="NO" id="OSI-va-4PU">
+                    <rect key="frame" x="18" y="24" width="16" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="16" id="U6Z-Yh-ZNT"/>
+                        <constraint firstAttribute="width" constant="16" id="oEi-3u-LiK"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="gNQ-AV-eiu" firstAttribute="centerY" secondItem="Cbo-uF-r9b" secondAttribute="centerY" id="I5S-7r-stN"/>
+                <constraint firstItem="OSI-va-4PU" firstAttribute="leading" secondItem="Cbo-uF-r9b" secondAttribute="leading" constant="18" id="W0i-nx-F2a"/>
+                <constraint firstItem="OSI-va-4PU" firstAttribute="centerY" secondItem="Cbo-uF-r9b" secondAttribute="centerY" id="bnj-1h-hgE"/>
+                <constraint firstItem="gNQ-AV-eiu" firstAttribute="leading" secondItem="OSI-va-4PU" secondAttribute="trailing" constant="20" id="nma-5u-TDw"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Fo9-Js-x9j"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                    <real key="value" value="1"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="3"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="-281" y="286"/>
+        </view>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+    </objects>
+    <resources>
+        <image name="checkOn" width="16" height="16"/>
+        <namedColor name="textBrown">
+            <color red="0.28999999165534973" green="0.28999999165534973" blue="0.28999999165534973" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

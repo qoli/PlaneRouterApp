@@ -1,0 +1,66 @@
+PODS:
+  - Alamofire (4.8.1)
+  - Charts (3.2.1):
+    - Charts/Core (= 3.2.1)
+  - Charts/Core (3.2.1)
+  - Hero (1.4.0)
+  - IQKeyboardManagerSwift (5.0.0)
+  - JGProgressHUD (2.0.3)
+  - MarkdownKit (1.5)
+  - MarqueeLabel/Swift (3.2.0)
+  - NewPopMenu (2.1.2)
+  - NMSSH (2.3.1)
+  - NotificationBannerSwift (2.0.1):
+    - MarqueeLabel/Swift (~> 3.2.0)
+    - SnapKit (~> 4.2.0)
+  - PlainPing (0.5)
+  - SnapKit (4.2.0)
+  - SwiftyJSON (4.2.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.5)
+  - Charts
+  - Hero
+  - IQKeyboardManagerSwift
+  - JGProgressHUD
+  - MarkdownKit
+  - NewPopMenu (~> 2.0)
+  - NMSSH
+  - NotificationBannerSwift
+  - PlainPing
+  - SwiftyJSON
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - Charts
+    - Hero
+    - IQKeyboardManagerSwift
+    - JGProgressHUD
+    - MarkdownKit
+    - MarqueeLabel
+    - NewPopMenu
+    - NMSSH
+    - NotificationBannerSwift
+    - PlainPing
+    - SnapKit
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  IQKeyboardManagerSwift: 3f340202ebe1a7076279b9b9b3c817243ddb3aab
+  JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
+  MarkdownKit: 379028e9cd3ebf05ccac87205cd9aead446159d4
+  MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
+  NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
+  NMSSH: cd689ae535a1581a6dd9fd4600ff71247df510a6
+  NotificationBannerSwift: 007774aa590cc9680647b92b2f217bef5c00c32c
+  PlainPing: 6b248b94d92be7ec0410952d1b09af43b9a39015
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
+
+PODFILE CHECKSUM: aad1ca5a4c58bddde6f75cba1a9f17f6c65e469a
+
+COCOAPODS: 1.5.2
