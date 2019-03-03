@@ -141,7 +141,7 @@
 		F91C3036220BE9E200703AF2 /* ViewControllerGroup */ = {
 			isa = PBXGroup;
 			children = (
-				F9B81462222BBC0500EFF2CF /* Update */,
+				F9B81462222BBC0500EFF2CF /* UpdateNotes */,
 				F9ADC517222946D000175CB1 /* Walkthrough */,
 				F900A71422229A3F00F206FA /* Setting-Views */,
 				F900A70F2222563A00F206FA /* Connect-Views */,
@@ -243,12 +243,12 @@
 			path = Walkthrough;
 			sourceTree = "<group>";
 		};
-		F9B81462222BBC0500EFF2CF /* Update */ = {
+		F9B81462222BBC0500EFF2CF /* UpdateNotes */ = {
 			isa = PBXGroup;
 			children = (
 				F9B81463222BBC1600EFF2CF /* UpdateNotes-ViewController.swift */,
 			);
-			path = Update;
+			path = UpdateNotes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

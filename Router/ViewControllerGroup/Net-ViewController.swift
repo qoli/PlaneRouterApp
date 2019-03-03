@@ -240,12 +240,14 @@ class Net_ViewController: UIViewController {
                         }
                     }
                     
+                    //404
                     if value.hasPrefix("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>") {
                         message(message: "cannot update speed")
                         self.updateTextLabel.text = "404 Not Found"
                         self.isViewAppear = false
                     }
                     
+                    // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
                         print(value)
                         self.updateTextLabel.text = "Waiting for login"
