@@ -212,7 +212,8 @@ class Net_ViewController: UIViewController {
             .responseString { response in
                 switch response.result {
                 case .success(let value):
-
+                    
+                    // 網速
                     if value.hasPrefix("\nnetdev = {") {
                         let rxtx = value.groups(for: "'INTERNET':\\{rx:(.*?),tx:(.*?)\\}")
                         self.upNow = hexTodec(number: rxtx[0][2])
