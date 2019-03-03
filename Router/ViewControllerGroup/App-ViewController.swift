@@ -17,8 +17,10 @@ class ServiceiconCollectionViewCell: UICollectionViewCell {
 }
 
 class App_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    // MARK: - 
+    
     @IBOutlet weak var PanSwipe: UIPanGestureRecognizer!
-
     @IBOutlet weak var appTitle: UILabel!
     @IBOutlet weak var childViewTop: NSLayoutConstraint!
     @IBOutlet weak var childViews: UIView!
