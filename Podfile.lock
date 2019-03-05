@@ -4,7 +4,7 @@ PODS:
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
   - Hero (1.4.0)
-  - IQKeyboardManagerSwift (5.0.0)
+  - IQKeyboardManagerSwift (6.2.0)
   - JGProgressHUD (2.0.3)
   - MarkdownKit (1.5)
   - MarqueeLabel/Swift (3.2.0)
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
-  IQKeyboardManagerSwift: 3f340202ebe1a7076279b9b9b3c817243ddb3aab
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
   MarkdownKit: 379028e9cd3ebf05ccac87205cd9aead446159d4
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e

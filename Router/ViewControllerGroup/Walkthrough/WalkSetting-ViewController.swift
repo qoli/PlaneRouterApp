@@ -21,20 +21,20 @@ class WalkSetting_ViewController: UIViewController {
     @IBOutlet weak var saveButton: UIButton!
 
     var isTest: Bool = false
-    
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         saveButton.isEnabled = false
     }
 
     // ib action
-    
+
     @IBAction func tapView(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    
-    
+
+
     @IBAction func tapLinkAction(_ sender: UITapGestureRecognizer) {
         print("tap")
         self.linkView.alpha = 0.3
@@ -50,9 +50,9 @@ class WalkSetting_ViewController: UIViewController {
             saveButton.isEnabled = true
         }
     }
-    
+
     var banner: NotificationBanner!
-    
+
     @IBAction func saveAction(_ sender: UIButton) {
         if isTest {
             self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
@@ -62,36 +62,46 @@ class WalkSetting_ViewController: UIViewController {
             banner = NotificationBanner(title: "設定路由器", subtitle: "...", style: .info)
             banner.show()
             banner.subtitleLabel?.text = "開始嘗試連接"
-            
+
             delay(0.6) {
-                SetupRouterSSH(user: self.name.text ?? "", pass: self.pass.text ?? "")
-                
-                self.SSHRun()
+                let uConfig = userConfig(
+                    name: "Router",
+                    mode: "http",
+                    address: "router.asus.com",
+                    port: 80,
+                    loginName: self.name.text ?? "",
+                    loginPassword: self.pass.text ?? "")
+
+                let r = saveUserConfig(userConfig: uConfig)
+                print(r)
+                if !r.0 {
+                    self.banner.subtitleLabel?.text = r.1
+                } else {
+                    self.SSHRun()
+                }
             }
         }
-        
+
     }
-    
+
     // check
-    
+
     func SSHRun() {
-        
-        var host: String!
-        var username: String!
-        var password: String!
-        
-        host = UserDefaults.standard.string(forKey: "routerAddress")
-        username = UserDefaults.standard.string(forKey: "routerUser")
-        password = UserDefaults.standard.string(forKey: "routerPass")
-        
-        print("\(host) \(username) \(password)")
-        
-        let session = NMSSHSession(host: host ?? "", andUsername: username ?? "")
+
+        let uConfig = getUserConfig(name: "Router")
+
+        print(uConfig)
+
+        let host = uConfig.address
+        let username = uConfig.loginName
+        let password = uConfig.loginPassword
+
+        let session = NMSSHSession(host: host , andUsername: username)
         session.connect()
-        
+
         if session.isConnected {
-            session.authenticate(byPassword: password ?? "")
-            
+            session.authenticate(byPassword: password )
+
             if session.isAuthorized {
                 banner.subtitleLabel?.text = "驗證成功"
                 saveButton.isEnabled = true
@@ -101,12 +111,12 @@ class WalkSetting_ViewController: UIViewController {
                 banner.subtitleLabel?.text = "驗證失敗"
                 self.saveButton.setTitle("驗證", for: .normal)
             }
-            
+
         } else {
             banner.subtitleLabel?.text = "連線失敗"
             self.saveButton.setTitle("驗證", for: .normal)
         }
-        
+
     }
-    
+
 }

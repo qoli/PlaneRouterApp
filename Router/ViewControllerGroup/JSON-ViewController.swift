@@ -144,24 +144,8 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         let hud = JGProgressHUD(style: .dark)
         hud.vibrancyEnabled = true
-        if category == "server" {
-            if UserDefaults.standard.string(forKey: "serverAddress") == "" {
-                let banner = NotificationBanner(title: "Setting Missing", subtitle: "Can not found Server Setting.", style: .warning)
-                banner.show()
-            } else {
-                self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
-                self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
-            }
-        } else {
-            if UserDefaults.standard.string(forKey: "routerAddress") == "" {
-                let banner = NotificationBanner(title: "Setting Missing", subtitle: "Can not found Router Setting.", style: .warning)
-                banner.show()
-            } else {
-                self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
-                self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
-            }
-        }
-
+        self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
+        self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

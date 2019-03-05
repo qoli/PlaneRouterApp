@@ -19,8 +19,11 @@ func GetRouterCookie() {
      */
 
     // user
-    let auth: String = (UserDefaults.standard.string(forKey: "routerUser") ?? "") + ":" + (UserDefaults.standard.string(forKey: "routerPass") ?? "")
     
+    let uConfig = getUserConfig(name: "Router")
+    print(uConfig)
+    let auth: String = (uConfig.loginName) + ":" + (uConfig.loginPassword)
+        
     // Add Headers
     let headers = [
         "Referer": "http://router.asus.com/",
@@ -38,9 +41,11 @@ func GetRouterCookie() {
         Alamofire.request("http://router.asus.com/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
             .responseString { response in
                 if (response.result.error == nil) {
-//                    print(response.value ?? "")
+                    print("login...")
                 }
         }
+    } else {
+        print("Settings not found")
     }
 }
 
@@ -56,34 +61,16 @@ func updateSSData(isRefresh: Bool = false, completionHandler: @escaping ([String
     
     for line in rLines {
         let data = line.groups(for: "(.*?)=(.*?)$")
-        if data[0].count == 3 {
-            dataDict["\(data[0][1])"] = "\(data[0][2])"
+        if data != [] {
+            if data[0].count == 3 {
+                dataDict["\(data[0][1])"] = "\(data[0][2])"
+            }
         }
         
     }
     
     UserDefaults.standard.set(dataDict, forKey: "ssData")
     completionHandler(dataDict, nil)
-    
-    
-//    fetchRequestString(
-//        api: "http://router.asus.com/dbconf?p=ss",
-//        isRefresh: isRefresh,
-//        completionHandler: { value, error in
-//            if value != nil {
-//                let allData = value?.groups(for: "o\\['(.*?)'\\]='(.*?)';")
-//                var dataDict: [String: String] = [:]
-//
-//                for d in allData ?? [[""]] {
-//                    dataDict[d[1]] = d[2]
-//                }
-//
-//                UserDefaults.standard.set(dataDict, forKey: "ssData")
-//                completionHandler(dataDict, nil)
-//            } else {
-//                completionHandler([:], error)
-//            }
-//    })
     
 }
 

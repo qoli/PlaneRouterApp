@@ -146,7 +146,7 @@ class Connect_ViewController: UIViewController {
 
     }
 
-    //MARK: Loop
+    //MARK: - Status loop
     
     // Status
     func loop() {
@@ -164,6 +164,7 @@ class Connect_ViewController: UIViewController {
         }
     }
 
+    // ARM Model
     func sendStatusRequest() {
         /**
          status
@@ -180,19 +181,9 @@ class Connect_ViewController: UIViewController {
                     if r[0].stringValue != "" {
                         let status = r[0].stringValue.groups(for: "color=(.*?)>国外连接 - \\[ (.*?) \\]")
                         if status[0][1] == "#fc0" {
-                            UIView.animate(withDuration: 0.4, animations: {
-                                self.statusLabel.text = "Success"
-                                self.statusView.backgroundColor = UIColor.appleGreen
-                                self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
-                                self.statusTimeLabel.text = status[0][2]
-                            })
+                            self.updateStatusView(isSuccess: true, text: status[0][2])
                         } else {
-                            UIView.animate(withDuration: 0.4, animations: {
-                                self.statusLabel.text = "Failure"
-                                self.statusView.backgroundColor = UIColor.coralPink
-                                self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
-                                self.statusTimeLabel.text = status[0][2]
-                            })
+                            self.updateStatusView(isSuccess: false, text: status[0][2])
                         }
                     }
 
@@ -217,8 +208,27 @@ class Connect_ViewController: UIViewController {
                 }
         }
     }
+    
+    func updateStatusView(isSuccess: Bool, text: String) {
+        if isSuccess {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.statusLabel.text = "Success"
+                self.statusView.backgroundColor = UIColor.appleGreen
+                self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
+                self.statusTimeLabel.text = text
+            })
+        } else {
+            UIView.animate(withDuration: 0.4, animations: {
+                self.statusLabel.text = "Failure"
+                self.statusView.backgroundColor = UIColor.coralPink
+                self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
+                self.statusTimeLabel.text = text
+            })
+        }
+    }
 
-    // line
+    //MARK: - Line Button
+    
     func lineButtonUpdate() {
         self.lineListButton.setTitle("...", for: .disabled)
         self.connectButton.setTitle("...", for: .disabled)
@@ -227,8 +237,8 @@ class Connect_ViewController: UIViewController {
         delay {
             updateSSData(isRefresh: true, completionHandler: {value,error in
                 if value != [:] {
-                    let node = value["ssconf_basic_node"]!
-                    let name = value["ssconf_basic_name_\(node)"]!
+                    let node = value["ssconf_basic_node"] ?? ""
+                    let name = value["ssconf_basic_name_\(node)"] ?? ""
                     self.lineListButton.setTitle(name, for: .normal)
                     self.connectButton.setTitle("Reconnect", for: .normal)
                     self.lineListButton.isEnabled = true

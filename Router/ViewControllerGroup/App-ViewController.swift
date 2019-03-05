@@ -44,6 +44,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        //dev
+//        delay {
+//            self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+//        }
+        
         // update
         updateNotes()
         

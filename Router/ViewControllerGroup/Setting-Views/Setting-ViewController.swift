@@ -38,7 +38,6 @@ class Setting_ViewController: UIViewController {
 
         backButton.hero.modifiers = [.fade, .translate(x: 50)]
 
-
         self.form_init()
         self.ViewTitleLabel.text = ViewTitle
     }
@@ -51,18 +50,9 @@ class Setting_ViewController: UIViewController {
     @IBAction func tapView(_ sender: Any) {
         view.endEditing(true)
     }
-    
-    
-    // Form
-    func form_init() {
-        addressTextField.text = UserDefaults.standard.string(forKey: "routerAddress") ?? "192.168.1."
-        userTextField.text = UserDefaults.standard.string(forKey: "routerUser") ?? ""
-        passTextField.text = UserDefaults.standard.string(forKey: "routerPass") ?? ""
-        serverAddress.text = UserDefaults.standard.string(forKey: "serverAddress") ?? ""
-        serverUser.text = UserDefaults.standard.string(forKey: "serverUser") ?? ""
-        serverPass.text = UserDefaults.standard.string(forKey: "serverPass") ?? ""
-    }
 
+    // MARK: - IBAction
+    
     @IBAction func saveAction(_ sender: UIButton) {
         UserDefaults.standard.set(addressTextField.text, forKey: "routerAddress")
         UserDefaults.standard.set(userTextField.text, forKey: "routerUser")
@@ -72,7 +62,6 @@ class Setting_ViewController: UIViewController {
         UserDefaults.standard.set(serverPass.text, forKey: "serverPass")
         dismiss(animated: true, completion: nil)
     }
-
 
     @IBAction func cleanAction(_ sender: Any) {
         if let appDomain = Bundle.main.bundleIdentifier {
@@ -95,6 +84,16 @@ class Setting_ViewController: UIViewController {
         self.ifTextFieldEmpty(sender: sender)
     }
 
+    // MARK: - Form
+    func form_init() {
+        addressTextField.text = UserDefaults.standard.string(forKey: "routerAddress") ?? "192.168.1."
+        userTextField.text = UserDefaults.standard.string(forKey: "routerUser") ?? ""
+        passTextField.text = UserDefaults.standard.string(forKey: "routerPass") ?? ""
+        serverAddress.text = UserDefaults.standard.string(forKey: "serverAddress") ?? ""
+        serverUser.text = UserDefaults.standard.string(forKey: "serverUser") ?? ""
+        serverPass.text = UserDefaults.standard.string(forKey: "serverPass") ?? ""
+    }
+    
     func ifTextFieldEmpty(sender: UITextField) {
         if (addressTextField.text?.isEmpty)! || (userTextField.text?.isEmpty)! || (passTextField.text?.isEmpty)! {
             // ...

@@ -9,10 +9,24 @@
 import UIKit
 
 class init_ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // ERROR ExceptionHandler
+        if let exception = UserDefaults.standard.object(forKey: "ExceptionHandler") as? [String] {
+            
+            print("Error was occured on previous session! \n", exception, "\n\n-------------------------")
+            var exceptions = ""
+            for e in exception {
+                exceptions = exceptions + e + "\n"
+            }
+        }
+//        
+//        delay {
+//            fatalError()
+//        }
+        
         delay {
             if UserDefaults.standard.bool(forKey: "isApp") {
                 self.performSegue(withIdentifier: "goAppSegue", sender: nil)
@@ -22,5 +36,5 @@ class init_ViewController: UIViewController {
         }
 
     }
-
+    
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import NMSSH
+import SwiftyJSON
 import IQKeyboardManagerSwift
 import NotificationBannerSwift
 
@@ -33,8 +34,7 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         textView.isSelectable = false
         textView.text = ""
 
-        IQKeyboardManager.sharedManager().enableAutoToolbar = false
-        IQKeyboardManager.sharedManager().enable = false
+        IQKeyboardManager.shared.enable = false
 
         //NotificationCenter
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -53,8 +53,7 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
-        IQKeyboardManager.sharedManager().enableAutoToolbar = true
-        IQKeyboardManager.sharedManager().enable = true
+        IQKeyboardManager.shared.enable = true
     }
 
 
@@ -99,7 +98,9 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         let command = self.lastCommand
         self.lastCopy = command
         DispatchQueue.main.async(execute: {
-            self.session.channel.write(command, error: nil, timeout: NSNumber(value: 10))
+            if self.session != nil {
+                self.session.channel.write(command, error: nil, timeout: 10)
+            }
         })
         self.passCommand = ""
         self.lastCommand = ""
@@ -110,45 +111,49 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         message(message: "Connecting...")
         DispatchQueue.main.async(execute: {
 
-            var host = UserDefaults.standard.string(forKey: "routerAddress")!
-            var username = UserDefaults.standard.string(forKey: "routerUser")!
-            var password = UserDefaults.standard.string(forKey: "routerPass")!
+            let uConfig = getUserConfig(name: "Router")
+            var host = uConfig.address
+            var username = uConfig.loginName
+            var password = uConfig.loginPassword
 
             if self.category == "server" {
                 host = UserDefaults.standard.string(forKey: "serverAddress") ?? ""
                 username = UserDefaults.standard.string(forKey: "serverUser") ?? ""
                 password = UserDefaults.standard.string(forKey: "serverPass") ?? ""
-                
-                if host == "" {
-                    self.exitMessage(message: "Missing server configuration")
-                }
             }
-            
-            self.session = NMSSHSession(host: host, andUsername: username)
 
-            self.session.delegate = self
-            self.session.connect()
-            if self.session.isConnected {
-                self.session.authenticate(byPassword: password)
+            if host != "" {
+                self.session = NMSSHSession(host: host, andUsername: username)
 
-                if !self.session.isAuthorized {
-                    self.exitMessage(message: "SSH Authentication Failed")
-                } else {
-                    do {
-                        self.session.channel.delegate = self
-                        self.session.channel.requestPty = true
-                        self.session.channel.ptyTerminalType = NMSSHChannelPtyTerminal.vanilla
-                        try self.session.channel.startShell()
-                        self.textView.isEditable = true
-                    } catch {
-                        self.exitMessage(message: error.localizedDescription)
+                self.session.delegate = self
+                self.session.connect()
+                if self.session.isConnected {
+                    self.session.authenticate(byPassword: password)
+
+                    if !self.session.isAuthorized {
+                        self.exitMessage(message: "SSH Authentication Failed")
+                    } else {
+                        do {
+                            self.session.channel.delegate = self
+                            self.session.channel.requestPty = true
+                            self.session.channel.ptyTerminalType = NMSSHChannelPtyTerminal.vanilla
+                            try self.session.channel.startShell()
+                            self.textView.isEditable = true
+                        } catch {
+                            self.exitMessage(message: error.localizedDescription)
+                        }
                     }
+
+                } else {
+                    // isConnected Failed
+                    self.exitMessage(message: "Connect Failed")
                 }
-
-
             } else {
-                self.exitMessage(message: "Connect Failed")
+                // Host == ""
+                self.exitMessage(message: "Missing configuration")
             }
+
+
         })
     }
 
@@ -254,19 +259,29 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         return true
     }
 
+    // MARK: - NotificationBanner
+
+    var banner: NotificationBanner?
+
     func exitMessage(message: String, style: BannerStyle = .warning) {
-        let banner = NotificationBanner(title: "Terminal", subtitle: message, style: style)
-        banner.show()
+        if banner != nil {
+            banner?.dismiss()
+        }
+        banner = NotificationBanner(title: "Terminal", subtitle: message, style: style)
+        banner?.duration = 2
+        banner?.show()
         delay {
             self.dismiss(animated: true, completion: nil)
         }
     }
 
-    func message(message: String) {
-        let banner = NotificationBanner(title: "Terminal", subtitle: message, style: .info)
-        banner.show()
-        delay {
-            banner.dismiss()
+    func message(message: String, style: BannerStyle = .info) {
+        if banner != nil {
+            banner?.dismiss()
         }
+        banner = NotificationBanner(title: "Terminal", subtitle: message, style: style)
+        banner?.duration = 0.3
+        banner?.show()
     }
+
 }

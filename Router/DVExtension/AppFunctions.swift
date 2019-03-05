@@ -12,6 +12,10 @@ import Alamofire
 import SwiftyJSON
 import NotificationBannerSwift
 
+struct Host {
+    static var domain = "router.asus.com"
+}
+
 // MARK: app service list
 
 func addServiceList(serviceName: String) {
@@ -37,13 +41,6 @@ func getServiceList() -> Array<Any> {
 
 // MARK: run in ssh
 
-func SetupRouterSSH(user: String, pass: String) {
-    UserDefaults.standard.set("router.asus.com", forKey: "routerAddress")
-    UserDefaults.standard.set(user, forKey: "routerUser")
-    UserDefaults.standard.set(pass, forKey: "routerPass")
-}
-
-
 func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isRouter: Bool = true, isShowResponse: Bool = false) -> String {
 
     var isR = isRefresh
@@ -53,9 +50,10 @@ func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isR
     var password: String!
 
     if isRouter {
-        host = UserDefaults.standard.string(forKey: "routerAddress")
-        username = UserDefaults.standard.string(forKey: "routerUser")
-        password = UserDefaults.standard.string(forKey: "routerPass")
+        let uConfig = getUserConfig(name: "Router")
+        host = uConfig.address
+        username = uConfig.loginName
+        password = uConfig.loginPassword
     } else {
         host = UserDefaults.standard.string(forKey: "serverAddress")
         username = UserDefaults.standard.string(forKey: "serverUser")
@@ -110,7 +108,7 @@ func CacheString(text: String = "", Key: String) -> String {
 
 
 
-// MARK: - 十六进制转十进制
+// MARK: 十六进制转十进制
 func hexTodec(number num: String) -> Double {
     let str = num.uppercased()
     var sum = 0
@@ -131,8 +129,11 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
     )
 }
 
+// MARK: Message
 
-func message(message: String) {
-    let banner = NotificationBanner(title: "Terminal", subtitle: message, style: .info)
+func messageNotification(message: String, title: String = "Terminal") {
+    let banner = NotificationBanner(title: title, subtitle: message, style: .info)
+    banner.duration = 0.6
+    banner.dismiss()
     banner.show()
 }
