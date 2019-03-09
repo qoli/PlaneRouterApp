@@ -49,6 +49,23 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 //            self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
 //        }
         
+        // ERROR ExceptionHandler
+        if let exception = UserDefaults.standard.object(forKey: "ExceptionHandler") as? [String] {
+            
+            print("Error was occured on previous session! \n", exception, "\n\n-------------------------")
+            var exceptions = ""
+            for e in exception {
+                exceptions = exceptions + e + "\n"
+            }
+        }
+        
+        //goWalkSegue
+        delay {
+            if UserDefaults.standard.bool(forKey: "isApp") == false {
+                self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
+            }
+        }
+        
         // update
         updateNotes()
         
@@ -72,6 +89,12 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             name: NSNotification.Name(rawValue: "appServiceList"),
             object: nil
         )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(collectionSelectNotification(_:)),
+            name: NSNotification.Name(rawValue: "collectionSelect"),
+            object: nil
+        )
 
         delay(0.6) {
             self.collection_select(selected: 0)
@@ -87,6 +110,10 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     @objc func serviceListActionNotification(_ notification: Notification) {
         serviceListDo((notification.object != nil))
+    }
+    
+    @objc func collectionSelectNotification(_ notification: Notification) {
+        self.collection_select(selected: notification.object as! Int)
     }
 
     // MARK: - IBAction

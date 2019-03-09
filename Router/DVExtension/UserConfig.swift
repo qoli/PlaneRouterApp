@@ -30,7 +30,7 @@ struct userConfig: Codable {
 let userConfigCacheKey = "com.qoli.userConfigCacheKey"
 
 func buildUserURL(name: String = "Router") -> String {
-    let r = getUserConfig(name: name)
+    let r = getUserConfig(name: name)    
     return "\(r.mode)://\(r.address):\(r.port)"
 }
 

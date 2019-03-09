@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jlD-xd-qr9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lwg-ZM-530">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -728,10 +728,10 @@
             </objects>
             <point key="canvasLocation" x="1873" y="-1809"/>
         </scene>
-        <!--Init View Controller-->
+        <!--Debug Page View Controller-->
         <scene sceneID="z4A-cJ-AoG">
             <objects>
-                <viewController id="jlD-xd-qr9" customClass="init_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="jlD-xd-qr9" customClass="debugPage_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gzc-4b-NgU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -741,10 +741,6 @@
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
-                    <connections>
-                        <segue destination="ugE-Zi-erk" kind="show" identifier="goWalkSegue" id="S3S-LY-2hK"/>
-                        <segue destination="Lwg-ZM-530" kind="show" identifier="goAppSegue" id="TY5-03-TJf"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KhI-3o-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1018,7 +1014,7 @@
                                 <color key="textColor" name="brownGreyTwo"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="路由器 SSH" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e7O-1s-wvM">
+                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Router" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e7O-1s-wvM">
                                 <rect key="frame" x="20" y="362" width="335" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1030,7 +1026,7 @@
                                 <color key="textColor" name="brownGreyTwo"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="router.asus.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kU0-2p-Tce">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="router.asus.com" borderStyle="roundedRect" placeholder="192.168.x.x / router.asus.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kU0-2p-Tce">
                                 <rect key="frame" x="20" y="416" width="335" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1367,6 +1363,7 @@
                         <outlet property="settingButton" destination="MkJ-MP-yv2" id="Sd5-e9-bMa"/>
                         <segue destination="rya-U1-BhR" kind="show" identifier="goSettingTableSegue" id="8DW-Sz-a4Q"/>
                         <segue destination="Pin-Gz-bTq" kind="show" identifier="goUpdateNotesSegue" id="tBz-cL-OxW"/>
+                        <segue destination="ugE-Zi-erk" kind="show" identifier="goWalkSegue" id="5Fb-qb-QJ1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WBN-F8-oPQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1436,7 +1433,7 @@ admin@AC68U:/tmp/home/root# </string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pSz-cj-cW0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1092" y="-376"/>
+            <point key="canvasLocation" x="1094" y="-305"/>
         </scene>
         <!--Net View Controller-->
         <scene sceneID="7yC-KK-lqJ">
@@ -2260,10 +2257,9 @@ admin@AC68U:/tmp/home/root# </string>
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="..." selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hmy-QW-Mhg">
-                                <rect key="frame" x="5" y="115" width="365" height="500"/>
+                                <rect key="frame" x="5" y="115" width="365" height="585"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="500" id="6NP-EP-X8W"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="500" id="DiW-7m-ko3"/>
                                 </constraints>
                                 <color key="textColor" name="gray29"/>
@@ -2275,7 +2271,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <constraints>
                             <constraint firstItem="Abw-en-B1y" firstAttribute="bottom" secondItem="U0q-0C-iNS" secondAttribute="top" id="1If-ir-7nZ"/>
                             <constraint firstItem="e9W-0I-Rvb" firstAttribute="trailing" secondItem="Abw-en-B1y" secondAttribute="trailing" id="5VS-Fi-txM"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hmy-QW-Mhg" secondAttribute="bottom" id="804-7c-JPZ"/>
+                            <constraint firstAttribute="bottom" secondItem="hmy-QW-Mhg" secondAttribute="bottom" id="804-7c-JPZ"/>
                             <constraint firstItem="hmy-QW-Mhg" firstAttribute="top" secondItem="U0q-0C-iNS" secondAttribute="bottom" constant="5" id="Ao0-U9-111"/>
                             <constraint firstItem="Abw-en-B1y" firstAttribute="leading" secondItem="xIi-pu-jk3" secondAttribute="leading" id="Bgk-P2-Ld3"/>
                             <constraint firstItem="hmy-QW-Mhg" firstAttribute="leading" secondItem="xIi-pu-jk3" secondAttribute="leading" constant="5" id="C5g-0M-CRX"/>
@@ -2805,6 +2801,6 @@ admin@AC68U:/tmp/home/root# </string>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sSP-Y3-MIA"/>
-        <segue reference="Qzu-lr-SLt"/>
+        <segue reference="0H0-y0-gnm"/>
     </inferredMetricsTieBreakers>
 </document>

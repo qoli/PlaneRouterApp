@@ -38,7 +38,18 @@ class CommnadRead_ViewController: UIViewController {
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
+        close()
+    }
+    
+    func close() {
+        var rootVC = self.presentingViewController
+        while let parent = rootVC?.presentingViewController {
+            rootVC = parent
+        }
+        //释放所有下级视图
+        NotificationCenter.default.post(name: NSNotification.Name.init("collectionSelect"), object: 1)
+        rootVC?.dismiss(animated: true, completion: nil)
     }
     
     //
@@ -87,6 +98,13 @@ class CommnadRead_ViewController: UIViewController {
             isRefresh: true,
             completionHandler: { value, error in
                 self.textView.text = value
+                delay {
+                    let textViewBottom = NSMakeRange(self.textView.text.count - 1, 1)
+                    self.textView.scrollRangeToVisible(textViewBottom)
+                    self.textView.isScrollEnabled = false
+                    self.textView.isScrollEnabled = true
+                }
+                
                 if value?.contains("XU6J03M6") ?? false {
                     self.isAppear = false
                     self.pageTitle.text = "Finish"
@@ -96,7 +114,7 @@ class CommnadRead_ViewController: UIViewController {
                     self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
                     self.hud.show(in: self.view)
                     delay(3) {
-                        self.dismiss(animated: true, completion: nil)
+                        self.close()
                     }
                 }
         })

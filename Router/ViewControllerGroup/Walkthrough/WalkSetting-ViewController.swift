@@ -67,7 +67,7 @@ class WalkSetting_ViewController: UIViewController {
                 let uConfig = userConfig(
                     name: "Router",
                     mode: "http",
-                    address: "router.asus.com",
+                    address: self.address.text ?? "router.asus.com",
                     port: 80,
                     loginName: self.name.text ?? "",
                     loginPassword: self.pass.text ?? "")

@@ -41,7 +41,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     func updateTextField(isR: Bool = false) {
         updateSSData(isRefresh: isR, completionHandler: { value, error in
             self.linkb64 = value["ss_online_links"] ?? ""
-            self.addressTextView.text = self.linkb64?.removingWhitespacesAndNewlines.base64Decoded()
+            self.addressTextView.text = self.linkb64?.removingWhitespacesAndNewlines.base64Decoded() ?? ""
         })
     }
 
@@ -63,7 +63,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
 
     // Button Radion
     
-    let UserDefaultsKey = "saveOption"
+    let UserDefaultsKey = "com.qoli.saveSubscribeOption"
     
     func updateOptionwithUserDefaults() -> saveOptin {
         let checkValue = UserDefaults.standard.integer(forKey: UserDefaultsKey)

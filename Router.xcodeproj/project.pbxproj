@@ -39,7 +39,7 @@
 		F9ADC519222946EE00175CB1 /* WalkSetting-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADC518222946EE00175CB1 /* WalkSetting-ViewController.swift */; };
 		F9ADC51B22294A3800175CB1 /* WalkDone-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADC51A22294A3800175CB1 /* WalkDone-ViewController.swift */; };
 		F9ADC51D22294AFD00175CB1 /* Walk-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADC51C22294AFD00175CB1 /* Walk-ViewController.swift */; };
-		F9ADC51F22294D1B00175CB1 /* init-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADC51E22294D1B00175CB1 /* init-ViewController.swift */; };
+		F9ADC51F22294D1B00175CB1 /* debug-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9ADC51E22294D1B00175CB1 /* debug-ViewController.swift */; };
 		F9B4129B220BD56D00756DF8 /* CoreRunningStatusButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9B4129A220BD56D00756DF8 /* CoreRunningStatusButton.xib */; };
 		F9B81464222BBC1600EFF2CF /* UpdateNotes-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B81463222BBC1600EFF2CF /* UpdateNotes-ViewController.swift */; };
 		F9BC920E221A88CF0078BD67 /* Net-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC920D221A88CF0078BD67 /* Net-ViewController.swift */; };
@@ -85,7 +85,7 @@
 		F9ADC518222946EE00175CB1 /* WalkSetting-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalkSetting-ViewController.swift"; sourceTree = "<group>"; };
 		F9ADC51A22294A3800175CB1 /* WalkDone-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalkDone-ViewController.swift"; sourceTree = "<group>"; };
 		F9ADC51C22294AFD00175CB1 /* Walk-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Walk-ViewController.swift"; sourceTree = "<group>"; };
-		F9ADC51E22294D1B00175CB1 /* init-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "init-ViewController.swift"; sourceTree = "<group>"; };
+		F9ADC51E22294D1B00175CB1 /* debug-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "debug-ViewController.swift"; sourceTree = "<group>"; };
 		F9B4129A220BD56D00756DF8 /* CoreRunningStatusButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoreRunningStatusButton.xib; sourceTree = "<group>"; };
 		F9B81463222BBC1600EFF2CF /* UpdateNotes-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UpdateNotes-ViewController.swift"; sourceTree = "<group>"; };
 		F9BC920D221A88CF0078BD67 /* Net-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Net-ViewController.swift"; sourceTree = "<group>"; };
@@ -149,11 +149,11 @@
 			isa = PBXGroup;
 			children = (
 				F95A3A6F222E8F7E00FEF460 /* setting.json */,
+				F9ADC51E22294D1B00175CB1 /* debug-ViewController.swift */,
 				F9B81462222BBC0500EFF2CF /* UpdateNotes */,
 				F9ADC517222946D000175CB1 /* Walkthrough */,
 				F900A71422229A3F00F206FA /* Setting-Views */,
 				F900A70F2222563A00F206FA /* Connect-Views */,
-				F9ADC51E22294D1B00175CB1 /* init-ViewController.swift */,
 				F929430E221A6F08000E8BF2 /* App-ViewController.swift */,
 				F9BC920D221A88CF0078BD67 /* Net-ViewController.swift */,
 				F9BC9215221AAA5F0078BD67 /* JSON-ViewController.swift */,
@@ -404,7 +404,7 @@
 				F9990F52220E8298006EA8D7 /* StringExtensions.swift in Sources */,
 				F900A7162222A66100F206FA /* DictionaryExtensions.swift in Sources */,
 				F91C3035220BDD6200703AF2 /* CoreRunningStatusButton.swift in Sources */,
-				F9ADC51F22294D1B00175CB1 /* init-ViewController.swift in Sources */,
+				F9ADC51F22294D1B00175CB1 /* debug-ViewController.swift in Sources */,
 				F95E3FD4220C1F31003046FB /* ServiceStatusView.swift in Sources */,
 				F95350A12220083300B2486D /* Connect-ViewController.swift in Sources */,
 				F92C220B2228123D0045ACBA /* UnderlinedLabel+UILabel.swift in Sources */,
@@ -578,9 +578,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_CURRENT_VERSION = 30;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -600,9 +600,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 27;
+				DYLIB_CURRENT_VERSION = 30;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
