@@ -66,7 +66,7 @@ class CommnadRead_ViewController: UIViewController {
             ]
         
         // Fetch Request
-        Alamofire.request("http://router.asus.com/applydb.cgi?p=ss", method: .post, parameters: body, encoding: URLEncoding.default)
+        Alamofire.request("\(buildUserURL())/applydb.cgi?p=ss", method: .post, parameters: body, encoding: URLEncoding.default)
             .responseString { response in
                 switch response.result {
                 case .success(let value):
@@ -83,7 +83,7 @@ class CommnadRead_ViewController: UIViewController {
     func CommnadReadAjax() {
         
         fetchRequestString(
-            api: "http://router.asus.com/cmdRet_check.htm",
+            api: "\(buildUserURL())/cmdRet_check.htm",
             isRefresh: true,
             completionHandler: { value, error in
                 self.textView.text = value

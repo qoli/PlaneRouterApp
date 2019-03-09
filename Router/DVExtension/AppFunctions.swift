@@ -131,7 +131,7 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
 
 // MARK: Message
 
-func messageNotification(message: String, title: String = "Terminal") {
+func messageNotification(message: String, title: String = "Plane Router App") {
     let banner = NotificationBanner(title: title, subtitle: message, style: .info)
     banner.duration = 0.6
     banner.dismiss()

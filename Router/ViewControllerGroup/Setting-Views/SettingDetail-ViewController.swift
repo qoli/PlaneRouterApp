@@ -121,10 +121,10 @@ class SettingDetail_ViewController: UIViewController {
             loginPassword: loginPasswordText.text ?? "")
         
         let rSave = saveUserConfig(userConfig: uConfig)
-        print(uConfig)
-        print(rSave)
-        if !rSave.0 {
-            print(rSave)
+        if rSave.0 {
+            dismiss(animated: true, completion: nil)
+        } else {
+            messageNotification(message: "save Error")
         }
     }
     @IBAction func backAction(_ sender: UIButton) {

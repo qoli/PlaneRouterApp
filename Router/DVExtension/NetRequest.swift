@@ -19,14 +19,13 @@ func GetRouterCookie() {
      */
 
     // user
-    
+
     let uConfig = getUserConfig(name: "Router")
-    print(uConfig)
     let auth: String = (uConfig.loginName) + ":" + (uConfig.loginPassword)
-        
+
     // Add Headers
     let headers = [
-        "Referer": "http://router.asus.com/",
+        "Referer": "\(buildUserURL())/",
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
     ]
 
@@ -38,10 +37,11 @@ func GetRouterCookie() {
     // auth
     if auth != ":" {
         // Fetch Request
-        Alamofire.request("http://router.asus.com/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
+        Alamofire.request("\(buildUserURL())/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
             .responseString { response in
                 if (response.result.error == nil) {
-                    print("login...")
+                    print("login...by")
+                    print(uConfig)
                 }
         }
     } else {
@@ -55,10 +55,10 @@ func GetRouterCookie() {
 func updateSSData(isRefresh: Bool = false, completionHandler: @escaping ([String: String], Error?) -> Void) {
 
     let returnCommand = SSHRun(command: "dbus list ss", cacheKey: "ssDataCommand", isRefresh: isRefresh, isRouter: true)
-    
+
     let rLines = returnCommand.lines
     var dataDict: [String: String] = [:]
-    
+
     for line in rLines {
         let data = line.groups(for: "(.*?)=(.*?)$")
         if data != [] {
@@ -66,28 +66,28 @@ func updateSSData(isRefresh: Bool = false, completionHandler: @escaping ([String
                 dataDict["\(data[0][1])"] = "\(data[0][2])"
             }
         }
-        
+
     }
-    
+
     UserDefaults.standard.set(dataDict, forKey: "ssData")
     completionHandler(dataDict, nil)
-    
+
 }
 
 // MARK: get data & cache
 
 func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @escaping (NSDictionary?, Error?) -> Void) {
-    
+
     var cacheObject = UserDefaults.standard.object(forKey: api)
-    
+
     if isRefresh == true {
         cacheObject = nil
     }
-    
+
     if cacheObject != nil {
         print("\(api) [onCache]")
         completionHandler(cacheObject as? NSDictionary, nil)
-        
+
     } else {
         print("\(api) [request]")
         Alamofire.request(api, method: .get)
@@ -96,25 +96,25 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
                 case .success(let value):
                     UserDefaults.standard.set(value, forKey: api)
                     completionHandler(value as? NSDictionary, nil)
-                    
+
                 case .failure(let error):
                     print(error.localizedDescription)
                     completionHandler(nil, error)
                 }
         }
     }
-    
+
 }
 
 func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler: @escaping (String?, Error?) -> Void) {
     let queue = DispatchQueue(label: "com.cnoon.response-queue", qos: .utility, attributes: [.concurrent])
-    
+
     var cacheObject = UserDefaults.standard.object(forKey: api)
-    
+
     if isRefresh == true {
         cacheObject = nil
     }
-    
+
     if cacheObject != nil {
         print("\(api) [onCache]")
         completionHandler(cacheObject as? String, nil)
@@ -132,7 +132,7 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
                             print("fetchRequestString [need login]")
                             completionHandler(nil, nil)
                         }
-                        
+
                     case .failure(let error):
                         print(error.localizedDescription)
                         completionHandler(nil, error)
@@ -140,5 +140,5 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
                 }
         }
     }
-    
+
 }

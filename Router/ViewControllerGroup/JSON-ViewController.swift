@@ -69,6 +69,20 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.jsonName = notification.object as! String
         page_init()
     }
+    
+    // MARK: - Page init
+    
+    func page_init() {
+        pageGetSrouce()
+        
+        if jsonName == "Shadowsock" {
+            pageDesc.text = "SSH: Router"
+            pageButton.isHidden = true
+        } else {
+            pageDesc.text = "SSH: ..."
+            pageButton.isHidden = false
+        }
+    }
 
     @IBAction func pageAction(_ sender: UIButton) {
         // 1. Hidden install category & items
@@ -92,19 +106,40 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         manager.present(sourceView: self.pageButton)
 
     }
-    
-    func page_init() {
-        pageGetSrouce()
-        
-        if jsonName == "Shadowsock" {
-            pageDesc.text = "SSH: Router"
-            pageButton.isHidden = true
-        } else {
-            pageDesc.text = "SSH: ..."
-            pageButton.isHidden = false
+
+    func forceReload() {
+        print("ForceReload")
+        self.isReload = true
+        tableView.reloadData()
+        delay(0.6) {
+            self.isReload = false
         }
     }
 
+    // MARK: Run command
+    func runCommand(indexPath: Int) {
+
+        let hud = JGProgressHUD(style: .dark)
+        hud.vibrancyEnabled = true
+        self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
+        self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
+    }
+
+    // MARK: Segue pass data
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goTerminalViewandRun" {
+            if let destinationVC = segue.destination as? Terminal_ViewController {
+                destinationVC.passCommand = self.passCommand
+                destinationVC.category = self.category
+            }
+        }
+    }
+    
+    // MARK: - Table
+    
+    var tableData: JSON = []
+    
+    // MARK: Page Get Srouce
     func pageGetSrouce(isReload: Bool = false) {
         refreshControl.beginRefreshing()
         fetchRequest(
@@ -127,55 +162,24 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.pageTitleLabel.text = self.jsonName
                     self.errorMessage.text = error?.localizedDescription
                 }
-            })
+        })
     }
-
-    func forceReload() {
-        print("ForceReload")
-        self.isReload = true
-        tableView.reloadData()
-        delay(0.6) {
-            self.isReload = false
-        }
-    }
-
-    // run command & segue pass data
-    func runCommand(indexPath: Int) {
-
-        let hud = JGProgressHUD(style: .dark)
-        hud.vibrancyEnabled = true
-        self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
-        self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goTerminalViewandRun" {
-            if let destinationVC = segue.destination as? Terminal_ViewController {
-                destinationVC.passCommand = self.passCommand
-                destinationVC.category = self.category
-            }
-        }
-    }
-
-    // table
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.transform = CGAffineTransform(scaleX: 0.75, y: 0.75);
-
+        
         refreshControl.addTarget(
             self,
             action: #selector(self.handleRefresh(_:)),
             for: UIControl.Event.valueChanged)
-
+        
         return refreshControl
     }()
-
+    
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         pageGetSrouce(isReload: true)
     }
-
-    var tableData: JSON = []
-    var googleIP: String = ""
 
     func table_init() {
         self.tableView.addSubview(self.refreshControl)

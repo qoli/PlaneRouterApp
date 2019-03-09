@@ -1967,8 +1967,8 @@ admin@AC68U:/tmp/home/root# </string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TH2-8s-cdd">
-                                        <rect key="frame" x="153.66666666666666" y="88" width="26" height="13.333333333333329"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TH2-8s-cdd">
+                                        <rect key="frame" x="20" y="88" width="293" height="13.333333333333329"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -1976,10 +1976,12 @@ admin@AC68U:/tmp/home/root# </string>
                                 </subviews>
                                 <color key="backgroundColor" name="Gray92"/>
                                 <constraints>
+                                    <constraint firstItem="TH2-8s-cdd" firstAttribute="leading" secondItem="Jqb-hO-ZEX" secondAttribute="leading" constant="20" id="73V-QE-dh6"/>
                                     <constraint firstItem="TH2-8s-cdd" firstAttribute="centerX" secondItem="Jqb-hO-ZEX" secondAttribute="centerX" id="O0b-8t-072"/>
                                     <constraint firstAttribute="height" constant="160" id="U4i-on-rUi"/>
                                     <constraint firstItem="Mzl-Ti-iNI" firstAttribute="centerX" secondItem="Jqb-hO-ZEX" secondAttribute="centerX" id="by5-eP-yHd"/>
                                     <constraint firstItem="Mzl-Ti-iNI" firstAttribute="centerY" secondItem="Jqb-hO-ZEX" secondAttribute="centerY" constant="-5" id="mza-bc-gYr"/>
+                                    <constraint firstAttribute="trailing" secondItem="TH2-8s-cdd" secondAttribute="trailing" constant="20" id="nXU-ir-Xgd"/>
                                     <constraint firstItem="TH2-8s-cdd" firstAttribute="top" secondItem="Mzl-Ti-iNI" secondAttribute="bottom" constant="5" id="nb5-xR-Owu"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>

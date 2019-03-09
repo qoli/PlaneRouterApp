@@ -26,7 +26,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     
 //    var saveValue: saveOptin = .saveUpdate
     
-    var linkb64: String!
+    var linkb64: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +40,8 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     
     func updateTextField(isR: Bool = false) {
         updateSSData(isRefresh: isR, completionHandler: { value, error in
-            self.linkb64 = value["ss_online_links"]
-            self.addressTextView.text = self.linkb64.removingWhitespacesAndNewlines.base64Decoded()
+            self.linkb64 = value["ss_online_links"] ?? ""
+            self.addressTextView.text = self.linkb64?.removingWhitespacesAndNewlines.base64Decoded()
         })
     }
 

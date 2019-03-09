@@ -11,6 +11,7 @@ import Hero
 import Alamofire
 import SwiftyJSON
 import Charts
+import SafariServices
 
 class Net_ViewController: UIViewController {
 
@@ -49,9 +50,8 @@ class Net_ViewController: UIViewController {
             name: NSNotification.Name(rawValue: "NetViewonShow"),
             object: nil
         )
-
+        
     }
-
     // MARK: - 通知
     
     @objc func netViewonShowNotification(_ notification: Notification) {
@@ -190,10 +190,10 @@ class Net_ViewController: UIViewController {
          GetSpeed
          post http://router.asus.com/update.cgi
          */
-
+        
         // Add Headers
         let headers = [
-            "Referer": "http://router.asus.com/update.cgi",
+            "Referer": "\(buildUserURL())/update.cgi",
             "Content-Type": "text/plain; charset=utf-8",
         ]
 
@@ -208,7 +208,7 @@ class Net_ViewController: UIViewController {
         }
 
         // Fetch Request
-        Alamofire.request("http://router.asus.com/update.cgi", method: .post, encoding: RawDataEncoding.default, headers: headers)
+        Alamofire.request("\(buildUserURL())/update.cgi", method: .post, encoding: RawDataEncoding.default, headers: headers)
             .responseString { response in
                 switch response.result {
                 case .success(let value):

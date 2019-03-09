@@ -171,8 +171,10 @@ class Connect_ViewController: UIViewController {
          get http://router.asus.com/ss_status
          */
 
+        
+        
         // Fetch Request
-        Alamofire.request("http://router.asus.com/ss_status", method: .get)
+        Alamofire.request("\(buildUserURL())/ss_status", method: .get)
             .responseJSON { response in
                 switch response.result {
                 case .success(let value):

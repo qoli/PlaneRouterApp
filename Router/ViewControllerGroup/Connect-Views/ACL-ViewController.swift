@@ -105,41 +105,6 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             })
         }
-        
-//        fetchRequestString(
-//            api: "http://router.asus.com/dbconf?p=ss",
-//            isRefresh: isRefresh,
-//            completionHandler: { value, error in
-//                self.refreshControl.endRefreshing()
-//
-//                if value != nil {
-//                    let aclConf = value?.groups(for: "o\\['ss_acl_ip_(.*?)'\\]='(.*?)';")
-//                    let allData = value?.groups(for: "o\\['(.*?)'\\]='(.*?)';")
-//
-//                    for d in allData ?? [[""]] {
-//                        self.dataDict[d[1]] = d[2]
-//                    }
-//
-//                    UserDefaults.standard.set(self.dataDict, forKey: "ssData")
-//
-//                    self.sourceData = aclConf!
-//                    self.sourceData = self.sourceData.sorted(by: { ($0[1] as NSString).integerValue < ($1[1] as NSString).integerValue })
-//
-//                    delay {
-//                        self.tableView.reloadData()
-//                        self.tableView.layoutIfNeeded()
-//
-//                        if self.isNeedApply {
-//                            self.applyButton.isEnabled = true
-//                        } else {
-//                            self.applyButton.isEnabled = false
-//                        }
-//                    }
-//                } else {
-//                    let banner = NotificationBanner(title: "Net Error", subtitle: error?.localizedDescription, style: .warning)
-//                    banner.show()
-//                }
-//            })
     }
 
     lazy var refreshControl: UIRefreshControl = {
@@ -202,10 +167,10 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         // Add Headers
         let headers = [
-            "Referer": "http://router.asus.com/update.cgi"
+            "Referer": "\(buildUserURL())/update.cgi"
         ]
 
-        Alamofire.request("http://router.asus.com/update_networkmapd.asp", method: .get, headers: headers)
+        Alamofire.request("\(buildUserURL())/update_networkmapd.asp", method: .get, headers: headers)
             .validate(statusCode: 200..<300)
             .responseString(encoding: String.Encoding.utf8) { response in
                 switch response.result {
@@ -368,7 +333,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         print(urlParams)
 
         // Fetch Request
-        Alamofire.request("http://router.asus.com/applydb.cgi", method: .get, parameters: urlParams)
+        Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
             .validate(statusCode: 200..<300)
             .responseString(encoding: String.Encoding.utf8) { response in
                 switch response.result {

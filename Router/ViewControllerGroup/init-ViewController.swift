@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class init_ViewController: UIViewController {
     
@@ -22,10 +23,6 @@ class init_ViewController: UIViewController {
                 exceptions = exceptions + e + "\n"
             }
         }
-//        
-//        delay {
-//            fatalError()
-//        }
         
         delay {
             if UserDefaults.standard.bool(forKey: "isApp") {
@@ -36,5 +33,9 @@ class init_ViewController: UIViewController {
         }
 
     }
+    
+
+
+
     
 }
