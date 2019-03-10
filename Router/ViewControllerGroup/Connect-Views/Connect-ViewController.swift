@@ -122,7 +122,7 @@ class Connect_ViewController: UIViewController {
         let cacheData = UserDefaults.standard.dictionary(forKey: "ssData") as? [String: String]
         
         if cacheData == nil {
-            let ssEnable = SSHRun(command: "dbus get ss_basic_enable", isRefresh: true )
+            let ssEnable = SSHRun(command: "dbus get ss_basic_enable", isRefresh: true)
             if ssEnable == "\n" {
                 delay(0) {
                     self.statusLabel.text = "Shadowsock not ready"
@@ -166,49 +166,64 @@ class Connect_ViewController: UIViewController {
 
     // ARM Model
     func sendStatusRequest() {
-        /**
-         status
-         get http://router.asus.com/ss_status
-         */
 
-        
-        
-        // Fetch Request
-        Alamofire.request("\(buildUserURL())/ss_status", method: .get)
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    //
-                    let r = JSON(value)
-                    if r[0].stringValue != "" {
-                        let status = r[0].stringValue.groups(for: "color=(.*?)>国外连接 - \\[ (.*?) \\]")
-                        if status[0][1] == "#fc0" {
-                            self.updateStatusView(isSuccess: true, text: status[0][2])
+        switch ModelPage.runningModel {
+        case .arm:
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/\(ModelPage.Status)", method: .get)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        //
+                        let r = JSON(value)
+                        if r[0].stringValue != "" {
+                            let status = r[0].stringValue.groups(for: "color=(.*?)>国外连接 - \\[ (.*?) \\]")
+                            if status[0][1] == "#fc0" {
+                                self.updateStatusView(isSuccess: true, text: status[0][2])
+                            } else {
+                                self.updateStatusView(isSuccess: false, text: status[0][2])
+                            }
+                        }
+                        
+                    case .failure(_):
+                        break
+                    }
+                }
+                .responseString { response in
+                    switch response.result {
+                    case .success(let value):
+                        // check login
+                        if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
+                            GetRouterCookie()
+                            self.statusTimeLabel.text = "Waiting for login"
                         } else {
-                            self.updateStatusView(isSuccess: false, text: status[0][2])
+                            self.connectButton.isEnabled = true
+                            self.lineListButton.isEnabled = true
+                        }
+                        
+                    case .failure(let error):
+                        self.statusTimeLabel.text = error.localizedDescription
+                    }
+            }
+        case .hnd:
+            fetchRequest(
+                api: "\(buildUserURL())/\(ModelPage.Status)",
+                isRefresh: true,
+                completionHandler: { value,error in
+                    if value != nil {
+                        let r = JSON(value as Any)
+                        if r["result"].stringValue != "" {
+                            let status = r["result"].stringValue.groups(for: "国外链接 【(.*?)】 (.*?)&nbsp;&nbsp;(.*?) ms")
+                            if status[0][2] == "✓" {
+                                self.updateStatusView(isSuccess: true, text: "\(status[0][1]) \(status[0][3]) ms")
+                            } else {
+                                self.updateStatusView(isSuccess: false, text: "\(status[0][1])")
+                            }
                         }
                     }
-
-                case .failure(_):
-                    break
-                }
-            }
-            .responseString { response in
-                switch response.result {
-                case .success(let value):
-                    // check login
-                    if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
-                        GetRouterCookie()
-                        self.statusTimeLabel.text = "Waiting for login"
-                    } else {
-                        self.connectButton.isEnabled = true
-                        self.lineListButton.isEnabled = true
-                    }
-
-                case .failure(let error):
-                    self.statusTimeLabel.text = error.localizedDescription
-                }
+            })
         }
+
     }
     
     func updateStatusView(isSuccess: Bool, text: String) {

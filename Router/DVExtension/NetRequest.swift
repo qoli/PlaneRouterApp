@@ -10,28 +10,94 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+// MARK: Model Page Setting
+// hnd: logPage:"_temp/ss_log.txt" PostPage:"_api/"
+
+class modelPageClass {
+    var ApplyPost: String = "applydb.cgi?p=ss"
+    var Log: String = "cmdRet_check.htm"
+    var Status: String = "ss_status"
+
+    var scriptName: String = "ss_config.sh"
+    var params: String = "\"start\""
+
+    var runningModel = model.arm
+
+    enum model {
+        case arm
+        case hnd
+    }
+
+    func updateStatus() {
+        switch ModelPage.runningModel {
+        case .arm:
+            print("Model: ARM")
+        case .hnd:
+            print("Model: HND")
+        }
+    }
+
+    func setModel(model: model) {
+        switch model {
+        case .arm:
+            ApplyPost = "applydb.cgi?p=ss"
+            Log = "cmdRet_check.htm"
+            Status = "ss_status"
+            runningModel = .arm
+            print("Model: ARM")
+        case .hnd:
+            ApplyPost = "_api/"
+            Log = "_temp/ss_log.txt"
+            Status = "_result/9527"
+            runningModel = .hnd
+            print("Model: HND")
+        }
+    }
+
+    func autoSetModel() {
+        let model: String = SSHRun(command: "nvram get model", isShowResponse: true)
+
+        switch model {
+        case "RT-AC86U\n":
+            setModel(model: .hnd)
+        case "GT-AC5300\n":
+            setModel(model: .hnd)
+        default:
+            setModel(model: .arm)
+        }
+    }
+}
+
 // MARK: Get Cookie
 
-func GetRouterCookie() {
+let ModelPage = modelPageClass()
+
+func GetRouterCookie(name: String = "", pass: String = "") {
     /**
      GetRouterCookie
      post http://router.asus.com/login.cgi
      */
 
     // user
-
+    var auth: String?
     let uConfig = getUserConfig(name: "Router")
-    let auth: String = (uConfig.loginName) + ":" + (uConfig.loginPassword)
+
+    if name != "" {
+        auth = (name) + ":" + (pass)
+    } else {
+        auth = (uConfig.loginName) + ":" + (uConfig.loginPassword)
+    }
+
 
     // Add Headers
     let headers = [
-        "Referer": "\(buildUserURL())/",
+        "Referer": "\(buildUserURL())/index.asp",
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
     ]
 
     // Form URL-Encoded Body
     let body = [
-        "login_authorization": "\(auth.base64Encoded() ?? "")",
+        "login_authorization": "\(auth?.base64Encoded() ?? "")",
     ]
 
     // auth
@@ -40,8 +106,13 @@ func GetRouterCookie() {
         Alamofire.request("\(buildUserURL())/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
             .responseString { response in
                 if (response.result.error == nil) {
-                    print("login...by")
-                    print(uConfig)
+                    if name != "" {
+                        print("login...by", name)
+                    } else {
+                        print("login...by", uConfig)
+                    }
+                    //
+                    ModelPage.autoSetModel()
                 }
         }
     } else {
@@ -74,7 +145,7 @@ func updateSSData(isRefresh: Bool = false, completionHandler: @escaping ([String
 
 }
 
-// MARK: get data & cache
+// MARK: Fetch Request
 
 func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @escaping (NSDictionary?, Error?) -> Void) {
 
@@ -98,7 +169,7 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
                     completionHandler(value as? NSDictionary, nil)
 
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    print("\(api) [\(error.localizedDescription)]")
                     completionHandler(nil, error)
                 }
         }
@@ -107,8 +178,6 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
 }
 
 func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler: @escaping (String?, Error?) -> Void) {
-    let queue = DispatchQueue(label: "com.cnoon.response-queue", qos: .utility, attributes: [.concurrent])
-
     var cacheObject = UserDefaults.standard.object(forKey: api)
 
     if isRefresh == true {
@@ -120,8 +189,14 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
         completionHandler(cacheObject as? String, nil)
     } else {
         print("\(api) [request]")
-        Alamofire.request(api, method: .get)
-            .responseString(queue: queue, encoding: String.Encoding.utf8) { response in
+
+        let headers = [
+            "Referer": "http://router.asus.com/index.asp"
+        ]
+
+
+        Alamofire.request(api, method: .get, headers: headers)
+            .responseString(encoding: String.Encoding.utf8) { response in
                 DispatchQueue.main.async {
                     switch response.result {
                     case .success(let value):
@@ -129,12 +204,13 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
                             UserDefaults.standard.set(value, forKey: api)
                             completionHandler(value, nil)
                         } else {
-                            print("fetchRequestString [need login]")
+                            print("fetchRequestString \(api) [need login]")
+                            messageNotification(message: "Need Router Login")
                             completionHandler(nil, nil)
                         }
 
                     case .failure(let error):
-                        print(error.localizedDescription)
+                        print("\(api) [\(error.localizedDescription)]")
                         completionHandler(nil, error)
                     }
                 }

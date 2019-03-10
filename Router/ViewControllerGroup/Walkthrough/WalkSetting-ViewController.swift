@@ -83,7 +83,7 @@ class WalkSetting_ViewController: UIViewController {
         }
 
     }
-
+    
     // check
 
     func SSHRun() {
@@ -113,7 +113,7 @@ class WalkSetting_ViewController: UIViewController {
             }
 
         } else {
-            banner.subtitleLabel?.text = "連線失敗"
+            banner.subtitleLabel?.text = "連線失敗，請檢查是否啟用 SSH 連線功能"
             self.saveButton.setTitle("驗證", for: .normal)
         }
 

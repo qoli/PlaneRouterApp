@@ -216,41 +216,47 @@ class Net_ViewController: UIViewController {
                     // 網速
                     if value.hasPrefix("\nnetdev = {") {
                         let rxtx = value.groups(for: "'INTERNET':\\{rx:(.*?),tx:(.*?)\\}")
-                        self.upNow = hexTodec(number: rxtx[0][2])
-                        self.downNow = hexTodec(number: rxtx[0][1])
-                        let upSpeed = (self.upNow - self.upOld) / 1024
-                        let downSpeed = (self.downNow - self.downOld) / 1024
-                        
-                        if self.upOld == 0 {
-                            self.upOld = self.upNow
-                            self.downOld = self.downNow
+                        if rxtx != [] {
+                            self.upNow = hexTodec(number: rxtx[0][2])
+                            self.downNow = hexTodec(number: rxtx[0][1])
+                            let upSpeed = (self.upNow - self.upOld) / 1024
+                            let downSpeed = (self.downNow - self.downOld) / 1024
+                            
+                            if self.upOld == 0 {
+                                self.upOld = self.upNow
+                                self.downOld = self.downNow
+                            } else {
+                                self.upOld = self.upNow
+                                self.downOld = self.downNow
+                                
+                                self.downloadLabel.text = String(format: "%.1f", self.unit(num: downSpeed).0)
+                                self.uploadLable.text = String(format: "%.1f", self.unit(num: upSpeed).0)
+                                self.downloadUnitLabel.text = self.unit(num: downSpeed).1
+                                self.uploadUnitLabel.text = self.unit(num: upSpeed).1
+                                self.updateTextLabel.text = "Updating"
+                                
+                                self.DownloadNumbers.append(downSpeed)
+                                self.UploadNumbers.append(upSpeed)
+                                self.updateGraph()
+                            }
                         } else {
-                            self.upOld = self.upNow
-                            self.downOld = self.downNow
-                            
-                            self.downloadLabel.text = String(format: "%.1f", self.unit(num: downSpeed).0)
-                            self.uploadLable.text = String(format: "%.1f", self.unit(num: upSpeed).0)
-                            self.downloadUnitLabel.text = self.unit(num: downSpeed).1
-                            self.uploadUnitLabel.text = self.unit(num: upSpeed).1
-                            self.updateTextLabel.text = "Updating"
-                            
-                            self.DownloadNumbers.append(downSpeed)
-                            self.UploadNumbers.append(upSpeed)
-                            self.updateGraph()
+                            // rxtx 無有效數據
+                            self.isViewAppear = false
+                            messageNotification(message: "Data invalid", title: "Net Speed")
                         }
                     }
                     
                     //404
                     if value.hasPrefix("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>") {
-                        messageNotification(message: "cannot update speed", title: "Net Speed")
-                        self.updateTextLabel.text = "404 Not Found"
+                        messageNotification(message: "Update 404", title: "Net Speed")
                         self.isViewAppear = false
                     }
                     
                     // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
-                        print("need login")
+                        print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login"
+                        //try login
                         GetRouterCookie()
                     }
 

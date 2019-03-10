@@ -152,13 +152,15 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             api: "https://raw.githubusercontent.com/qoli/AtomicR/master/Update/updatetime.txt",
             isRefresh: true,
             completionHandler: { value, error in
-                print("Update Time Remote: \(value ?? "") · Loacl: \(updateTime)")
+                var isUpdate = false
                 if value != nil {
                     if updateTime != value {
+                        isUpdate = true
                         self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
                         _ = CacheString(text: value ?? "", Key: updateTimeCacheKey)
                     }
                 }
+                print("Update Time Remote: \(value ?? "") · Loacl: \(updateTime) · isUpdate: \(isUpdate)")
         })
     }
 

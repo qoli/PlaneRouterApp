@@ -36,6 +36,13 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         //
         cacheData = UserDefaults.standard.dictionary(forKey: "ssData") as? [String: String]
 
+        switch ModelPage.runningModel {
+        case .arm:
+            break
+        case .hnd:
+            messageNotification(message: "HND Model not support now.")
+        }
+        
         //
         table_init()
     }
@@ -165,13 +172,22 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func devices() {
 
+//        fetchRequestString(
+//            api: "\(buildUserURL())/update_clients.asp",
+//            isRefresh: true,
+//            completionHandler: { value,error in
+//                if value != nil {
+//                    let device = value?.groups(for: "fromNetworkmapd : \\[(.*)\\]")
+//                    print(device)
+//                }
+//        })
+        
         // Add Headers
         let headers = [
             "Referer": "\(buildUserURL())/update.cgi"
         ]
 
         Alamofire.request("\(buildUserURL())/update_networkmapd.asp", method: .get, headers: headers)
-            .validate(statusCode: 200..<300)
             .responseString(encoding: String.Encoding.utf8) { response in
                 switch response.result {
                 case .success(let value):
@@ -292,61 +308,64 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func ACLSetting(number: String, mode: String, ip: String = "", name: String = "") {
-        /**
-         Remove ACL
-         get http://router.asus.com/applydb.cgi
-         */
-
-        print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
-
-        var urlParams = ["": ""]
-
-        if mode == "6" {
-            urlParams = [
-                "use_rm": "1",
-                "p": "ss_acl",
-                "ss_acl_ip_\(number)": "",
-                "ss_acl_name_\(number)": "",
-                "ss_acl_port_\(number)": "",
-                "ss_acl_mode_\(number)": "",
-            ]
-        } else {
-            if ip == "" {
+        switch ModelPage.runningModel {
+        case .arm:
+            
+            /**
+             Remove ACL
+             get http://router.asus.com/applydb.cgi
+             */
+            
+            print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
+            
+            var urlParams = ["": ""]
+            
+            if mode == "6" {
                 urlParams = [
+                    "use_rm": "1",
                     "p": "ss_acl",
-                    "ss_acl_ip_\(number)": self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "",
-                    "ss_acl_name_\(number)": self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "",
-                    "ss_acl_port_\(number)": getMode(mode: mode).1,
-                    "ss_acl_mode_\(number)": mode,
+                    "ss_acl_ip_\(number)": "",
+                    "ss_acl_name_\(number)": "",
+                    "ss_acl_port_\(number)": "",
+                    "ss_acl_mode_\(number)": "",
                 ]
             } else {
-                urlParams = [
-                    "p": "ss_acl",
-                    "ss_acl_ip_\(number)": ip,
-                    "ss_acl_name_\(number)": name,
-                    "ss_acl_port_\(number)": getMode(mode: mode).1,
-                    "ss_acl_mode_\(number)": mode,
-                ]
-            }
-        }
-
-        print(urlParams)
-
-        // Fetch Request
-        Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
-            .validate(statusCode: 200..<300)
-            .responseString(encoding: String.Encoding.utf8) { response in
-                switch response.result {
-                case .success(_):
-                    self.isNeedApply = true
-                    self.table_update(isRefresh: true)
-                case .failure(let error):
-                    print(error.localizedDescription)
+                if ip == "" {
+                    urlParams = [
+                        "p": "ss_acl",
+                        "ss_acl_ip_\(number)": self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "",
+                        "ss_acl_name_\(number)": self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "",
+                        "ss_acl_port_\(number)": getMode(mode: mode).1,
+                        "ss_acl_mode_\(number)": mode,
+                    ]
+                } else {
+                    urlParams = [
+                        "p": "ss_acl",
+                        "ss_acl_ip_\(number)": ip,
+                        "ss_acl_name_\(number)": name,
+                        "ss_acl_port_\(number)": getMode(mode: mode).1,
+                        "ss_acl_mode_\(number)": mode,
+                    ]
                 }
+            }
+            
+            print(urlParams)
+            
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
+                .validate(statusCode: 200..<300)
+                .responseString(encoding: String.Encoding.utf8) { response in
+                    switch response.result {
+                    case .success(_):
+                        self.isNeedApply = true
+                        self.table_update(isRefresh: true)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+            }
+            
+        case .hnd:
+            print("Model: HND")
         }
     }
-
-
-
-
 }

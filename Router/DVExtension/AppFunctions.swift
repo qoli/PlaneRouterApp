@@ -133,7 +133,7 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
 
 func messageNotification(message: String, title: String = "Plane Router App") {
     let banner = NotificationBanner(title: title, subtitle: message, style: .info)
-    banner.duration = 0.6
+    banner.duration = 2
     banner.dismiss()
     banner.show()
 }

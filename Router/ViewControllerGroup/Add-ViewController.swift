@@ -54,8 +54,10 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
             api: "https://raw.githubusercontent.com/qoli/AtomicR/master/app/addList.json",
             isRefresh: isReload,
             completionHandler: { value, error in
-                self.tableSource = JSON(value!)
-                self.tableView.reloadData()
+                if value != nil {
+                    self.tableSource = JSON(value as Any)
+                    self.tableView.reloadData()
+                }
             })
     }
 

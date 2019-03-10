@@ -231,21 +231,31 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         delay(0.1) {
             let ssNumber = self.sourceData[indexPath.row][1]
-            let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
-            let password = self.dataDict["ssconf_basic_password_\(ssNumber)"] ?? ""
-            let port = self.dataDict["ssconf_basic_port_\(ssNumber)"] ?? ""
-            let param = self.dataDict["ssconf_basic_rss_protocol_param_\(ssNumber)"] ?? ""
-            let server = self.dataDict["ssconf_basic_server_\(ssNumber)"] ?? ""
-
-            _ = SSHRun(command: "dbus set ss_basic_enable=1")
-            _ = SSHRun(command: "dbus set ss_basic_method=\(method)")
-            _ = SSHRun(command: "dbus set ss_basic_password=\(password)")
-            _ = SSHRun(command: "dbus set ss_basic_port=\(port)")
-            _ = SSHRun(command: "dbus set ss_basic_rss_protocol_param=\(param)")
-            _ = SSHRun(command: "dbus set ss_basic_server=\(server)")
-            _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
-
+            
+            switch ModelPage.runningModel {
+            case .arm:
+                let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
+                let password = self.dataDict["ssconf_basic_password_\(ssNumber)"] ?? ""
+                let port = self.dataDict["ssconf_basic_port_\(ssNumber)"] ?? ""
+                let param = self.dataDict["ssconf_basic_rss_protocol_param_\(ssNumber)"] ?? ""
+                let server = self.dataDict["ssconf_basic_server_\(ssNumber)"] ?? ""
+                
+                _ = SSHRun(command: "dbus set ss_basic_enable=1")
+                _ = SSHRun(command: "dbus set ss_basic_method=\(method)")
+                _ = SSHRun(command: "dbus set ss_basic_password=\(password)")
+                _ = SSHRun(command: "dbus set ss_basic_port=\(port)")
+                _ = SSHRun(command: "dbus set ss_basic_rss_protocol_param=\(param)")
+                _ = SSHRun(command: "dbus set ss_basic_server=\(server)")
+                _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
+                
+                
+            case .hnd:
+                _ = SSHRun(command: "dbus set ss_basic_enable=1")
+                _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
+            }
+            
             self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
+
         }
 
         delay(0.2) {

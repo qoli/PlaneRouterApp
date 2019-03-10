@@ -18,6 +18,8 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     @IBOutlet weak var saveUpdateButton: UIButton!
     @IBOutlet weak var removeButton: UIButton!
     
+    
+    
     enum saveOptin: Int {
         case remove = 1
         case saveOnly = 2
@@ -51,6 +53,8 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
         if segue.identifier == "goCommandReadSegue" {
             if let destinationVC = segue.destination as? CommnadRead_ViewController {
                 destinationVC.script = "ss_online_update.sh"
+                // params 1 刪除 2 僅保存 3 開始訂閱 4 通過鏈接增加節點
+                destinationVC.params = "\(self.updateOptionwithUserDefaults().rawValue)"
             }
         }
     }
@@ -76,7 +80,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     func saveOptiontoUserDefaults(check: saveOptin) {
         UserDefaults.standard.set(check.rawValue, forKey: UserDefaultsKey)
     }
-    
+
     func saveRadio(check: saveOptin) {
         saveButton.layer.borderColor = UIColor.gray92.cgColor
         saveUpdateButton.layer.borderColor = UIColor.gray92.cgColor
@@ -108,15 +112,21 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     var hud: JGProgressHUD!
 
     @IBAction func applyAction(_ sender: UIButton) {
-
+        self.linkb64 = self.addressTextView.text.base64Encoded()
+        
         delay(0) {
             self.hud = JGProgressHUD(style: .dark)
             self.hud.show(in: self.view)
         }
         
         delay {
-            _ = SSHRun(command: "dbus set ss_online_links=\(self.linkb64 ?? "")")
-            _ = SSHRun(command: "dbus set ss_online_action=\(self.updateOptionwithUserDefaults().rawValue)")
+            switch ModelPage.runningModel {
+            case .arm:
+                _ = SSHRun(command: "dbus set ss_online_links=\(self.linkb64 ?? "")")
+                _ = SSHRun(command: "dbus set ss_online_action=\(self.updateOptionwithUserDefaults().rawValue)")
+            case .hnd:
+                _ = SSHRun(command: "dbus set ss_online_links=\(self.linkb64 ?? "")")
+            }
             
             self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
         }
@@ -129,11 +139,6 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
 
     @IBAction func tapView(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        self.linkb64 = self.addressTextView.text.base64Encoded()
-        self.applyButton.isEnabled = true
     }
 
 
