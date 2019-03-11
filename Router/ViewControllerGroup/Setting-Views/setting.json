@@ -16,6 +16,16 @@
         },
         {
             "type": "row",
+            "title": "Reset local storage data",
+            "icon": "iconFontEraser16",
+            "do": "reset"
+        },
+        {
+            "type": "title",
+            "title": "Help & About"
+        },
+        {
+            "type": "row",
             "title": "How to turn on router SSH",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/HowtoSSH.md"
@@ -31,11 +41,6 @@
             "title": "Join TestFlight",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/invitation.md"
-        },
-        {
-            "type": "row",
-            "title": "Reset local storage data",
-            "do": "reset"
         },
         {
             "type": "row",

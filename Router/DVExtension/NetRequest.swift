@@ -13,10 +13,14 @@ import SwiftyJSON
 // MARK: Model Page Setting
 // hnd: logPage:"_temp/ss_log.txt" PostPage:"_api/"
 
+let ModelPage = modelPageClass()
+
 class modelPageClass {
     var ApplyPost: String = "applydb.cgi?p=ss"
     var Log: String = "cmdRet_check.htm"
     var Status: String = "ss_status"
+
+    var modelName: String = ""
 
     var runningModel = model.arm
 
@@ -52,8 +56,9 @@ class modelPageClass {
     }
 
     func autoSetModel() {
-        let model: String = SSHRun(command: "nvram get model",cacheKey: "nvramGetModel")
-
+        let model: String = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel")
+        self.modelName = model.removingWhitespacesAndNewlines
+        
         switch model {
         case "RT-AC86U\n":
             setModel(model: .hnd)
@@ -66,8 +71,6 @@ class modelPageClass {
 }
 
 // MARK: Get Cookie
-
-let ModelPage = modelPageClass()
 
 func GetRouterCookie(name: String = "", pass: String = "") {
     /**
@@ -109,7 +112,7 @@ func GetRouterCookie(name: String = "", pass: String = "") {
                         print("login...by", uConfig)
                     }
                     //
-                    delay {
+                    delay(0.4) {
                         ModelPage.autoSetModel()
                     }
                 }
@@ -217,3 +220,31 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
     }
 
 }
+
+
+// MARK: - Post User Token
+func userToken() {
+    // Form URL-Encoded Body
+    let token = CacheString(Key: "DeviceToken")
+    
+    print("DeviceToken: \(token)")
+    
+    if token != "" {
+        let body = [
+            ModelPage.modelName: token,
+        ]
+
+        // Fetch Request
+        Alamofire.request("https://pushmore.io/webhook/GmbRBGLzZciHamwt8Ax2ydSC", method: .post, parameters: body, encoding: URLEncoding.default)
+            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                if (response.result.error == nil) {
+                    print(response.description)
+                }
+        }
+    }
+
+}
+
+
+

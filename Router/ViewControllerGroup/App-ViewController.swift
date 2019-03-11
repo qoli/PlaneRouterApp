@@ -75,9 +75,14 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         // Notification
         addNotification()
-
-        delay(0.6) {
+        
+        delay {
             self.collection_select(selected: 0)
+        }
+        
+        // Device Token
+        delay(3) {
+            userToken()
         }
     }
     

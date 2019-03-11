@@ -177,6 +177,9 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         case "row":
             let cell = tableView.dequeueReusableCell(withIdentifier: "row") as! settingRowCell
             cell.row.text = self.tableData[indexPath.row]["title"].stringValue
+            if self.tableData[indexPath.row]["icon"].stringValue != "" {
+                cell.imageRow.image = UIImage(named: self.tableData[indexPath.row]["icon"].stringValue)
+            }
             return cell
         case "add":
             let cell = tableView.dequeueReusableCell(withIdentifier: "add") as! settingADDCell

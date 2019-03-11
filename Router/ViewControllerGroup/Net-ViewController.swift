@@ -257,7 +257,7 @@ class Net_ViewController: UIViewController {
                         print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login"
                         //try login
-                        GetRouterCookie()
+                        //GetRouterCookie()
                     }
 
 
