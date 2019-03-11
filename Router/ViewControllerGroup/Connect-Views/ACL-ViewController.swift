@@ -36,13 +36,6 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         //
         cacheData = UserDefaults.standard.dictionary(forKey: "ssData") as? [String: String]
 
-        switch ModelPage.runningModel {
-        case .arm:
-            break
-        case .hnd:
-            messageNotification(message: "HND Model not support now.")
-        }
-        
         //
         table_init()
     }
@@ -58,7 +51,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // table
 
-    var sourceData:[[String]] = []
+    var sourceData: [[String]] = []
     var dataDict: [String: String] = [:]
     var lastNumber: Int = 0
     let ACL: [Int: String] = [
@@ -81,12 +74,12 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func table_update(isRefresh: Bool = false) {
         refreshControl.beginRefreshing()
-        
+
         delay {
-            updateSSData(isRefresh: isRefresh, completionHandler: { value,error in
+            updateSSData(isRefresh: isRefresh, completionHandler: { value, error in
                 self.refreshControl.endRefreshing()
                 self.sourceData = []
-                
+
                 if value != [:] {
                     for v in value {
                         if v.key.hasPrefix("ss_acl_ip_") {
@@ -95,11 +88,11 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.sourceData.append(ssconfBasicNames[0])
                         }
                     }
-                    
+
                     self.dataDict = value
                     self.sourceData = self.sourceData.sorted(by: { ($0[1] as NSString).integerValue < ($1[1] as NSString).integerValue })
                     self.tableView.reloadData()
-                    
+
                     if self.isNeedApply {
                         self.applyButton.isEnabled = true
                     } else {
@@ -170,54 +163,50 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     }
 
+    // MARK: click ADD
+
+    var hud: JGProgressHUD!
     func devices() {
 
-//        fetchRequestString(
-//            api: "\(buildUserURL())/update_clients.asp",
-//            isRefresh: true,
-//            completionHandler: { value,error in
-//                if value != nil {
-//                    let device = value?.groups(for: "fromNetworkmapd : \\[(.*)\\]")
-//                    print(device)
-//                }
-//        })
-        
-        // Add Headers
-        let headers = [
-            "Referer": "\(buildUserURL())/update.cgi"
-        ]
-
-        Alamofire.request("\(buildUserURL())/update_networkmapd.asp", method: .get, headers: headers)
-            .responseString(encoding: String.Encoding.utf8) { response in
-                switch response.result {
-                case .success(let value):
-                    let devices = value.groups(for: "<0>(.*?)>(.*?)>(.*?)>0>0>0>")
-
-                    let manager = PopMenuManager.default
-                    manager.actions = []
-                    for d in devices {
-
-                        var name = d[1]
-                        if name == "" {
-                            name = d[2]
-                        }
-
-                        manager.actions.append(PopMenuDefaultAction(
-                            title: name,
-                            didSelect: { action in
-                                delay {
-                                    print("ip: \(d[2]), name: \(d[1])")
-                                    self.ACL_Add(number: "\(self.lastNumber + 1)", ip: d[2], name: d[1])
-                                }
-                            }))
-
-                    }
-                    manager.popMenuAppearance.popMenuActionCountForScrollable = 10
-                    manager.present(on: self)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+        delay(0) {
+            self.hud = JGProgressHUD(style: .dark)
+            self.hud.show(in: self.view)
         }
+
+        delay {
+            let devices = SSHRun(command: "cat /var/lib/misc/dnsmasq.leases | awk '{print $3,$4}'", isRefresh: true)
+            let ds = devices.groups(for: "(.*) (.*)")
+
+            let manager = PopMenuManager.default
+            manager.actions = []
+
+            for d in ds {
+                if d.count == 3 {
+                    let ip = d[1]
+                    var name = d[2]
+                    if name == "*" {
+                        name = ip
+                    }
+                    manager.actions.append(PopMenuDefaultAction(
+                        title: name,
+                        didSelect: { action in
+                            delay {
+                                print("ip: \(d[2]), name: \(d[1])")
+                                self.ACL_Add(number: "\(self.lastNumber + 1)", ip: ip, name: name)
+                            }
+                        }))
+
+                }
+            }
+
+            manager.popMenuAppearance.popMenuActionCountForScrollable = 10
+            manager.present(on: self)
+        }
+
+        delay(0.3) {
+            self.hud.dismiss(afterDelay: 1.0)
+        }
+
     }
 
     func ACL_Add(number: String, ip: String, name: String) {
@@ -308,18 +297,12 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func ACLSetting(number: String, mode: String, ip: String = "", name: String = "") {
+        print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
         switch ModelPage.runningModel {
         case .arm:
-            
-            /**
-             Remove ACL
-             get http://router.asus.com/applydb.cgi
-             */
-            
-            print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
-            
+
             var urlParams = ["": ""]
-            
+
             if mode == "6" {
                 urlParams = [
                     "use_rm": "1",
@@ -348,9 +331,9 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                     ]
                 }
             }
-            
+
             print(urlParams)
-            
+
             // Fetch Request
             Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
                 .validate(statusCode: 200..<300)
@@ -363,9 +346,74 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                         print(error.localizedDescription)
                     }
             }
-            
+
         case .hnd:
-            print("Model: HND")
+
+            var body: [String: Any]?
+
+            if mode == "6" {
+                // remove
+                body = [
+                    "fields": [
+                        "ss_acl_ip_\(number)": "",
+                        "ss_acl_name_\(number)": "",
+                        "ss_acl_port_\(number)": "",
+                        "ss_acl_mode_\(number)": "",
+                    ],
+                    "id": 65940754,
+                    "method": "dummy_script.sh",
+                    "params": [
+
+                    ]
+                ]
+            } else {
+                if ip == "" {
+                    // JSON Body
+                    body = [
+                        "fields": [
+                            "ss_acl_ip_\(number)": "\(self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "")",
+                            "ss_acl_name_\(number)": "\(self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "")",
+                            "ss_acl_port_\(number)": "\(getMode(mode: mode).1)",
+                            "ss_acl_mode_\(number)": "\(mode)"
+                        ],
+                        "id": 65940754,
+                        "method": "dummy_script.sh",
+                        "params": [
+
+                        ]
+                    ]
+                } else {
+                    // JSON Body
+                    body = [
+                        "fields": [
+                            "ss_acl_ip_\(number)": "\(ip)",
+                            "ss_acl_name_\(number)": "\(name)",
+                            "ss_acl_port_\(number)": "\(getMode(mode: mode).1)",
+                            "ss_acl_mode_\(number)": "\(mode)"
+                        ],
+                        "id": 65940754,
+                        "method": "dummy_script.sh",
+                        "params": [
+
+                        ]
+                    ]
+                }
+            }
+
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/_api/", method: .post, parameters: body, encoding: JSONEncoding.default)
+                .validate(statusCode: 200..<300)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(_):
+                        self.isNeedApply = true
+                        self.table_update(isRefresh: true)
+                    case .failure(let error):
+                        print(error.localizedDescription)
+                    }
+            }
+
+
         }
     }
 }

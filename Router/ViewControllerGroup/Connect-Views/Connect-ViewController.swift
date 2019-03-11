@@ -38,42 +38,80 @@ class Connect_ViewController: UIViewController {
             name: NSNotification.Name(rawValue: "ConnectViewonShow"),
             object: nil
         )
-        
+
         pageDesc.text = "SSH: Router"
+        
+        //
+        script = "ss_config.sh"
+        ssLinks = ""
 
     }
 
     //MARK: 通知
-    
+
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
             self.isAppear = true
-            self.loop()
+            self.loopUpdateStatus()
         }
-
     }
-    
+    @objc func openNoedsAndGoBottom() {
+        print("openNoedsAndGoBottom")
+        delay {
+            self.goButton = true
+            self.performSegue(withIdentifier: "goListSegue", sender: nil)
+            self.goButton = false
+        }
+    }
+
     //MARK: View 生命週期處理
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         isAppear = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
         print("checkSSInstall: \(checkSSInstall())")
-        self.loop()
+        self.loopUpdateStatus()
         if checkSSInstall() {
             lineButtonUpdate()
         }
     }
-    
-    //MARK: IBAction
-    
+
+    //MARK: - page more action
+
     @IBAction func pageMoreAction(_ sender: UIButton) {
-        
+
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        
+
         let controller = PopMenuViewController(sourceView: self.pageButton, actions: [
+            PopMenuDefaultAction(
+                title: "Add a Node",
+                image: UIImage(named: "iconFontPlusCircle"),
+                didSelect: { action in
+                    delay {
+                        self.addNodePopMenu()
+                    }
+                }
+            ),
+            PopMenuDefaultAction(
+                title: "Subscribe",
+                image: UIImage(named: "iconFontServer"),
+                didSelect: { action in
+                    delay {
+                        self.performSegue(withIdentifier: "goSubscribeSegue", sender: nil)
+                    }
+                }
+            ),
+            PopMenuDefaultAction(
+                title: "Nodes List",
+                image: UIImage(named: "iconFontThList"),
+                didSelect: { action in
+                    delay {
+                        self.performSegue(withIdentifier: "goListSegue", sender: nil)
+                    }
+            }
+            ),
             PopMenuDefaultAction(
                 title: "ACL Setting",
                 image: UIImage(named: "iconFontNetworkWired"),
@@ -83,27 +121,99 @@ class Connect_ViewController: UIViewController {
                     }
             }
             ),
-            PopMenuDefaultAction(
-                title: "Subscribe",
-                image: UIImage(named: "iconFontServer"),
-                didSelect: { action in
-                    delay {
-                        self.performSegue(withIdentifier: "goSubscribeSegue", sender: nil)
-                    }
-            }
-            ),
-            PopMenuDefaultAction(
-                title: "Add a Hosts",
-                image: UIImage(named: "iconFontPlusCircle"),
-                didSelect: { action in
-                    //
-            }
-            ),
-            ])
-        
+        ])
+
         controller.shouldDismissOnSelection = true
         present(controller, animated: true, completion: nil)
     }
+
+    var isSSR: Bool = false
+
+    func addNodePopMenu() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        let controller = PopMenuViewController(actions: [
+            PopMenuDefaultAction(
+                title: "URI (ss:// or ssr://)",
+                didSelect: { action in
+                    delay {
+                        //1. Create the alert controller.
+                        let alert = UIAlertController(title: "URI", message: "ss:// or ssr://", preferredStyle: .alert)
+                        
+                        //1.1 cancel button
+                        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
+                            //cancel code
+                        }
+                        alert.addAction(cancelAction)
+                        
+                        //2. Add the text field. You can configure it however you need.
+                        alert.addTextField { (textField) in
+                            textField.placeholder = "ss:// or ssr://"
+                        }
+                        
+                        // 3. Grab the value from the text field, and print it when the user clicks OK.
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                            let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
+                            if textField.text?.hasPrefix("ss://") ?? false || textField.text?.hasPrefix("ssr://") ?? false {
+                                _ = SSHRun(command: "dbus set ss_online_action=4")
+                                self.script = "ss_online_update.sh"
+                                self.ssLinks = textField.text ?? ""
+                                self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
+                            } else {
+                                messageNotification(message: "Invalid URI")
+                            }
+                            
+                        }))
+                        
+                        // 4. Present the alert.
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            ),
+            PopMenuDefaultAction(
+                title: "Shadowsock",
+                didSelect: { action in
+                    delay {
+                        self.isSSR = false
+                        self.performSegue(withIdentifier: "goAddNodeSegue", sender: nil)
+                    }
+                }
+            ),
+            PopMenuDefaultAction(
+                title: "ShadowsockR",
+                didSelect: { action in
+                    delay {
+                        self.isSSR = true
+                        self.performSegue(withIdentifier: "goAddNodeSegue", sender: nil)
+                    }
+                }
+            ),
+        ])
+
+        controller.appearance.popMenuActionCountForScrollable = 10
+        present(controller, animated: true, completion: nil)
+    }
+
+    // MARK: Segue pass data
+    
+    var goButton: Bool = false
+    var script: String = "ss_config.sh"
+    var ssLinks: String = ""
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goAddNodeSegue" {
+            if let destinationVC = segue.destination as? AddNode_ViewController {
+                destinationVC.isSSR = self.isSSR
+            }
+        }
+        if segue.identifier == "goCommandReadSegue" {
+            if let destinationVC = segue.destination as? CommnadRead_ViewController {
+                destinationVC.script = self.script
+                destinationVC.ssLinks = self.ssLinks
+            }
+        }
+    }
+
+    // MARK: - button
 
     @IBAction func DropdownListAction(_ sender: UIButton) {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
@@ -115,12 +225,12 @@ class Connect_ViewController: UIViewController {
         self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
     }
 
-    //MARK: 檢查 SS 安裝狀態
-    
+    //MARK: - 檢查 SS 安裝狀態
+
     func checkSSInstall() -> Bool {
 
         let cacheData = UserDefaults.standard.dictionary(forKey: "ssData") as? [String: String]
-        
+
         if cacheData == nil {
             let ssEnable = SSHRun(command: "dbus get ss_basic_enable", isRefresh: true)
             if ssEnable == "\n" {
@@ -143,23 +253,22 @@ class Connect_ViewController: UIViewController {
             return true
         }
 
-
     }
 
     //MARK: - Status loop
-    
+
     // Status
-    func loop() {
-        
+    func loopUpdateStatus() {
+
         if !isAppear {
             self.statusTimeLabel.text = "Pause"
             print("Connect_ViewController: Pause")
         }
-        
+
         delay(2) {
             self.sendStatusRequest()
             if self.isAppear {
-                self.loop()
+                self.loopUpdateStatus()
             }
         }
     }
@@ -184,7 +293,7 @@ class Connect_ViewController: UIViewController {
                                 self.updateStatusView(isSuccess: false, text: status[0][2])
                             }
                         }
-                        
+
                     case .failure(_):
                         break
                     }
@@ -200,7 +309,7 @@ class Connect_ViewController: UIViewController {
                             self.connectButton.isEnabled = true
                             self.lineListButton.isEnabled = true
                         }
-                        
+
                     case .failure(let error):
                         self.statusTimeLabel.text = error.localizedDescription
                     }
@@ -209,7 +318,7 @@ class Connect_ViewController: UIViewController {
             fetchRequest(
                 api: "\(buildUserURL())/\(ModelPage.Status)",
                 isRefresh: true,
-                completionHandler: { value,error in
+                completionHandler: { value, error in
                     if value != nil {
                         let r = JSON(value as Any)
                         if r["result"].stringValue != "" {
@@ -221,11 +330,11 @@ class Connect_ViewController: UIViewController {
                             }
                         }
                     }
-            })
+                })
         }
 
     }
-    
+
     func updateStatusView(isSuccess: Bool, text: String) {
         if isSuccess {
             UIView.animate(withDuration: 0.4, animations: {
@@ -245,14 +354,14 @@ class Connect_ViewController: UIViewController {
     }
 
     //MARK: - Line Button
-    
+
     func lineButtonUpdate() {
         self.lineListButton.setTitle("...", for: .disabled)
         self.connectButton.setTitle("...", for: .disabled)
         self.lineListButton.isEnabled = false
         self.connectButton.isEnabled = false
         delay {
-            updateSSData(isRefresh: true, completionHandler: {value,error in
+            updateSSData(isRefresh: true, completionHandler: { value, error in
                 if value != [:] {
                     let node = value["ssconf_basic_node"] ?? ""
                     let name = value["ssconf_basic_name_\(node)"] ?? ""

@@ -14,33 +14,36 @@ import JGProgressHUD
 
 class CommnadRead_ViewController: UIViewController {
 
-    
     @IBOutlet weak var pageTitle: UILabel!
     @IBOutlet weak var textView: UITextView!
-    
-    //
+
+    // MARK: - page view
+
     var isAppear = true
     var script = "ss_config.sh"
-    var params = "\"start\""
-    
+    var params = "start"
+    var ssLinks: String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         ApplydbSS()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         isAppear = true
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         isAppear = false
     }
-    
+
+    // MARK: - close
+
     @IBAction func closeAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     func returnToRoot() {
         var rootVC = self.presentingViewController
         while let parent = rootVC?.presentingViewController {
@@ -51,9 +54,9 @@ class CommnadRead_ViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
         rootVC?.dismiss(animated: true, completion: nil)
     }
-    
-    // MARK: Loop
-    
+
+    // MARK: - Loop
+
     func LoopLoadText() {
         self.CommnadReadAjax()
         delay(2) {
@@ -62,73 +65,95 @@ class CommnadRead_ViewController: UIViewController {
             }
         }
     }
-    
+
     // MARK: Apply Page
-    
+
     func ApplydbSS() {
-        ModelPage.scriptName = self.script
-        ModelPage.params = self.params
-        
-        
+
         print("applyPost: \(buildUserURL())/\(ModelPage.ApplyPost)")
-        
+
         switch ModelPage.runningModel {
         case .arm:
-            
-            // Form URL-Encoded Body
-            let body = [
-                "SystemCmd": ModelPage.scriptName,
-                "action_mode":" Refresh ",
-                "current_page":"Main_Ss_Content.asp",
+
+            var body: [String: String]?
+
+            if self.ssLinks != "" {
+                // add link
+                body = [
+                    "SystemCmd": self.script,
+                    "action_mode": " Refresh ",
+                    "current_page": "Main_Ss_Content.asp",
+                    "ss_base64_links": "\(self.ssLinks)",
                 ]
-            
+            } else {
+                // normal
+                body = [
+                    "SystemCmd": self.script,
+                    "action_mode": " Refresh ",
+                    "current_page": "Main_Ss_Content.asp",
+                ]
+            }
+
             // Fetch Request
             Alamofire.request("\(buildUserURL())/\(ModelPage.ApplyPost)", method: .post, parameters: body, encoding: URLEncoding.default)
                 .responseString { response in
                     switch response.result {
-                    case .success(let value):
-                        print(value)
+                    case .success(_):
                         self.LoopLoadText()
                     case .failure(let error):
-                        print("Apply POST: ",error.localizedDescription)
+                        messageNotification(message: error.localizedDescription)
                     }
             }
-            
-            
+
+
         case .hnd:
-            
-            // Custom Body Encoding
-            struct RawDataEncoding: ParameterEncoding {
-                public static var `default`: RawDataEncoding { return RawDataEncoding() }
-                public func encode(_ urlRequest: URLRequestConvertible, with parameters: Parameters?) throws -> URLRequest {
-                    var request = try urlRequest.asURLRequest()
-                    //let timestamp = Date().timeIntervalSince1970
-                    let body = "{\"id\":10001,\"method\":\"\(ModelPage.scriptName)\",\"params\":[\(ModelPage.params)],\"fields\":{}}"
-                    request.httpBody = body.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                    print(body)
-                    return request
-                }
+
+            var body: [String: Any]?
+            if self.ssLinks == "" {
+                // normal
+                body = [
+                    "fields": [],
+                    "id": 95131455,
+                    "method": script,
+                    "params": [
+                        self.params
+                    ]
+                ]
+            } else {
+                // add link
+                body = [
+                    "fields": [
+                        "ss_base64_links": "\(self.ssLinks)"
+                    ],
+                    "id": 95131455,
+                    "method": script,
+                    "params": [
+                        4
+                    ]
+                ]
             }
-            
+
+
+
             // Fetch Request
-            Alamofire.request("\(buildUserURL())/\(ModelPage.ApplyPost)", method: .post, encoding: RawDataEncoding.default)
+            Alamofire.request("\(buildUserURL())/\(ModelPage.ApplyPost)", method: .post, parameters: body, encoding: JSONEncoding.default)
+                .validate(statusCode: 200..<300)
                 .responseJSON { response in
-                    switch response.result {
-                    case .success(let value):
-                        print(value)
+                    if (response.result.error == nil) {
                         self.LoopLoadText()
-                    case .failure(let error):
-                        print("Apply POST: ",error.localizedDescription)
+                    }
+                    else {
+                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
                     }
             }
         }
     }
-    
+
     var hud: JGProgressHUD!
-    
+
     func CommnadReadAjax() {
         let timestamp = Date().timeIntervalSince1970
-        
+
         fetchRequestString(
             api: "\(buildUserURL())/\(ModelPage.Log)?_=\(Int(timestamp))",
             isRefresh: true,
@@ -140,7 +165,7 @@ class CommnadRead_ViewController: UIViewController {
                     self.textView.isScrollEnabled = false
                     self.textView.isScrollEnabled = true
                 }
-                
+
                 if value?.contains("XU6J03M6") ?? false {
                     self.isAppear = false
                     self.pageTitle.text = "Finish"
@@ -153,11 +178,11 @@ class CommnadRead_ViewController: UIViewController {
                         self.returnToRoot()
                     }
                 }
-        })
-      
-    }
-    
-    
+            })
 
-    
+    }
+
+
+
+
 }

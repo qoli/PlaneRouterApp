@@ -11,6 +11,7 @@
 		F900A7112222564D00F206FA /* ACL-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A7102222564D00F206FA /* ACL-ViewController.swift */; };
 		F900A71322229A3B00F206FA /* SettingTable-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A71222229A3B00F206FA /* SettingTable-ViewController.swift */; };
 		F900A7162222A66100F206FA /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A7152222A66100F206FA /* DictionaryExtensions.swift */; };
+		F91B41632235AE7D0063D632 /* NodeManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91B41622235AE7D0063D632 /* NodeManage.swift */; };
 		F91C3035220BDD6200703AF2 /* CoreRunningStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91C3034220BDD6200703AF2 /* CoreRunningStatusButton.swift */; };
 		F929430F221A6F08000E8BF2 /* App-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F929430E221A6F08000E8BF2 /* App-ViewController.swift */; };
 		F92C220B2228123D0045ACBA /* UnderlinedLabel+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C220A2228123D0045ACBA /* UnderlinedLabel+UILabel.swift */; };
@@ -27,6 +28,7 @@
 		F971F970220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */; };
 		F971F971220BC38600C5F4B9 /* UIView+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F96F220BC38600C5F4B9 /* UIView+cornerRadius.swift */; };
 		F971F976220BD13800C5F4B9 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F975220BD13800C5F4B9 /* UIColor+Additions.swift */; };
+		F9823F3622359D5E006A2411 /* AddNode-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9823F3522359D5E006A2411 /* AddNode-ViewController.swift */; };
 		F983DF5B222692CA003C1FDD /* Subscribe-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F983DF5A222692CA003C1FDD /* Subscribe-ViewController.swift */; };
 		F984A952220A9D6C0037FE29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F984A951220A9D6C0037FE29 /* AppDelegate.swift */; };
 		F984A957220A9D6C0037FE29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F984A955220A9D6C0037FE29 /* Main.storyboard */; };
@@ -55,6 +57,7 @@
 		F900A7102222564D00F206FA /* ACL-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACL-ViewController.swift"; sourceTree = "<group>"; };
 		F900A71222229A3B00F206FA /* SettingTable-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingTable-ViewController.swift"; sourceTree = "<group>"; };
 		F900A7152222A66100F206FA /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
+		F91B41622235AE7D0063D632 /* NodeManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeManage.swift; sourceTree = "<group>"; };
 		F91C3034220BDD6200703AF2 /* CoreRunningStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRunningStatusButton.swift; sourceTree = "<group>"; };
 		F929430E221A6F08000E8BF2 /* App-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App-ViewController.swift"; sourceTree = "<group>"; };
 		F92C220A2228123D0045ACBA /* UnderlinedLabel+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnderlinedLabel+UILabel.swift"; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 		F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+ExtendedHitAreaButton.swift"; sourceTree = "<group>"; };
 		F971F96F220BC38600C5F4B9 /* UIView+cornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+cornerRadius.swift"; sourceTree = "<group>"; };
 		F971F975220BD13800C5F4B9 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		F9823F3522359D5E006A2411 /* AddNode-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddNode-ViewController.swift"; sourceTree = "<group>"; };
 		F983DF5A222692CA003C1FDD /* Subscribe-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscribe-ViewController.swift"; sourceTree = "<group>"; };
 		F984A94E220A9D6C0037FE29 /* Router.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Router.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F984A951220A9D6C0037FE29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				F95350A02220083300B2486D /* Connect-ViewController.swift */,
+				F9823F3522359D5E006A2411 /* AddNode-ViewController.swift */,
 				F95350A32220A21B00B2486D /* List-ViewController.swift */,
 				F900A7102222564D00F206FA /* ACL-ViewController.swift */,
 				F983DF5A222692CA003C1FDD /* Subscribe-ViewController.swift */,
@@ -233,6 +238,7 @@
 			isa = PBXGroup;
 			children = (
 				F9A93027220EB8E100FF7482 /* AppFunctions.swift */,
+				F91B41622235AE7D0063D632 /* NodeManage.swift */,
 				F95A3A73222EA14800FEF460 /* UserConfig.swift */,
 				F9BC920F221A95E90078BD67 /* NetRequest.swift */,
 				F9990F51220E8298006EA8D7 /* StringExtensions.swift */,
@@ -410,6 +416,7 @@
 				F92C220B2228123D0045ACBA /* UnderlinedLabel+UILabel.swift in Sources */,
 				F9B81464222BBC1600EFF2CF /* UpdateNotes-ViewController.swift in Sources */,
 				F95E3FD6220C29B5003046FB /* Setting-ViewController.swift in Sources */,
+				F9823F3622359D5E006A2411 /* AddNode-ViewController.swift in Sources */,
 				F983DF5B222692CA003C1FDD /* Subscribe-ViewController.swift in Sources */,
 				F929430F221A6F08000E8BF2 /* App-ViewController.swift in Sources */,
 				F984A95A220A9D6C0037FE29 /* Router.xcdatamodeld in Sources */,
@@ -418,6 +425,7 @@
 				F95350A42220A21B00B2486D /* List-ViewController.swift in Sources */,
 				F9ADC519222946EE00175CB1 /* WalkSetting-ViewController.swift in Sources */,
 				F95350A822218A4300B2486D /* CommnadRead-ViewController.swift in Sources */,
+				F91B41632235AE7D0063D632 /* NodeManage.swift in Sources */,
 				F984A952220A9D6C0037FE29 /* AppDelegate.swift in Sources */,
 				F971F970220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift in Sources */,
 				F971F971220BC38600C5F4B9 /* UIView+cornerRadius.swift in Sources */,

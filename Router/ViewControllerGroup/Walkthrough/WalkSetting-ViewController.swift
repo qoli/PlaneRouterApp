@@ -107,14 +107,17 @@ class WalkSetting_ViewController: UIViewController {
                 saveButton.isEnabled = true
                 self.saveButton.setTitle("設定完畢", for: .normal)
                 self.isTest = true
+                self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
             } else {
-                banner.subtitleLabel?.text = "驗證失敗"
+                banner.subtitleLabel?.text = "驗證失敗，請檢查賬號密碼是否正確"
                 self.saveButton.setTitle("驗證", for: .normal)
+                saveButton.isEnabled = true
             }
 
         } else {
             banner.subtitleLabel?.text = "連線失敗，請檢查是否啟用 SSH 連線功能"
             self.saveButton.setTitle("驗證", for: .normal)
+            saveButton.isEnabled = true
         }
 
     }

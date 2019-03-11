@@ -41,8 +41,20 @@ func getServiceList() -> Array<Any> {
 
 // MARK: run in ssh
 
-func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isRouter: Bool = true, isShowResponse: Bool = false) -> String {
+func SSHRun(
+    command: String,
+    cacheKey: String = "",
+    isRefresh: Bool = false,
+    isRouter: Bool = true,
+    isShowResponse: Bool = false,
+    isTest: Bool = false
+    ) -> String {
 
+    if isTest {
+        print("[SSHRun] not Run: \(command)")
+        return ""
+    }
+    
     var isR = isRefresh
 
     var host: String!

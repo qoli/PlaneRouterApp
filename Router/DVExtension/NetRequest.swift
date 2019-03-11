@@ -18,9 +18,6 @@ class modelPageClass {
     var Log: String = "cmdRet_check.htm"
     var Status: String = "ss_status"
 
-    var scriptName: String = "ss_config.sh"
-    var params: String = "\"start\""
-
     var runningModel = model.arm
 
     enum model {
@@ -55,7 +52,7 @@ class modelPageClass {
     }
 
     func autoSetModel() {
-        let model: String = SSHRun(command: "nvram get model", isShowResponse: true)
+        let model: String = SSHRun(command: "nvram get model")
 
         switch model {
         case "RT-AC86U\n":

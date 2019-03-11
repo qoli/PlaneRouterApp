@@ -18,31 +18,37 @@ import NotificationBannerSwift
 class listTableCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var delayLabel: UILabel!
+    @IBOutlet weak var desc: UILabel!
 }
 
 class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var category = ""
     var passCommand = ""
+    var goBottom: Bool = false
 
     var isPing = false
     var pings: [String] = []
     var delayData: [String: String] = [:]
 
     @IBOutlet weak var tableView: UITableView!
-    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // ui
-//        self.hud = JGProgressHUD(style: .dark)
 
         // data
         delayData = UserDefaults.standard.dictionary(forKey: "ssPing") as? [String: String] ?? [:]
 
         // func
         table_init()
+        
+        delay(0.5) {
+            if self.goBottom {
+                let indexPath = IndexPath(row: self.sourceData.count-1, section: 0)
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
+        }
     }
 
     // seuge
@@ -59,7 +65,15 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     //
 
     @IBAction func CloseAction(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+        //dismiss(animated: true, completion: nil)
+        var rootVC = self.presentingViewController
+        while let parent = rootVC?.presentingViewController {
+            rootVC = parent
+        }
+        //释放所有下级视图
+        NotificationCenter.default.post(name: NSNotification.Name.init("collectionSelect"), object: 1)
+        NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
+        rootVC?.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func PingAction(_ sender: UIButton) {
@@ -69,8 +83,8 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     //
 
-    var pingsCount:Int?
-    
+    var pingsCount: Int?
+
     func ping() {
         for i in self.sourceData {
             pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "")
@@ -117,8 +131,8 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     //MARK: - Table
-    
-    var sourceData:[[String]] = []
+
+    var sourceData: [[String]] = []
     var dataDict: [String: String] = [:]
 
     func table_init() {
@@ -127,18 +141,22 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.delegate = self
         self.tableView.dataSource = self
 
-        table_update()
+        if !goBottom {
+            table_update()
+        } else {
+            table_update(isRefresh: true)
+        }
     }
 
     func table_update(isRefresh: Bool = false) {
-        
+
         refreshControl.beginRefreshing()
-        
+
         delay {
-            updateSSData(isRefresh: isRefresh, completionHandler: { value,error in
+            updateSSData(isRefresh: isRefresh, completionHandler: { value, error in
                 self.refreshControl.endRefreshing()
                 self.sourceData = []
-                
+
                 if value != [:] {
                     for v in value {
                         if v.key.hasPrefix("ssconf_basic_name_") {
@@ -156,7 +174,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 }
             })
         }
-        
+
     }
 
     lazy var refreshControl: UIRefreshControl = {
@@ -175,18 +193,32 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.table_update(isRefresh: true)
     }
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt: IndexPath) -> [UITableViewRowAction]? {
-        let action1 = UITableViewRowAction(style: .normal, title: "编辑") { action, index in
-            print("more button tapped")
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "编辑") { action, index in
+            print("编辑")
+            self.removeNodebySSH(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
         }
-        action1.backgroundColor = UIColor.mainBlue
+        editAction.backgroundColor = UIColor.mainBlue
 
-        let action2 = UITableViewRowAction(style: .normal, title: "删除") { action, index in
-            print("favorite button tapped")
+        let removeAction = UITableViewRowAction(style: .normal, title: "删除") { action, index in
+            //print("删除", self.sourceData[indexPath.row][2], self.sourceData[indexPath.row][1])
+            let alertController = UIAlertController(title: "\(self.sourceData[indexPath.row][2]) \(self.sourceData[indexPath.row][1])", message: nil, preferredStyle: .actionSheet)
+            
+            alertController.addAction(
+                UIAlertAction(
+                    title: "Remove",
+                    style: .destructive,
+                    handler: { (action) -> Void in
+                        self.removeNode(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
+                }))
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            self.present(alertController, animated: true, completion: nil)
         }
-        action2.backgroundColor = UIColor.watermelon
+        removeAction.backgroundColor = UIColor.watermelon
 
-        return [action2, action1]
+        return [removeAction, editAction]
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -197,6 +229,20 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell = self.tableView.dequeueReusableCell(withIdentifier: "cell") as! listTableCell
         if sourceData[indexPath.row].count != 1 {
             cell.label.text = sourceData[indexPath.row][2]
+            var type = "ss"
+            if dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "0" {
+                type = "ss"
+            }
+            if dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "1" {
+                type = "ssr"
+            }
+            if dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "2" {
+                type = "koolgame"
+            }
+            if dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "3" {
+                type = "v2ray"
+            }
+            cell.desc.text = "\(type) · \(dataDict["ssconf_basic_server_\(self.sourceData[indexPath.row][1])"] ?? "")"
 
             if self.delayData.count != 0 || isPing {
                 let domain: String = self.dataDict["ssconf_basic_server_\(sourceData[indexPath.row][1])"] ?? ""
@@ -217,7 +263,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 delay {
                     self.setLineinSSH(indexPath: indexPath)
                 }
-        }))
+            }))
         manager.present(on: self)
 
     }
@@ -231,7 +277,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         delay(0.1) {
             let ssNumber = self.sourceData[indexPath.row][1]
-            
+
             switch ModelPage.runningModel {
             case .arm:
                 let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
@@ -239,7 +285,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 let port = self.dataDict["ssconf_basic_port_\(ssNumber)"] ?? ""
                 let param = self.dataDict["ssconf_basic_rss_protocol_param_\(ssNumber)"] ?? ""
                 let server = self.dataDict["ssconf_basic_server_\(ssNumber)"] ?? ""
-                
+
                 _ = SSHRun(command: "dbus set ss_basic_enable=1")
                 _ = SSHRun(command: "dbus set ss_basic_method=\(method)")
                 _ = SSHRun(command: "dbus set ss_basic_password=\(password)")
@@ -247,13 +293,13 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 _ = SSHRun(command: "dbus set ss_basic_rss_protocol_param=\(param)")
                 _ = SSHRun(command: "dbus set ss_basic_server=\(server)")
                 _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
-                
-                
+
+
             case .hnd:
                 _ = SSHRun(command: "dbus set ss_basic_enable=1")
                 _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
             }
-            
+
             self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
 
         }
@@ -263,7 +309,119 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
+    // MARK: - data pass
 
-
+    func removeNodebySSH(number: Int) {
+        delay(0) {
+            self.hud = JGProgressHUD(style: .dark)
+            self.hud.show(in: self.view)
+        }
+        
+        delay {
+            _ = SSHRun(command: "dbus remove ssconf_basic_name_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_server_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_server_ip_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_mode_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_port_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_password_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_method_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_rss_protocol_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_rss_protocol_param_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_rss_obfs_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_rss_obfs_param_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_use_kcp_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_ss_obfs_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_ss_obfs_host_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_koolgame_udp_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_ping_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_web_test_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_use_lb_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_lbmode_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_weight_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_group_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_uuid_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_alterid_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_security_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_headtype_tcp_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_headtype_kcp_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_path_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_host_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_security_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_mux_concurrency_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_json_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_use_json_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_mux_enable_\(number)")
+            _ = SSHRun(command: "dbus remove ssconf_basic_type_\(number)")
+        }
+        
+        delay {
+            self.hud.dismiss(afterDelay: 1.0)
+            self.table_update(isRefresh: true)
+        }
+        
+        
+    }
+    
+    func removeNode(number: Int) {
+        switch ModelPage.runningModel {
+        case .arm:
+            
+            let urlParams = [
+                "use_rm": "1",
+                "p": "ssconf_basic",
+                "ssconf_basic_name_\(number)": "",
+                "ssconf_basic_server_\(number)": "",
+                "ssconf_basic_server_ip_\(number)": "",
+                "ssconf_basic_mode_\(number)": "",
+                "ssconf_basic_port_\(number)": "",
+                "ssconf_basic_password_\(number)": "",
+                "ssconf_basic_method_\(number)": "",
+                "ssconf_basic_rss_protocol_\(number)": "",
+                "ssconf_basic_rss_protocol_param_\(number)": "",
+                "ssconf_basic_rss_obfs_\(number)": "",
+                "ssconf_basic_rss_obfs_param_\(number)": "",
+                "ssconf_basic_use_kcp_\(number)": "",
+                "ssconf_basic_ss_obfs_\(number)": "",
+                "ssconf_basic_ss_obfs_host_\(number)": "",
+                "ssconf_basic_koolgame_udp_\(number)": "",
+                "ssconf_basic_ping_\(number)": "",
+                "ssconf_basic_web_test_\(number)": "",
+                "ssconf_basic_use_lb_\(number)": "",
+                "ssconf_basic_lbmode_\(number)": "",
+                "ssconf_basic_weight_\(number)": "",
+                "ssconf_basic_group_\(number)": "",
+                "ssconf_basic_v2ray_uuid_\(number)": "",
+                "ssconf_basic_v2ray_alterid_\(number)": "",
+                "ssconf_basic_v2ray_security_\(number)": "",
+                "ssconf_basic_v2ray_network_\(number)": "",
+                "ssconf_basic_v2ray_headtype_tcp_\(number)": "",
+                "ssconf_basic_v2ray_headtype_kcp_\(number)": "",
+                "ssconf_basic_v2ray_network_path_\(number)": "",
+                "ssconf_basic_v2ray_network_host_\(number)": "",
+                "ssconf_basic_v2ray_network_security_\(number)": "",
+                "ssconf_basic_v2ray_mux_concurrency_\(number)": "",
+                "ssconf_basic_v2ray_json_\(number)": "",
+                "ssconf_basic_v2ray_use_json_\(number)": "",
+                "ssconf_basic_v2ray_mux_enable_\(number)": "",
+                "ssconf_basic_type_\(number)": ""
+            ]
+            
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
+                .validate(statusCode: 200..<300)
+                .responseString(encoding: String.Encoding.utf8) { response in
+                    if (response.result.error == nil) {
+                        self.table_update(isRefresh: true)
+                    }
+                    else {
+                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                    }
+            }
+        case .hnd:
+            print("Model: HND")
+        }
+        
+    }
 
 }
