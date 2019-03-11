@@ -17,66 +17,125 @@ import SafariServices
 
 class tableLableCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.selectionStyle = .none
+    }
 }
 
 class tableDataCell: UITableViewCell {
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var label: UILabel!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.selectionStyle = .none
+        
+        if selected {
+            UIView.animate(withDuration: 0.1, animations: {
+                self.layer.opacity = 0.3
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.layer.opacity = 1
+                })
+            })
+        }
+    }
 }
 
 class tableActionCell: UITableViewCell {
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var label: UILabel!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.selectionStyle = .none
+        
+        if selected {
+            UIView.animate(withDuration: 0.1, animations: {
+                self.layer.opacity = 0.3
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.layer.opacity = 1
+                })
+            })
+        }
+    }
 }
 
 class tableLinkCell: UITableViewCell {
     @IBOutlet weak var link: UILabel!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.selectionStyle = .none
+        
+        if selected {
+            UIView.animate(withDuration: 0.1, animations: {
+                self.layer.opacity = 0.3
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.6, animations: {
+                    self.layer.opacity = 1
+                })
+            })
+        }
+    }
 }
 
+// MARK: - JSON_ViewController
+
 class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-
-    var isReload = false
-    var jsonName = "Shadowsock"
-    var category = ""
-    var passCommand = ""
-    var isRouter = true
-
+    
     @IBOutlet weak var pageTitleLabel: UILabel!
     @IBOutlet weak var pageDesc: UILabel!
     @IBOutlet weak var pageButton: UIButton!
-
     @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
+    // MARK: - view
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         //添加通知
+        addNotification()
+
+        //
+        table_init()
+        page_init()
+    }
+    
+    // MARK: - Notification
+    
+    func addNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(JSONCall(_:)),
             name: NSNotification.Name(rawValue: "JSONCall"),
             object: nil
         )
-
-        //
-        table_init()
-        page_init()
     }
 
     @objc func JSONCall(_ notification: Notification) {
         self.jsonName = notification.object as! String
         page_init()
     }
-    
+
     // MARK: - Page init
+    var jsonName = "Shadowsock"
     
     func page_init() {
         pageGetSrouce()
-        
+
         if jsonName == "Shadowsock" {
-            pageDesc.text = "SSH: Router"
+            switch ModelPage.runningModel {
+            case .arm:
+                pageDesc.text = "My Router: ARM Model"
+            case .hnd:
+                pageDesc.text = "My Router: HND Model"
+            }
+            
             pageButton.isHidden = true
         } else {
             pageDesc.text = "SSH: ..."
@@ -84,6 +143,8 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
+    // MARK: - Page Action
+    
     @IBAction func pageAction(_ sender: UIButton) {
         // 1. Hidden install category & items
         // 2. switch SSH Config
@@ -96,17 +157,23 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             image: UIImage(named: "iconFontPlug"),
             didSelect: { action in
                 //
-        }))
+            }))
         manager.actions.append(PopMenuDefaultAction(
             title: "Remove Screen",
             image: UIImage(named: "iconFontEraser"),
             didSelect: { action in
-                //
-        }))
+                delay {
+                    removeServiceList(serviceName: self.jsonName)
+                    NotificationCenter.default.post(name: NSNotification.Name.init("updateCollection"), object: nil)
+                }
+            }))
         manager.present(sourceView: self.pageButton)
 
     }
 
+    // MARK: - Load Page
+    var isReload = false
+    
     func forceReload() {
         print("ForceReload")
         self.isReload = true
@@ -125,7 +192,11 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
     }
 
-    // MARK: Segue pass data
+    // MARK: - Segue pass data
+    
+    var category = ""
+    var passCommand = ""
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goTerminalViewandRun" {
             if let destinationVC = segue.destination as? Terminal_ViewController {
@@ -134,11 +205,12 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
         }
     }
-    
+
     // MARK: - Table
     
+    var isRouter = true
     var tableData: JSON = []
-    
+
     // MARK: Page Get Srouce
     func pageGetSrouce(isReload: Bool = false) {
         refreshControl.beginRefreshing()
@@ -147,7 +219,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             isRefresh: isReload,
             completionHandler: { value, error in
                 self.refreshControl.endRefreshing()
-                
+
                 if value != nil {
                     self.tableView.isHidden = false
                     self.tableData = JSON(value!)
@@ -162,21 +234,21 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.pageTitleLabel.text = self.jsonName
                     self.errorMessage.text = error?.localizedDescription
                 }
-        })
+            })
     }
-    
+
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.transform = CGAffineTransform(scaleX: 0.75, y: 0.75);
-        
+
         refreshControl.addTarget(
             self,
             action: #selector(self.handleRefresh(_:)),
             for: UIControl.Event.valueChanged)
-        
+
         return refreshControl
     }()
-    
+
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         pageGetSrouce(isReload: true)
     }
@@ -246,6 +318,8 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
+    // MARK: tap row
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableData["data"][indexPath.row]["type"].stringValue {
         case "action":

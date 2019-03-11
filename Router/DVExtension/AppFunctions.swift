@@ -12,11 +12,8 @@ import Alamofire
 import SwiftyJSON
 import NotificationBannerSwift
 
-struct Host {
-    static var domain = "router.asus.com"
-}
 
-// MARK: app service list
+// MARK: - app service list
 
 func addServiceList(serviceName: String) {
     let cacheKey = "com.qoli.ServiceList"
@@ -33,13 +30,29 @@ func addServiceList(serviceName: String) {
     UserDefaults.standard.set(cacheResult, forKey: cacheKey)
 }
 
+func removeServiceList(serviceName: String) {
+    let cacheKey = "com.qoli.ServiceList"
+    var cacheResult = UserDefaults.standard.array(forKey: cacheKey)
+    if cacheResult == nil {
+        cacheResult = []
+    } else {
+        cacheResult = cacheResult?.filter { $0 as! String != serviceName }
+    }
+
+    if serviceName == "" {
+        cacheResult = []
+    }
+
+    UserDefaults.standard.set(cacheResult, forKey: cacheKey)
+}
+
 func getServiceList() -> Array<Any> {
     let cacheKey = "com.qoli.ServiceList"
     let cacheResult = UserDefaults.standard.array(forKey: cacheKey)
     return cacheResult ?? []
 }
 
-// MARK: run in ssh
+// MARK: - run in ssh
 
 func SSHRun(
     command: String,
@@ -48,13 +61,13 @@ func SSHRun(
     isRouter: Bool = true,
     isShowResponse: Bool = false,
     isTest: Bool = false
-    ) -> String {
+) -> String {
 
     if isTest {
         print("[SSHRun] not Run: \(command)")
         return ""
     }
-    
+
     var isR = isRefresh
 
     var host: String!
@@ -85,13 +98,13 @@ func SSHRun(
             if session.isConnected {
                 session.authenticate(byPassword: password ?? "")
                 let response = session.channel.execute(command, error: nil)
-                
+
                 if isShowResponse {
-                    print("[SSHRun] isRouter: \(isRouter), command: \(command), response: \(response)")
+                    print("[SSHRun] isRouter: \(isRouter), command: \(command), response: \(response), isR: \(isR) [SSH]")
                 } else {
-                    print("[SSHRun] isRouter: \(isRouter), command: \(command)")
+                    print("[SSHRun] isRouter: \(isRouter), command: \(command), isR: \(isR)  [SSH]")
                 }
-                
+
                 return CacheString(text: response, Key: cacheKey)
             }
             session.disconnect()
@@ -100,6 +113,8 @@ func SSHRun(
             let cacheText = CacheString(Key: cacheKey)
             if cacheText == "" {
                 _ = SSHRun(command: command, cacheKey: cacheKey, isRefresh: true)
+            } else {
+                print("[SSHRun] isRouter: \(isRouter), command: \(command) [onCache]")
             }
             return cacheText
         }
@@ -107,7 +122,7 @@ func SSHRun(
 
 }
 
-// MARK: cache
+// MARK: - cache
 
 func CacheString(text: String = "", Key: String) -> String {
     if text == "" {
@@ -120,7 +135,7 @@ func CacheString(text: String = "", Key: String) -> String {
 
 
 
-// MARK: 十六进制转十进制
+// MARK: - 十六进制转十进制
 func hexTodec(number num: String) -> Double {
     let str = num.uppercased()
     var sum = 0
@@ -133,7 +148,7 @@ func hexTodec(number num: String) -> Double {
     return Double(sum)
 }
 
-// MARK: delay
+// MARK: - delay
 
 func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
     DispatchQueue.main.asyncAfter(
@@ -141,11 +156,26 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
     )
 }
 
-// MARK: Message
+// MARK: - UI
 
 func messageNotification(message: String, title: String = "Plane Router App") {
     let banner = NotificationBanner(title: title, subtitle: message, style: .info)
     banner.duration = 2
     banner.dismiss()
     banner.show()
+}
+
+// MARK: animate
+
+func buttonTapAnimate(button: UIButton) {
+    UIView.animate(
+        withDuration: 0.1,
+        animations: {
+            button.alpha = 0.3
+        },
+        completion: { _ in
+            UIView.animate(withDuration: 0.6, animations: {
+                button.alpha = 1
+            })
+        })
 }

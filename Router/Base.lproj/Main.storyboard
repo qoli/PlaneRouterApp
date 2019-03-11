@@ -160,6 +160,12 @@
                                 <color key="textColor" name="brownGreyTwo"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HTTPS only support valid certificates. Self-signed certificates or invalid certificates cannot be used." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20K-GK-H8q">
+                                <rect key="frame" x="20" y="746.33333333333337" width="335" height="21.666666666666629"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" name="gray80"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" name="paleGrey"/>
                         <gestureRecognizers/>
@@ -168,6 +174,7 @@
                             <constraint firstItem="I0T-yW-8rh" firstAttribute="leading" secondItem="3uM-2R-yNk" secondAttribute="leading" id="1Di-gS-ugM"/>
                             <constraint firstItem="tyD-VF-at5" firstAttribute="leading" secondItem="zvn-gO-c1p" secondAttribute="leading" id="1Te-Ah-hXX"/>
                             <constraint firstItem="4yb-mT-Jjg" firstAttribute="trailing" secondItem="IHT-U2-hbE" secondAttribute="trailing" constant="20" id="371-te-tqD"/>
+                            <constraint firstItem="4yb-mT-Jjg" firstAttribute="bottom" secondItem="20K-GK-H8q" secondAttribute="bottom" constant="10" id="4Lf-qs-cuA"/>
                             <constraint firstItem="6m7-KD-K0R" firstAttribute="top" secondItem="tyD-VF-at5" secondAttribute="bottom" constant="10" id="5Kc-AH-IYU"/>
                             <constraint firstItem="kog-02-Oc0" firstAttribute="top" secondItem="tyD-VF-at5" secondAttribute="bottom" constant="142" id="5rE-gP-8BO"/>
                             <constraint firstItem="Vg3-G2-yT2" firstAttribute="top" secondItem="dwh-I2-nyg" secondAttribute="bottom" constant="10" id="5z8-GQ-ZzM"/>
@@ -204,6 +211,8 @@
                             <constraint firstItem="kog-02-Oc0" firstAttribute="leading" secondItem="4yb-mT-Jjg" secondAttribute="leading" constant="20" id="e99-Py-GQl"/>
                             <constraint firstItem="xwv-zi-0hS" firstAttribute="trailing" secondItem="mlT-Xz-XMu" secondAttribute="trailing" id="h3N-fk-ZSU"/>
                             <constraint firstItem="3uM-2R-yNk" firstAttribute="top" secondItem="ywM-am-N0R" secondAttribute="bottom" constant="10" id="h4x-Lv-Blh"/>
+                            <constraint firstItem="4yb-mT-Jjg" firstAttribute="trailing" secondItem="20K-GK-H8q" secondAttribute="trailing" constant="20" id="h5h-zg-p8O"/>
+                            <constraint firstItem="20K-GK-H8q" firstAttribute="leading" secondItem="4yb-mT-Jjg" secondAttribute="leading" constant="20" id="kA1-YG-OJw"/>
                             <constraint firstItem="dwh-I2-nyg" firstAttribute="top" secondItem="kog-02-Oc0" secondAttribute="bottom" constant="2" id="kxL-Yb-8k2"/>
                             <constraint firstItem="xwv-zi-0hS" firstAttribute="top" secondItem="fEW-Da-SbN" secondAttribute="bottom" constant="22" id="lde-QX-dBj"/>
                             <constraint firstItem="ywM-am-N0R" firstAttribute="leading" secondItem="OxU-ZK-SjQ" secondAttribute="leading" id="p4d-YI-G3T"/>
@@ -226,6 +235,7 @@
                         <outlet property="addressText" destination="dwh-I2-nyg" id="ANR-3Z-8lR"/>
                         <outlet property="addressTop" destination="5rE-gP-8BO" id="Na2-18-dYm"/>
                         <outlet property="backButton" destination="fEW-Da-SbN" id="6b1-lg-UUJ"/>
+                        <outlet property="formTitle" destination="xwv-zi-0hS" id="gWv-Qt-lZm"/>
                         <outlet property="loginNameText" destination="ywM-am-N0R" id="uZb-DA-1rY"/>
                         <outlet property="loginPasswordText" destination="I0T-yW-8rh" id="h2Q-gF-Jvb"/>
                         <outlet property="nameText" destination="tyD-VF-at5" id="5zM-b7-Yxq"/>
@@ -234,6 +244,7 @@
                         <outlet property="radioHttpButton" destination="3Jx-cw-d4X" id="TWh-uI-aQe"/>
                         <outlet property="radioHttpsButton" destination="IHT-U2-hbE" id="ULv-d5-13Q"/>
                         <outlet property="saveButton" destination="mlT-Xz-XMu" id="ClH-6M-hdS"/>
+                        <outlet property="tipLabel" destination="20K-GK-H8q" id="Ndx-RB-iGp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C3K-zp-BW8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -243,7 +254,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="4279" y="-893"/>
+            <point key="canvasLocation" x="3450" y="-1810"/>
         </scene>
         <!--Setting Table View Controller-->
         <scene sceneID="cW3-g7-uIG">
@@ -447,6 +458,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-wi-14g">
+                                <rect key="frame" x="20" y="757" width="335" height="11"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                <color key="textColor" name="gray80"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" name="paleGrey"/>
                         <constraints>
@@ -454,7 +471,10 @@
                             <constraint firstItem="maH-Ia-lsQ" firstAttribute="leading" secondItem="avN-eP-vgy" secondAttribute="leading" id="EWy-0G-DRf"/>
                             <constraint firstItem="maH-Ia-lsQ" firstAttribute="top" secondItem="5L4-In-Rrl" secondAttribute="bottom" id="Sx8-DK-Bk6"/>
                             <constraint firstItem="5L4-In-Rrl" firstAttribute="trailing" secondItem="avN-eP-vgy" secondAttribute="trailing" id="faK-p2-4iG"/>
+                            <constraint firstItem="zZ7-wi-14g" firstAttribute="leading" secondItem="avN-eP-vgy" secondAttribute="leading" constant="20" id="hvX-us-cXJ"/>
                             <constraint firstItem="avN-eP-vgy" firstAttribute="trailing" secondItem="maH-Ia-lsQ" secondAttribute="trailing" id="ioG-nR-oPC"/>
+                            <constraint firstItem="avN-eP-vgy" firstAttribute="bottom" secondItem="zZ7-wi-14g" secondAttribute="bottom" constant="10" id="miO-JS-aCc"/>
+                            <constraint firstItem="avN-eP-vgy" firstAttribute="trailing" secondItem="zZ7-wi-14g" secondAttribute="trailing" constant="20" id="usk-mf-uY7"/>
                             <constraint firstItem="avN-eP-vgy" firstAttribute="bottom" secondItem="maH-Ia-lsQ" secondAttribute="bottom" id="wod-9M-hQl"/>
                             <constraint firstItem="5L4-In-Rrl" firstAttribute="top" secondItem="wEo-hU-uSd" secondAttribute="top" id="ygE-mJ-GJL"/>
                         </constraints>
@@ -466,12 +486,13 @@
                     <connections>
                         <outlet property="pageTitle" destination="a5X-EL-CsP" id="GG9-dO-wPN"/>
                         <outlet property="tableView" destination="maH-Ia-lsQ" id="efC-y7-c2X"/>
+                        <outlet property="versionLabel" destination="zZ7-wi-14g" id="GvB-DX-Wdd"/>
                         <segue destination="qYv-Ho-f6n" kind="show" identifier="goSettingDetailSegue" id="hvB-xw-fEz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fSI-el-hxm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3450" y="-893"/>
+            <point key="canvasLocation" x="2626" y="-1810"/>
         </scene>
         <!--Debug Page View Controller-->
         <scene sceneID="z4A-cJ-AoG">
@@ -1873,7 +1894,7 @@ admin@AC68U:/tmp/home/root# </string>
                                         <color key="textColor" name="gray29"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCx-8s-ZO7">
+                                    <button opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCx-8s-ZO7">
                                         <rect key="frame" x="239" y="21" width="72" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Latency" image="iconFontStopwatch">
@@ -1961,8 +1982,10 @@ admin@AC68U:/tmp/home/root# </string>
                     </view>
                     <size key="freeformSize" width="375" height="700"/>
                     <connections>
+                        <outlet property="pingButton" destination="QCx-8s-ZO7" id="6mu-dK-AkK"/>
                         <outlet property="tableView" destination="yYA-Dh-23E" id="wKb-hL-Fuq"/>
                         <segue destination="TA0-Uw-aoj" kind="show" identifier="goCommandReadSegue" id="5hT-1t-2an"/>
+                        <segue destination="3Cm-WK-ITk" kind="show" identifier="goAddNodeSegue" id="QRx-Bx-Enf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m1K-lf-OcB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2646,7 +2669,7 @@ admin@AC68U:/tmp/home/root# </string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mothod" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-cL-yvY">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Method" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVo-cL-yvY">
                                         <rect key="frame" x="20" y="269" width="335" height="14"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <color key="textColor" name="brownGreyTwo"/>
@@ -2946,8 +2969,9 @@ admin@AC68U:/tmp/home/root# </string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sSP-Y3-MIA"/>
-        <segue reference="MpS-jZ-ZVk"/>
+        <segue reference="QRx-Bx-Enf"/>
+        <segue reference="5hT-1t-2an"/>
+        <segue reference="UhI-fY-yJ5"/>
         <segue reference="Qzu-lr-SLt"/>
     </inferredMetricsTieBreakers>
 </document>

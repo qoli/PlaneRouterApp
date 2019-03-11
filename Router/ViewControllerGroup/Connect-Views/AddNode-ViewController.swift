@@ -22,16 +22,16 @@ class AddNode_ViewController: UIViewController {
     @IBOutlet weak var obfsTop: NSLayoutConstraint!
     @IBOutlet weak var obfsParamTitle: UILabel!
     @IBOutlet weak var obfsParam: UITextField!
-
     @IBOutlet weak var protocolTitle: UILabel!
-
     @IBOutlet weak var protocolParamTitle: UILabel!
-
     @IBOutlet weak var saveButton: UIButton!
     
+    // MARK: - var
     
     var isSSR: Bool = true
     var lastNumber: Int = 1
+    
+    // MARK: - View
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,12 +48,18 @@ class AddNode_ViewController: UIViewController {
         })
         
         //
-        nodeModeName.text = "ShadowsockR \(lastNumber)"
         
         saveButton.isEnabled = true
         
-        if !isSSR {
-            nodeModeName.text = "Shadowsock  \(lastNumber)"
+        if isEditMode {
+            editMode(number: editNumber)
+            lastNumber = editNumber
+        }
+        
+        if isSSR {
+            nodeModeName.text = "ShadowsockR node \(lastNumber)"
+        } else {
+            nodeModeName.text = "Shadowsock node  \(lastNumber)"
             
             obfsParamTitle.text = "obfs Host"
             obfsTop.constant = 10
@@ -65,8 +71,9 @@ class AddNode_ViewController: UIViewController {
             protocolParamTitle.isHidden = true
             protocolParam.isHidden = true
         }
+        
     }
-
+    
     // MARK: - Close
 
     @IBAction func closeAction(_ sender: UIButton) {
@@ -94,7 +101,58 @@ class AddNode_ViewController: UIViewController {
         }
     }
     
-    // MARK: save button action
+    // MARK: - Edit Call
+    
+    var isEditMode: Bool = false
+    var editNumber: Int = 1
+    
+    func editMode(number: Int) {
+        lastNumber = number
+        
+        updateSSData(completionHandler: { value,_ in
+            self.name.text = value["ssconf_basic_name_\(number)"]
+            self.address.text = value["ssconf_basic_server_\(number)"]
+            self.port.text = value["ssconf_basic_port_\(number)"]
+            self.password.text = value["ssconf_basic_password_\(number)"]?.base64Decoded()
+            
+            // mode
+            let ModeInt = (value["ssconf_basic_mode_\(number)"]! as NSString ).integerValue
+            let ModeName = ModeList(rawValue: ModeInt)
+            self.modeButton.setTitle(ModeName?.description ?? "", for: .normal)
+            self.ModeListValue = ModeInt
+            
+            // method
+            self.ssMethodValue = value["ssconf_basic_method_\(number)"] ?? ""
+            self.encrytionButton.setTitle(ss_method(rawValue: self.ssMethodValue)?.rawValue ?? "", for: .normal)
+            
+            
+            if self.isSSR {
+                self.protocolParam.text = value["ssconf_basic_rss_protocol_param_\(number)"]
+                self.obfsParam.text = value["ssconf_basic_rss_obfs_param_\(number)"]
+                
+                // protocol
+                self.rssProtocolValue = value["ssconf_basic_rss_protocol_\(number)"] ?? ""
+                self.protocolButton.setTitle(rss_protocol(rawValue: self.rssProtocolValue)?.rawValue ?? "", for: .normal)
+                
+                // obfs
+                self.rssObfsValue = value["ssconf_basic_rss_obfs_\(number)"] ?? ""
+                self.obfsButton.setTitle(rss_obfs(rawValue: self.rssObfsValue)?.rawValue ?? "", for: .normal)
+            } else {
+                self.obfsParam.text = value["ssconf_basic_ss_obfs_host_\(number)"]
+                
+                // obfs
+                self.ssObfsValue = value["ssconf_basic_ss_obfs_\(number)"] ?? ""
+                self.obfsButton.setTitle(ss_obfs(rawValue: self.ssObfsValue)?.rawValue ?? "", for: .normal)
+                
+                if self.ssObfsValue != "0" {
+                    self.obfsParamTitle.isHidden = false
+                    self.obfsParam.isHidden = false
+                }
+            }
+        })
+    }
+    
+    // MARK: Save Call
     
     @IBAction func saveAction(_ sender: Any) {
         print(ModeListValue)
@@ -126,11 +184,7 @@ class AddNode_ViewController: UIViewController {
                 ss_obfs: ssObfsValue,
                 ss_obfs_host: obfsParam.text ?? "")
         }
-        
     }
-
-    
-    
 
     // MARK: - Drop Menu
     
@@ -334,25 +388,7 @@ class AddNode_ViewController: UIViewController {
         }
     }
 
-
-
-
-    // MARK: - animate
-
-    func buttonTapAnimate(button: UIButton) {
-        UIView.animate(
-            withDuration: 0.1,
-            animations: {
-                button.alpha = 0.3
-            },
-            completion: { _ in
-                UIView.animate(withDuration: 0.6, animations: {
-                    button.alpha = 1
-                })
-            })
-    }
-
-    // MARK: - add nodes
+    // MARK: - Add or Update nodes
     
     func addSSNode(
         mode: String,
@@ -370,7 +406,7 @@ class AddNode_ViewController: UIViewController {
         let urlParams = [
             "p":"ssconf_basic",
             "ssconf_basic_type_\(lastNumber)":"0",
-            "ssconf_basic_password_\(lastNumber)":"\(password)",
+            "ssconf_basic_password_\(lastNumber)":"\(password.base64Encoded() ?? "")",
             
             "ssconf_basic_mode_\(lastNumber)":"\(mode)",
             "ssconf_basic_name_\(lastNumber)":"\(name)",
@@ -438,7 +474,7 @@ class AddNode_ViewController: UIViewController {
         let urlParams = [
             "p":"ssconf_basic",
             "ssconf_basic_type_\(lastNumber)":"1",
-            "ssconf_basic_password_\(lastNumber)":"\(password)",
+            "ssconf_basic_password_\(lastNumber)":"\(password.base64Encoded() ?? "")",
             
             "ssconf_basic_mode_\(lastNumber)":"\(mode)",
             "ssconf_basic_name_\(lastNumber)":"\(name)",

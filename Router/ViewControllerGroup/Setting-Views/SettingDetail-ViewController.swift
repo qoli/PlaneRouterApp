@@ -22,6 +22,9 @@ class SettingDetail_ViewController: UIViewController {
     @IBOutlet weak var addressTop: NSLayoutConstraint!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var tipLabel: UILabel!
+    @IBOutlet weak var formTitle: UILabel!
+    
     
     //MARK: - Detail
     var isRouter: Bool = true
@@ -49,12 +52,17 @@ class SettingDetail_ViewController: UIViewController {
 
     func detail_init() {
         if !isRouter {
+            // ssh
+            formTitle.text = "SSH Connect"
             protocolLabel.isHidden = true
             radioHttpButton.isHidden = true
             radioHttpsButton.isHidden = true
+            tipLabel.isHidden = true
             addressTop.constant = 10
             radioSelected(selected: .ssh)
         } else {
+            // router
+            formTitle.text = "Router Connect"
             radioSelected(selected: .http)
             nameText.isEnabled = false
         }

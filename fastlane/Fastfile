@@ -24,6 +24,24 @@ platform :ios do
     	scheme: "Router",
     	xcargs: "-UseModernBuildSystem=0"
     	)
-    upload_to_testflight
+    upload_to_testflight(
+      changelog: "Update",
+      distribute_external: true,
+      ipa: ipa,
+      groups: "Open Beta"
+      )
+  end
+
+  desc "add_group_to_tf_build"
+  lane :add_group_to_tf_build do
+    fastlane_require 'spaceship'
+   
+    Spaceship::Tunes.login("llqoli@email.com")
+    app = Spaceship::Tunes::Application.find("com.qoli.Router")
+    build = Spaceship::TestFlight::Build.latest(app_id: app.apple_id, platform: 'ios')
+   
+    group_name = 'Open Beta'
+    group = Spaceship::TestFlight::Group.find(app_id: app.apple_id, group_name: group_name)
+    build.add_group!(group)
   end
 end

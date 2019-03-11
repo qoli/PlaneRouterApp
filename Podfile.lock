@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.8.1)
+  - BaiduMobStatCodeless (4.9.5)
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
@@ -19,6 +20,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
+  - BaiduMobStatCodeless
   - Charts
   - Hero
   - IQKeyboardManagerSwift
@@ -33,6 +35,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - BaiduMobStatCodeless
     - Charts
     - Hero
     - IQKeyboardManagerSwift
@@ -48,6 +51,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  BaiduMobStatCodeless: 8fa2c6bf1cc9f5ec3ec77c69fbf4d5ed195c959a
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
@@ -61,6 +65,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: aad1ca5a4c58bddde6f75cba1a9f17f6c65e469a
+PODFILE CHECKSUM: a6dd015130626972f8478e7b322d6a898e3e0820
 
 COCOAPODS: 1.5.2

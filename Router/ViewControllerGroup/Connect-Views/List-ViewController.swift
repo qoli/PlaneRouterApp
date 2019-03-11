@@ -22,18 +22,10 @@ class listTableCell: UITableViewCell {
 }
 
 class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
-    var category = ""
-    var passCommand = ""
-    var goBottom: Bool = false
-
-    var isPing = false
-    var pings: [String] = []
-    var delayData: [String: String] = [:]
-
     @IBOutlet weak var tableView: UITableView!
-
-
+    
+    var goBottom: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,8 +43,13 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
-    // seuge
+    // MARK: - prepare seuge
 
+    var category = ""
+    var passCommand = ""
+    var editNumber: Int = 0
+    var isSSR: Bool = false
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goTerminalViewandRun" {
             if let destinationVC = segue.destination as? Terminal_ViewController {
@@ -60,12 +57,18 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 destinationVC.category = self.category
             }
         }
+        if segue.identifier == "goAddNodeSegue" {
+            if let destinationVC = segue.destination as? AddNode_ViewController {
+                destinationVC.isEditMode = true
+                destinationVC.editNumber = editNumber
+                destinationVC.isSSR = self.isSSR
+            }
+        }
     }
 
-    //
+    // MARK: - Close
 
     @IBAction func CloseAction(_ sender: UIButton) {
-        //dismiss(animated: true, completion: nil)
         var rootVC = self.presentingViewController
         while let parent = rootVC?.presentingViewController {
             rootVC = parent
@@ -76,61 +79,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         rootVC?.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func PingAction(_ sender: UIButton) {
-        self.isPing = true
-        ping()
-    }
-
-    //
-
-    var pingsCount: Int?
-
-    func ping() {
-        for i in self.sourceData {
-            pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "")
-        }
-
-        self.hud = JGProgressHUD(style: .dark)
-        hud.detailTextLabel.text = "Total: \(pings.count)"
-        self.pingsCount = pings.count
-        hud.textLabel.text = "Checking Latency"
-        hud.show(in: self.view)
-
-        pingNext()
-    }
-
-    func pingNext() {
-        guard pings.count > 0 else {
-            UIView.animate(withDuration: 0.1, animations: {
-                self.hud.textLabel.text = nil
-                self.hud.detailTextLabel.text = nil
-                self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
-            })
-
-            hud.dismiss(afterDelay: 1.0)
-
-            UserDefaults.standard.set(self.delayData, forKey: "ssPing")
-            self.tableView.reloadData()
-            return
-        }
-
-        let ping = pings.removeFirst()
-        PlainPing.ping(ping, withTimeout: 1.0, completionBlock: { (timeElapsed: Double?, error: Error?) in
-            self.hud.detailTextLabel.text = "\(ping)\n\(self.pings.count) / \(self.pingsCount ?? 0)"
-            
-            if let latency = timeElapsed {
-                print("\(ping) latency (ms): \(latency)")
-                self.delayData[ping] = String(format: "%.2f", latency)
-            }
-            if let error = error {
-                print("error: \(error.localizedDescription)")
-                self.delayData[ping] = "0"
-            }
-            self.pingNext()
-        })
-    }
-
-    //MARK: - Table
+    // MARK: - Table
 
     var sourceData: [[String]] = []
     var dataDict: [String: String] = [:]
@@ -193,34 +142,6 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.table_update(isRefresh: true)
     }
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
-        let editAction = UITableViewRowAction(style: .normal, title: "编辑") { action, index in
-            print("编辑")
-            self.removeNodebySSH(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
-        }
-        editAction.backgroundColor = UIColor.mainBlue
-
-        let removeAction = UITableViewRowAction(style: .normal, title: "删除") { action, index in
-            //print("删除", self.sourceData[indexPath.row][2], self.sourceData[indexPath.row][1])
-            let alertController = UIAlertController(title: "\(self.sourceData[indexPath.row][2]) \(self.sourceData[indexPath.row][1])", message: nil, preferredStyle: .actionSheet)
-            
-            alertController.addAction(
-                UIAlertAction(
-                    title: "Remove",
-                    style: .destructive,
-                    handler: { (action) -> Void in
-                        self.removeNode(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
-                }))
-            
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-            self.present(alertController, animated: true, completion: nil)
-        }
-        removeAction.backgroundColor = UIColor.watermelon
-
-        return [removeAction, editAction]
-    }
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sourceData.count
     }
@@ -261,15 +182,51 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             image: UIImage(named: "iconFontPaperPlane"),
             didSelect: { action in
                 delay {
-                    self.setLineinSSH(indexPath: indexPath)
+                    self.connectNode(indexPath: indexPath)
                 }
             }))
         manager.present(on: self)
 
     }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+            self.editNumber = (self.sourceData[indexPath.row][1] as NSString).integerValue
+            if self.dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "0" {
+                self.isSSR = false
+            }
+            if self.dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "1" {
+                self.isSSR = true
+            }
+            self.performSegue(withIdentifier: "goAddNodeSegue", sender: nil)
+        }
+        editAction.backgroundColor = UIColor.mainBlue
+        
+        let removeAction = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
+            //print("删除", self.sourceData[indexPath.row][2], self.sourceData[indexPath.row][1])
+            let alertController = UIAlertController(title: "\(self.sourceData[indexPath.row][2]) \(self.sourceData[indexPath.row][1])", message: nil, preferredStyle: .actionSheet)
+            
+            alertController.addAction(
+                UIAlertAction(
+                    title: "Remove",
+                    style: .destructive,
+                    handler: { (action) -> Void in
+                        self.removeNode(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
+                }))
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            self.present(alertController, animated: true, completion: nil)
+        }
+        removeAction.backgroundColor = UIColor.watermelon
+        
+        return [removeAction, editAction]
+    }
+    
+    // MARK: - connect Node
 
     var hud: JGProgressHUD!
-    func setLineinSSH(indexPath: IndexPath) {
+    func connectNode(indexPath: IndexPath) {
         delay(0) {
             self.hud = JGProgressHUD(style: .dark)
             self.hud.show(in: self.view)
@@ -309,64 +266,11 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 
-    // MARK: - data pass
-
-    func removeNodebySSH(number: Int) {
-        delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
-        }
-        
-        delay {
-            _ = SSHRun(command: "dbus remove ssconf_basic_name_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_server_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_server_ip_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_mode_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_port_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_password_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_method_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_rss_protocol_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_rss_protocol_param_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_rss_obfs_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_rss_obfs_param_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_use_kcp_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_ss_obfs_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_ss_obfs_host_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_koolgame_udp_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_ping_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_web_test_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_use_lb_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_lbmode_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_weight_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_group_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_uuid_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_alterid_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_security_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_headtype_tcp_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_headtype_kcp_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_path_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_host_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_network_security_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_mux_concurrency_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_json_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_use_json_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_v2ray_mux_enable_\(number)")
-            _ = SSHRun(command: "dbus remove ssconf_basic_type_\(number)")
-        }
-        
-        delay {
-            self.hud.dismiss(afterDelay: 1.0)
-            self.table_update(isRefresh: true)
-        }
-        
-        
-    }
+    // MARK: - remove Node
     
     func removeNode(number: Int) {
         switch ModelPage.runningModel {
         case .arm:
-            
             let urlParams = [
                 "use_rm": "1",
                 "p": "ssconf_basic",
@@ -419,9 +323,123 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     }
             }
         case .hnd:
-            print("Model: HND")
-        }
-        
+            
+            // JSON Body
+            let body: [String : Any] = [
+                "fields": [
+                    "ssconf_basic_name_\(number)": "",
+                    "ssconf_basic_server_\(number)": "",
+                    "ssconf_basic_server_ip_\(number)": "",
+                    "ssconf_basic_mode_\(number)": "",
+                    "ssconf_basic_port_\(number)": "",
+                    "ssconf_basic_password_\(number)": "",
+                    "ssconf_basic_method_\(number)": "",
+                    "ssconf_basic_rss_protocol_\(number)": "",
+                    "ssconf_basic_rss_protocol_param_\(number)": "",
+                    "ssconf_basic_rss_obfs_\(number)": "",
+                    "ssconf_basic_rss_obfs_param_\(number)": "",
+                    "ssconf_basic_use_kcp_\(number)": "",
+                    "ssconf_basic_ss_obfs_\(number)": "",
+                    "ssconf_basic_ss_obfs_host_\(number)": "",
+                    "ssconf_basic_koolgame_udp_\(number)": "",
+                    "ssconf_basic_ping_\(number)": "",
+                    "ssconf_basic_web_test_\(number)": "",
+                    "ssconf_basic_use_lb_\(number)": "",
+                    "ssconf_basic_lbmode_\(number)": "",
+                    "ssconf_basic_weight_\(number)": "",
+                    "ssconf_basic_group_\(number)": "",
+                    "ssconf_basic_v2ray_uuid_\(number)": "",
+                    "ssconf_basic_v2ray_alterid_\(number)": "",
+                    "ssconf_basic_v2ray_security_\(number)": "",
+                    "ssconf_basic_v2ray_network_\(number)": "",
+                    "ssconf_basic_v2ray_headtype_tcp_\(number)": "",
+                    "ssconf_basic_v2ray_headtype_kcp_\(number)": "",
+                    "ssconf_basic_v2ray_network_path_\(number)": "",
+                    "ssconf_basic_v2ray_network_host_\(number)": "",
+                    "ssconf_basic_v2ray_network_security_\(number)": "",
+                    "ssconf_basic_v2ray_mux_concurrency_\(number)": "",
+                    "ssconf_basic_v2ray_json_\(number)": "",
+                    "ssconf_basic_v2ray_use_json_\(number)": "",
+                    "ssconf_basic_v2ray_mux_enable_\(number)": "",
+                    "ssconf_basic_type_\(number)": ""
+                ],
+                "id": 89105112,
+                "method": "dummy_script.sh",
+                "params": []
+            ]
+            
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/_api/", method: .post, parameters: body, encoding: JSONEncoding.default)
+                .validate(statusCode: 200..<300)
+                .responseJSON { response in
+                    if (response.result.error == nil) {
+                        self.table_update(isRefresh: true)
+                    }
+                    else {
+                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                    }
+            }
+        }// end switch
     }
 
+    
+    // MARK: - Ping
+    
+    var isPing = false
+    var pings: [String] = []
+    var delayData: [String: String] = [:]
+    var pingsCount: Int?
+    @IBOutlet weak var pingButton: UIButton!
+    
+    @IBAction func PingAction(_ sender: UIButton) {
+        buttonTapAnimate(button: pingButton)
+        self.isPing = true
+        ping()
+    }
+    
+    func ping() {
+        for i in self.sourceData {
+            pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "")
+        }
+        
+        self.hud = JGProgressHUD(style: .dark)
+        hud.detailTextLabel.text = "Total: \(pings.count)"
+        self.pingsCount = pings.count
+        hud.textLabel.text = "Checking Latency"
+        hud.show(in: self.view)
+        
+        pingNext()
+    }
+    
+    func pingNext() {
+        guard pings.count > 0 else {
+            UIView.animate(withDuration: 0.1, animations: {
+                self.hud.textLabel.text = nil
+                self.hud.detailTextLabel.text = nil
+                self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
+            })
+            
+            hud.dismiss(afterDelay: 1.0)
+            
+            UserDefaults.standard.set(self.delayData, forKey: "ssPing")
+            self.tableView.reloadData()
+            return
+        }
+        
+        let ping = pings.removeFirst()
+        PlainPing.ping(ping, withTimeout: 1.0, completionBlock: { (timeElapsed: Double?, error: Error?) in
+            self.hud.detailTextLabel.text = "\(ping)\n\(self.pings.count) / \(self.pingsCount ?? 0)"
+            
+            if let latency = timeElapsed {
+                print("\(ping) latency (ms): \(latency)")
+                self.delayData[ping] = String(format: "%.2f", latency)
+            }
+            if let error = error {
+                print("error: \(error.localizedDescription)")
+                self.delayData[ping] = "0"
+            }
+            self.pingNext()
+        })
+    }
+    
 }

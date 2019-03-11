@@ -21,6 +21,9 @@ target 'Router' do
   pod 'IQKeyboardManagerSwift'
   pod 'PlainPing'
   
+  # 百度统计
+  pod 'BaiduMobStatCodeless'
+  
   post_install do |installer|
       installer.pods_project.targets.each do |target|
           target.build_configurations.each do |config|

@@ -16,15 +16,37 @@
         },
         {
             "type": "row",
-            "title": "Howto...",
+            "title": "How to turn on router SSH",
             "do": "openweb",
-            "value": ""
+            "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/HowtoSSH.md"
         },
         {
             "type": "row",
-            "title": "clean",
-            "do": "callfunc",
-            "value": "clean"
+            "title": "How to write your own scripts",
+            "do": "openweb",
+            "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/BuildMyScript.md"
+        },
+        {
+            "type": "row",
+            "title": "Join TestFlight",
+            "do": "openweb",
+            "value": "https://github.com/qoli/AtomicR/blob/master/invitation.md"
+        },
+        {
+            "type": "row",
+            "title": "Reset local storage data",
+            "do": "reset"
+        },
+        {
+            "type": "row",
+            "title": "Feedback",
+            "do": "sendMail",
+            "value": "qoli@me.com"
+        },
+        {
+            "type": "row",
+            "title": "Share App",
+            "do": "share"
         }
     ]
 }

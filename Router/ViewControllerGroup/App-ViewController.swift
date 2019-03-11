@@ -68,15 +68,22 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         // update
         updateNotes()
-        
-        // login
-        GetRouterCookie()
 
         self.appTitle.alpha = 0
 
         collection_init()
 
         // Notification
+        addNotification()
+
+        delay(0.6) {
+            self.collection_select(selected: 0)
+        }
+    }
+    
+    // MARK: - Notification
+
+    func addNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateCollection(_:)),
@@ -95,13 +102,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             name: NSNotification.Name(rawValue: "collectionSelect"),
             object: nil
         )
-
-        delay(0.6) {
-            self.collection_select(selected: 0)
-        }
     }
-
-    // MARK: - Notification
     
     @objc func updateCollection(_ notification: Notification) {
         self.collection_update()
@@ -116,33 +117,14 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.collection_select(selected: notification.object as! Int)
     }
 
-    // MARK: - IBAction
+    // MARK: - SettingAction
     
-    //
-    @IBAction func PanSwipeAction(_ sender: UIPanGestureRecognizer) {
-        if self.PanSwipe.state == .changed {
-            let offY = self.PanSwipe.velocity(in: childViews).y
-            if offY <= -150 {
-                serviceListDo(true)
-            }
-            if offY >= 150 {
-                serviceListDo(false)
-            }
-        }
-    }
-
     @IBAction func SettingAction(_ sender: UIButton) {
         self.collectionView.alpha = 0
         self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
     }
-
-
-    //
-    @IBAction func serviceListMenuAction(_ sender: UIButton) {
-        serviceListDo(self.isMenuOpen)
-    }
     
-    // MARK: - 
+    // MARK: - Update Notes
     
     func updateNotes() {
         let updateTimeCacheKey = "updateTime"
@@ -164,6 +146,25 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         })
     }
 
+    // MARK: - service List open or close
+    
+    
+    @IBAction func PanSwipeAction(_ sender: UIPanGestureRecognizer) {
+        if self.PanSwipe.state == .changed {
+            let offY = self.PanSwipe.velocity(in: childViews).y
+            if offY <= -150 {
+                serviceListDo(true)
+            }
+            if offY >= 150 {
+                serviceListDo(false)
+            }
+        }
+    }
+    
+    @IBAction func serviceListMenuAction(_ sender: UIButton) {
+        serviceListDo(self.isMenuOpen)
+    }
+    
     func serviceListDo(_ isOpen: Bool) {
         isMenuOpen = isOpen
         // 200 / 60
@@ -288,7 +289,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         return cell
     }
 
-
+    // MARK: collectionView didSelectItemAt
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if indexPath.row != previousSelected?.row {

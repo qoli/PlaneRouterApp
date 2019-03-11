@@ -40,14 +40,10 @@ class Connect_ViewController: UIViewController {
         )
 
         pageDesc.text = "SSH: Router"
-        
-        //
-        script = "ss_config.sh"
-        ssLinks = ""
 
     }
 
-    //MARK: 通知
+    //MARK: - 通知
 
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
@@ -55,23 +51,14 @@ class Connect_ViewController: UIViewController {
             self.loopUpdateStatus()
         }
     }
-    @objc func openNoedsAndGoBottom() {
-        print("openNoedsAndGoBottom")
-        delay {
-            self.goButton = true
-            self.performSegue(withIdentifier: "goListSegue", sender: nil)
-            self.goButton = false
-        }
-    }
 
-    //MARK: View 生命週期處理
+    //MARK: - View 生命週期處理
 
     override func viewWillDisappear(_ animated: Bool) {
         isAppear = false
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        print("checkSSInstall: \(checkSSInstall())")
         self.loopUpdateStatus()
         if checkSSInstall() {
             lineButtonUpdate()
@@ -86,7 +73,7 @@ class Connect_ViewController: UIViewController {
 
         let controller = PopMenuViewController(sourceView: self.pageButton, actions: [
             PopMenuDefaultAction(
-                title: "Add a Node",
+                title: "Add node",
                 image: UIImage(named: "iconFontPlusCircle"),
                 didSelect: { action in
                     delay {
@@ -104,7 +91,7 @@ class Connect_ViewController: UIViewController {
                 }
             ),
             PopMenuDefaultAction(
-                title: "Nodes List",
+                title: "Nodes",
                 image: UIImage(named: "iconFontThList"),
                 didSelect: { action in
                     delay {
@@ -360,18 +347,17 @@ class Connect_ViewController: UIViewController {
         self.connectButton.setTitle("...", for: .disabled)
         self.lineListButton.isEnabled = false
         self.connectButton.isEnabled = false
-        delay {
-            updateSSData(isRefresh: true, completionHandler: { value, error in
-                if value != [:] {
-                    let node = value["ssconf_basic_node"] ?? ""
-                    let name = value["ssconf_basic_name_\(node)"] ?? ""
-                    self.lineListButton.setTitle(name, for: .normal)
-                    self.connectButton.setTitle("Reconnect", for: .normal)
-                    self.lineListButton.isEnabled = true
-                    self.connectButton.isEnabled = true
-                }
-            })
-        }
+        //
+        updateSSData(isRefresh: true, completionHandler: { value, error in
+            if value != [:] {
+                let node = value["ssconf_basic_node"] ?? ""
+                let name = value["ssconf_basic_name_\(node)"] ?? ""
+                self.lineListButton.setTitle(name, for: .normal)
+                self.connectButton.setTitle("Reconnect", for: .normal)
+                self.lineListButton.isEnabled = true
+                self.connectButton.isEnabled = true
+            }
+        })
     }
 
 

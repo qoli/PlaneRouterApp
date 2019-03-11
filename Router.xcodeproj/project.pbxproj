@@ -74,6 +74,7 @@
 		F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+ExtendedHitAreaButton.swift"; sourceTree = "<group>"; };
 		F971F96F220BC38600C5F4B9 /* UIView+cornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+cornerRadius.swift"; sourceTree = "<group>"; };
 		F971F975220BD13800C5F4B9 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
+		F974F6CB223624AE00F57DD8 /* Router.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Router.entitlements; sourceTree = "<group>"; };
 		F9823F3522359D5E006A2411 /* AddNode-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddNode-ViewController.swift"; sourceTree = "<group>"; };
 		F983DF5A222692CA003C1FDD /* Subscribe-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subscribe-ViewController.swift"; sourceTree = "<group>"; };
 		F984A94E220A9D6C0037FE29 /* Router.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Router.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +220,7 @@
 		F984A950220A9D6C0037FE29 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				F974F6CB223624AE00F57DD8 /* Router.entitlements */,
 				F984A951220A9D6C0037FE29 /* AppDelegate.swift */,
 				F91C3036220BE9E200703AF2 /* ViewControllerGroup */,
 				F984A955220A9D6C0037FE29 /* Main.storyboard */,
@@ -300,6 +302,23 @@
 				TargetAttributes = {
 					F984A94D220A9D6C0037FE29 = {
 						CreatedOnToolsVersion = 10.1;
+						SystemCapabilities = {
+							com.apple.AccessWiFi = {
+								enabled = 0;
+							};
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Siri = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -585,18 +604,22 @@
 			baseConfigurationReference = 661556FF083AC4D2C164D797 /* Pods-Router.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 32;
+				DYLIB_CURRENT_VERSION = 37;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qoli.Router;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -607,18 +630,22 @@
 			baseConfigurationReference = 52F4C94CD876BA2239000F35 /* Pods-Router.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 32;
+				DYLIB_CURRENT_VERSION = 37;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.qoli.Router;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

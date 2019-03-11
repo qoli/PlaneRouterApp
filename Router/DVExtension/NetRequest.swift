@@ -52,7 +52,7 @@ class modelPageClass {
     }
 
     func autoSetModel() {
-        let model: String = SSHRun(command: "nvram get model")
+        let model: String = SSHRun(command: "nvram get model",cacheKey: "nvramGetModel")
 
         switch model {
         case "RT-AC86U\n":
@@ -109,7 +109,9 @@ func GetRouterCookie(name: String = "", pass: String = "") {
                         print("login...by", uConfig)
                     }
                     //
-                    ModelPage.autoSetModel()
+                    delay {
+                        ModelPage.autoSetModel()
+                    }
                 }
         }
     } else {
