@@ -39,7 +39,7 @@ class Connect_ViewController: UIViewController {
             object: nil
         )
 
-        pageDesc.text = "SSH: Router"
+        pageDesc.text = "SSH: Router".localized()
 
     }
 

@@ -11,6 +11,7 @@ import Hero
 import SwiftyJSON
 import SafariServices
 import Localize_Swift
+import MessageUI
 
 class settingTitleCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
@@ -79,12 +80,12 @@ class settingRowCell: UITableViewCell {
     }
 }
 
-class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate {
 
     // MARK: - Setting Page
-    
+
     @IBOutlet weak var pageTitle: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -96,7 +97,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         // table
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
+
         UpdateVersion()
     }
 
@@ -171,7 +172,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         switch self.tableData[indexPath.row]["type"].stringValue {
         case "title":
             let cell = tableView.dequeueReusableCell(withIdentifier: "title") as! settingTitleCell
@@ -182,7 +183,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             if OSLanguage == "tc" {
                 cell.title.text = self.tableData[indexPath.row]["titletc"].stringValue
             }
-            
+
             return cell
         case "row":
             let cell = tableView.dequeueReusableCell(withIdentifier: "row") as! settingRowCell
@@ -208,6 +209,8 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
     }
 
+    // MARK: - did Select Row
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         switch self.tableData[indexPath.row]["type"].stringValue {
@@ -221,6 +224,17 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
                 present(svc, animated: true, completion: nil)
             case "reset":
                 showMessageResetApp()
+            case "sendMail":
+                if MFMailComposeViewController.canSendMail() {
+                    let mail = MFMailComposeViewController()
+                    mail.mailComposeDelegate = self
+                    mail.setToRecipients([self.tableData[indexPath.row]["value"].stringValue])
+                    mail.setSubject("[Feedback]Plane Router App")
+
+                    present(mail, animated: true)
+                } else {
+                    print("send mail 取消")
+                }
             case "share":
                 let url = NSURL(string: "itms-apps://itunes.apple.com/app/bars/id1452044466")
                 if UIApplication.shared.canOpenURL(url! as URL) {
@@ -246,31 +260,31 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
         }
     }
-    
+
     // MARK: - Version
-    
+
     @IBOutlet weak var versionLabel: UILabel!
-    
+
     func UpdateVersion() {
         let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         versionLabel.text = "Version \(appVersion ?? "1.0") Build \(buildNumber ?? "0")\n© 2019 R.ONE"
     }
-    
+
     // MARK: -
-    
-    func showMessageResetApp(){
+
+    func showMessageResetApp() {
         let exitAppAlert = UIAlertController(title: "Restart App is needed".localized(),
                                              message: "We need to exit the app on Clear all Data.\nPlease reopen the app after this.".localized(),
                                              preferredStyle: .alert)
-        
+
         let resetApp = UIAlertAction(title: "Close Now".localized(), style: .destructive) {
             (alert) -> Void in
-            
+
             let domain = Bundle.main.bundleIdentifier!
             UserDefaults.standard.removePersistentDomain(forName: domain)
             UserDefaults.standard.synchronize()
-            
+
             // home button pressed programmatically - to thorw app to background
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             // terminaing app in background
@@ -278,16 +292,20 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
                 exit(EXIT_SUCCESS)
             })
         }
-        
+
         let laterAction = UIAlertAction(title: "Later".localized(), style: .cancel) {
             (alert) -> Void in
 //            self.dismiss(animated: true, completion: nil)
         }
-        
+
         exitAppAlert.addAction(resetApp)
         exitAppAlert.addAction(laterAction)
         present(exitAppAlert, animated: true, completion: nil)
-        
+
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 
 }

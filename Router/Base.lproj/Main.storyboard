@@ -497,24 +497,6 @@
             </objects>
             <point key="canvasLocation" x="2626" y="-1810"/>
         </scene>
-        <!--Debug Page View Controller-->
-        <scene sceneID="z4A-cJ-AoG">
-            <objects>
-                <viewController id="jlD-xd-qr9" customClass="debugPage_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gzc-4b-NgU">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="GJe-me-uVh"/>
-                    </view>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KhI-3o-NCK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="300" y="-2649"/>
-        </scene>
         <!--Update Notes View Controller-->
         <scene sceneID="i1U-6h-yzk">
             <objects>

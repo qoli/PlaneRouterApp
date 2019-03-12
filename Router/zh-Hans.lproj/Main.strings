@@ -162,7 +162,7 @@
 "PTT-x4-DXq.text" = "订阅";
 
 /* Class = "UIButton"; normalTitle = "Latency"; ObjectID = "QCx-8s-ZO7"; */
-"QCx-8s-ZO7.normalTitle" = "计算延迟";
+"QCx-8s-ZO7.normalTitle" = "测试延迟";
 
 /* Class = "UILabel"; text = "00"; ObjectID = "QDW-9B-4ZY"; */
 "QDW-9B-4ZY.text" = "00";

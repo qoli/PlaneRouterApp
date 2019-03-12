@@ -36,3 +36,13 @@
 "WAN IP (by ifconfig.co)" = "公网 IP 由 ifconfig.co 查询";
 "Waiting Data" = "等待数据";
 "Waiting for login" = "等待登入";
+
+"Total: \(pings.count)" = "总计: \(pings.count)";
+"Checking Latency" = "测试延迟中";
+
+"SSH: Router" = "SSH: 路由器";
+
+"Edit" = "编辑";
+"Connect" = "连接节点";
+
+"Setup SSH" = "选择 SSH";

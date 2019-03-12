@@ -36,14 +36,6 @@
         },
         {
             "type": "row",
-            "title": "How to turn on router SSH",
-            "titlesc": "如何打开路由器的 SSH",
-            "titletc": "如何打開路由器的 SSH",
-            "do": "openweb",
-            "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/HowtoSSH.md"
-        },
-        {
-            "type": "row",
             "title": "How to write your own scripts",
             "titlesc": "学习怎么编写自己的脚本",
             "titletc": "如何編寫自己的腳本",
@@ -60,9 +52,17 @@
         },
         {
             "type": "row",
+            "title": "Telegram Group",
+            "titlesc": "Telegram 群组讨论",
+            "titletc": "Telegram 群組",
+            "do": "openweb",
+            "value": "https://t.me/planeroutapp"
+        },
+        {
+            "type": "row",
             "title": "Feedback",
-            "titlesc": "反馈问题",
-            "titletc": "反饋問題",
+            "titlesc": "反馈和建议",
+            "titletc": "反饋和建議",
             "do": "sendMail",
             "value": "qoli@me.com"
         },

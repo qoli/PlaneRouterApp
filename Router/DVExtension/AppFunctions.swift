@@ -140,9 +140,11 @@ func buttonTapAnimate(button: UIButton) {
         })
 }
 
+// MARK: OS Language
+
 func getCurrentLanguage() -> String {
     let preferredLang = Bundle.main.preferredLocalizations.first! as NSString
-    print("当前系统语言:\(preferredLang)")
+    print("OS Language: \(preferredLang)")
     
     switch String(describing: preferredLang) {
     case "en-US", "en-CN":

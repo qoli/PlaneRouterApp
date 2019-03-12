@@ -14,6 +14,7 @@ import JGProgressHUD
 import PlainPing
 import PopMenu
 import NotificationBannerSwift
+import Localize_Swift
 
 class listTableCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
@@ -178,7 +179,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let manager = PopMenuManager.default
         manager.actions = []
         manager.actions.append(PopMenuDefaultAction(
-            title: "Connect",
+            title: "Connect".localized(),
             image: UIImage(named: "iconFontPaperPlane"),
             didSelect: { action in
                 delay {
@@ -191,7 +192,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { action, index in
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit".localized()) { action, index in
             self.editNumber = (self.sourceData[indexPath.row][1] as NSString).integerValue
             if self.dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "0" {
                 self.isSSR = false
@@ -203,19 +204,19 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         editAction.backgroundColor = UIColor.mainBlue
         
-        let removeAction = UITableViewRowAction(style: .normal, title: "Remove") { action, index in
+        let removeAction = UITableViewRowAction(style: .normal, title: "Remove".localized()) { action, index in
             //print("删除", self.sourceData[indexPath.row][2], self.sourceData[indexPath.row][1])
             let alertController = UIAlertController(title: "\(self.sourceData[indexPath.row][2]) \(self.sourceData[indexPath.row][1])", message: nil, preferredStyle: .actionSheet)
             
             alertController.addAction(
                 UIAlertAction(
-                    title: "Remove",
+                    title: "Remove".localized(),
                     style: .destructive,
                     handler: { (action) -> Void in
                         self.removeNode(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
                 }))
             
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
             self.present(alertController, animated: true, completion: nil)
         }
         removeAction.backgroundColor = UIColor.watermelon
@@ -403,9 +404,9 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
         
         self.hud = JGProgressHUD(style: .dark)
-        hud.detailTextLabel.text = "Total: \(pings.count)"
+        hud.detailTextLabel.text = "Total: \(pings.count)".localized()
         self.pingsCount = pings.count
-        hud.textLabel.text = "Checking Latency"
+        hud.textLabel.text = "Checking Latency".localized()
         hud.show(in: self.view)
         
         pingNext()
