@@ -12,18 +12,19 @@ import Alamofire
 import SwiftyJSON
 import Charts
 import SafariServices
+import Localize_Swift
 
 class Net_ViewController: UIViewController {
 
     @IBOutlet weak var pageTitleLabel: UILabel!
 
+    @IBOutlet weak var WANIPTitle: UILabel!
     @IBOutlet weak var WANIPLabel: UILabel!
     @IBOutlet weak var chtChart: LineChartView!
     @IBOutlet weak var downloadLabel: UILabel!
     @IBOutlet weak var downloadUnitLabel: UILabel!
     @IBOutlet weak var uploadLable: UILabel!
     @IBOutlet weak var uploadUnitLabel: UILabel!
-
     @IBOutlet weak var updateTextLabel: UILabel!
 
     var upOld = 0.0
@@ -90,14 +91,14 @@ class Net_ViewController: UIViewController {
                 self.UpdateNetSpeed()
                 self.runLoop()
             } else {
-                self.updateTextLabel.text = "Pause"
+                self.updateTextLabel.text = "Pause".localized()
             }
         }
     }
 
     func chartSetup() {
 
-        chtChart.noDataText = "Waiting Data"
+        chtChart.noDataText = "Waiting Data".localized()
 
         // Interaction
         chtChart.doubleTapToZoomEnabled = false
@@ -233,7 +234,7 @@ class Net_ViewController: UIViewController {
                                 self.uploadLable.text = String(format: "%.1f", self.unit(num: upSpeed).0)
                                 self.downloadUnitLabel.text = self.unit(num: downSpeed).1
                                 self.uploadUnitLabel.text = self.unit(num: upSpeed).1
-                                self.updateTextLabel.text = "Updating"
+                                self.updateTextLabel.text = "Updating".localized()
                                 
                                 self.DownloadNumbers.append(downSpeed)
                                 self.UploadNumbers.append(upSpeed)
@@ -255,9 +256,9 @@ class Net_ViewController: UIViewController {
                     // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
                         print("net speed: need login")
-                        self.updateTextLabel.text = "Waiting for login"
+                        self.updateTextLabel.text = "Waiting for login".localized()
                         //try login
-                        //GetRouterCookie()
+                        GetRouterCookie()
                     }
 
 
@@ -291,19 +292,23 @@ class Net_ViewController: UIViewController {
 
     func sendChineseipRequest() {
 
-        // Fetch Request
-        Alamofire.request("http://ip.360.cn/IPShare/info", method: .get, encoding: URLEncoding.default)
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    delay(0.1) {
-                        let rJSON = JSON(value)
+        fetchRequest(api: "http://ip.360.cn/IPShare/info", completionHandler: { value, error in
+            if value != nil {
+                let rJSON = JSON(value as Any)
+                self.WANIPLabel.text = rJSON["ip"].stringValue
+            } else {
+                fetchRequest(api: "https://ifconfig.co/json", completionHandler: { value, error in
+                    if value != nil {
+                        let rJSON = JSON(value as Any)
                         self.WANIPLabel.text = rJSON["ip"].stringValue
+                        self.WANIPTitle.text = "WAN IP (by ifconfig.co)".localized()
+                    } else {
+                        self.WANIPLabel.text = error?.localizedDescription
                     }
-                case .failure(let error):
-                    self.WANIPLabel.text = error.localizedDescription
-                }
-        }
+                })
+            }
+        })
+    
     }
 
 

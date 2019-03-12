@@ -107,15 +107,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - UNUserNotificationCenter
 
-    func application( _ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
 //        print("Device Token: \(token)")
         _ = CacheString(text: token, Key: "DeviceToken")
     }
 
-    func application( _ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("Failed to register: \(error)")
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        let code = (error as NSError).code
+        if code != 3010 {
+            print("Failed to register: \(error)")
+        }
     }
 
     func registerForPushNotifications() {
@@ -139,6 +142,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
     }
+
+
 
 }
 

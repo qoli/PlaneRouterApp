@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class SettingDetail_ViewController: UIViewController {
 
@@ -30,6 +31,7 @@ class SettingDetail_ViewController: UIViewController {
     var isRouter: Bool = true
     var isAdd: Bool = true
     var name: String = ""
+    var config: connectClass.ConnectStruct!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,23 +39,24 @@ class SettingDetail_ViewController: UIViewController {
         
         saveButton.isEnabled = false
         
-        print("Detail \(isAdd) \(isRouter)")
+        print("Setting Detail Page - New: \(isAdd) isRouter: \(isRouter)")
         
         detail_init()
         if !isAdd {
-            let r = getUserConfig(name: self.name)
-            nameText.text = r.name
-            addressText.text = r.address
-            loginNameText.text = r.loginName
-            loginPasswordText.text = r.loginPassword
-            portText.text = "\(r.port)"
+//            let r = getUserConfig(name: self.name)
+//            let r = ConnectConfig.getByID(identifier: config.identifier)
+            nameText.text = config.name
+            addressText.text = config.address
+            loginNameText.text = config.loginName
+            loginPasswordText.text = config.loginPassword
+            portText.text = "\(config.port)"
         }
     }
 
     func detail_init() {
         if !isRouter {
             // ssh
-            formTitle.text = "SSH Connect"
+            formTitle.text = "SSH Connect".localized()
             protocolLabel.isHidden = true
             radioHttpButton.isHidden = true
             radioHttpsButton.isHidden = true
@@ -62,7 +65,7 @@ class SettingDetail_ViewController: UIViewController {
             radioSelected(selected: .ssh)
         } else {
             // router
-            formTitle.text = "Router Connect"
+            formTitle.text = "Router Connect".localized()
             radioSelected(selected: .http)
             nameText.isEnabled = false
         }
@@ -120,20 +123,33 @@ class SettingDetail_ViewController: UIViewController {
     }
     
     @IBAction func saveAction(_ sender: UIButton) {
-        let uConfig = userConfig(
-            name: nameText.text ?? "",
-            mode: radioButtonValue.rawValue,
-            address: addressText.text ?? "",
-            port: (portText.text! as NSString).integerValue,
-            loginName: loginNameText.text ?? "",
-            loginPassword: loginPasswordText.text ?? "")
         
-        let rSave = saveUserConfig(userConfig: uConfig)
-        if rSave.0 {
-            dismiss(animated: true, completion: nil)
+        let portString: String! = portText?.text ?? "0"
+        let port: Int64 = (portString! as NSString).longLongValue
+        if isAdd {
+            _ = ConnectConfig.buildConnectConfig(
+                name: nameText.text ?? "",
+                mode: connectClass.connectMode(rawValue: radioButtonValue.rawValue)!,
+                address: addressText.text ?? "",
+                port: port,
+                loginName: loginNameText.text ?? "",
+                loginPassword: loginPasswordText.text ?? "",
+                type: .Server
+            )
         } else {
-            messageNotification(message: "save Error")
+            
+            config.name = nameText.text ?? ""
+            config.mode = connectClass.connectMode(rawValue: radioButtonValue.rawValue)!
+            config.address = addressText.text ?? ""
+            config.port = port
+            config.loginName = loginNameText.text ?? ""
+            config.loginPassword = loginPasswordText.text ?? ""
+            
+            ConnectConfig.updateConnectConfig(connect: config)
         }
+        
+        dismiss(animated: true, completion: nil)
+        
     }
     @IBAction func backAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)

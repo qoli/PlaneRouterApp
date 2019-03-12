@@ -121,7 +121,7 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: action
+    // MARK:  - action
     func action(selected: Int) {
         
         let manager = PopMenuManager.default
@@ -131,7 +131,8 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
             image: UIImage(named: "iconFontArrowToBottom24"),
             didSelect: { action in
                 delay {
-                    addServiceList(serviceName: self.tableSource["data"][selected]["name"].stringValue)
+                    ServiceList.addService(service: self.tableSource["data"][selected]["name"].stringValue, connectType: .Server)
+//                    addServiceList(serviceName: )
                     NotificationCenter.default.post(name: NSNotification.Name.init("updateCollection"), object: nil)
                 }
         }))

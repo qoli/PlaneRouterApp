@@ -39,7 +39,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     var isMenuOpen: Bool = true
     var selectServiceNumber: Int = 0
 
-    var lastPageName = ""
+    var lastScreenID = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,11 +78,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         delay {
             self.collection_select(selected: 0)
-        }
-        
-        // Device Token
-        delay(3) {
-            userToken()
         }
     }
     
@@ -132,6 +127,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - Update Notes
     
     func updateNotes() {
+        setCacheBool(value: false, Key: "isUpdate")
         let updateTimeCacheKey = "updateTime"
         let updateTime = CacheString(Key: updateTimeCacheKey)
         
@@ -139,20 +135,21 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             api: "https://raw.githubusercontent.com/qoli/AtomicR/master/Update/updatetime.txt",
             isRefresh: true,
             completionHandler: { value, error in
+                let valueDate = value?.removingWhitespacesAndNewlines ?? ""
                 var isUpdate = false
                 if value != nil {
-                    if updateTime != value {
+                    if updateTime != valueDate {
                         isUpdate = true
                         self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
-                        _ = CacheString(text: value ?? "", Key: updateTimeCacheKey)
+                        setCacheBool(value: true, Key: "isUpdate")
+                        _ = CacheString(text: valueDate, Key: updateTimeCacheKey)
                     }
                 }
-                print("Update Time Remote: \(value ?? "") · Loacl: \(updateTime) · isUpdate: \(isUpdate)")
+                print("Update Time Remote: \(valueDate) · Loacl: \(updateTime) · isUpdate: \(isUpdate)")
         })
     }
 
     // MARK: - service List open or close
-    
     
     @IBAction func PanSwipeAction(_ sender: UIPanGestureRecognizer) {
         if self.PanSwipe.state == .changed {
@@ -198,9 +195,10 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     var previousSelected: IndexPath?
     var currentSelected: Int?
 
-    var items: Array = [""]
+    var items: [serviceListClass.serviceStruct] = []
     let itemsImage = ["iconCustomSpeed", "iconCustomInternetNetwork", "iconCustomShadowsockLogo"]
-    let itemsFixed = ["Net Speed", "Connect", "Shadowsock"]
+//    let itemsFixed = ["Net Speed", "Connect", "Shadowsock"]
+    var itemsFixed: [serviceListClass.serviceStruct] = []
 
     func collection_select(selected: Int = 0) {
         let indexPath = IndexPath(row: selected, section: 0)
@@ -212,17 +210,31 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.dataSource = self
         collectionView.delegate = self
 
+        Fixed()
+        
         collection_update()
         collection_select()
     }
+    
+    func Fixed() {
+        let r = ServiceList.buildFixed(name: "Net Speed")
+        let c = ServiceList.buildFixed(name: "Connect")
+        let s = ServiceList.buildFixed(name: "Shadowsock")
+        self.itemsFixed.append(r)
+        self.itemsFixed.append(c)
+        self.itemsFixed.append(s)
+        
+    }
 
+    // MARK: - item Update
+    
     func collection_update() {
         self.items = self.itemsFixed
-        let addList = getServiceList()
-        for i in addList {
-            items.append(i as! String)
+        let list = ServiceList.getSerivces()
+        for i in list {
+            items.append(i)
         }
-        items.append("Add")
+        items.append(ServiceList.buildFixed(name: "Add"))
         self.collectionView.reloadData()
     }
 
@@ -230,14 +242,14 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         if cell != nil {
             if isSelected {
                 self.selectServiceNumber = indexPath.row
-                self.appTitle.text = self.items[self.selectServiceNumber]
+                self.appTitle.text = self.items[self.selectServiceNumber].name
 
                 cell?.cellView.backgroundColor = UIColor.mainBlue
                 cell?.shadowImage.image = UIImage(named: "serviceShadowActive")
                 cell?.shadowImage.frame.origin.y = 6
 
                 // imageView.image
-                if self.items[indexPath.item] == "Add" {
+                if self.items[indexPath.item].name == "Add" {
                     cell?.imageView.image = UIImage(named: "iconCustomAddW")
                 } else {
                     if indexPath.item < self.itemsFixed.count {
@@ -256,7 +268,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 cell?.shadowImage.frame.origin.y = 0
 
                 // imageView.image
-                if self.items[indexPath.item] == "Add" {
+                if self.items[indexPath.item].name == "Add" {
                     cell?.imageView.image = UIImage(named: "iconCustomAddG")
                 } else {
                     if indexPath.item < 3 {
@@ -282,7 +294,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! ServiceiconCollectionViewCell
-        cell.nameLabel.text = self.items[indexPath.item]
+        cell.nameLabel.text = self.items[indexPath.item].name
 
         // To set the selected cell background color here
         if currentSelected != nil && currentSelected == indexPath.row {
@@ -298,7 +310,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
         if indexPath.row != previousSelected?.row {
-            print("Service Select: \(self.items[indexPath.item])")
+            print("Service Select: \(self.items[indexPath.item].identifier)")
 
             // For remove previously selection
             if previousSelected != nil {
@@ -316,9 +328,9 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: false)
             NotificationCenter.default.post(name: NSNotification.Name.init("NetViewonShow"), object: false)
 
-            if self.lastPageName != self.items[indexPath.item] {
+            if self.lastScreenID != self.items[indexPath.item].identifier {
                 // tap collection action
-                switch self.items[indexPath.item] {
+                switch self.items[indexPath.item].name {
                 case "Net Speed":
                     NotificationCenter.default.post(name: NSNotification.Name.init("NetViewonShow"), object: true)
                     self.switchView(showView: self.childNetView)
@@ -336,7 +348,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
             }
 
-            self.lastPageName = self.items[indexPath.item]
+            self.lastScreenID = self.items[indexPath.item].identifier
         }
 
     }

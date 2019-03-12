@@ -13,6 +13,7 @@ import SwiftyJSON
 import JGProgressHUD
 import PopMenu
 import NotificationBannerSwift
+import Localize_Swift
 
 class aclTableCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
@@ -229,43 +230,43 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         let controller = PopMenuViewController(actions: [
             PopMenuDefaultAction(
-                title: "No Proxy",
+                title: "No Proxy".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "0")
                 }
             ),
             PopMenuDefaultAction(
-                title: "GFW Mode",
+                title: "GFW Mode".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "1")
                 }
             ),
             PopMenuDefaultAction(
-                title: "White List",
+                title: "White List".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "2")
                 }
             ),
             PopMenuDefaultAction(
-                title: "Game Mode",
+                title: "Game Mode".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "3")
                 }
             ),
             PopMenuDefaultAction(
-                title: "Global",
+                title: "Global".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "4")
                 }
             ),
             PopMenuDefaultAction(
-                title: "Back to China",
+                title: "Back to China".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "5")
                 }
             ),
             PopMenuDefaultAction(
-                title: "Remove",
+                title: "Remove".localized(),
                 didSelect: { action in
                     self.ACLSetting(number: self.sourceData[indexPath.row][1], mode: "6")
                 }

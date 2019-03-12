@@ -1,0 +1,375 @@
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "023-z6-qHb"; */
+"023-z6-qHb.text" = "Label";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "0F6-jY-wVg"; */
+"0F6-jY-wVg.text" = "Status";
+
+/* Class = "UILabel"; text = "In Process"; ObjectID = "1Kq-Gp-YjA"; */
+"1Kq-Gp-YjA.text" = "In Process";
+
+/* Class = "UITextField"; placeholder = "通常為 admin"; ObjectID = "1qf-yF-lhh"; */
+"1qf-yF-lhh.placeholder" = "通常為 admin";
+
+/* Class = "UILabel"; text = "ACL Mode"; ObjectID = "1ty-7m-m3d"; */
+"1ty-7m-m3d.text" = "ACL Mode";
+
+/* Class = "UILabel"; text = "HTTPS only support valid certificates. Self-signed certificates or invalid certificates cannot be used."; ObjectID = "20K-GK-H8q"; */
+"20K-GK-H8q.text" = "HTTPS only support valid certificates. Self-signed certificates or invalid certificates cannot be used.";
+
+/* Class = "UIButton"; normalTitle = "已经了解"; ObjectID = "2Yx-46-0zw"; */
+"2Yx-46-0zw.normalTitle" = "已经了解";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "2ku-yE-Bye"; */
+"2ku-yE-Bye.text" = "Title";
+
+/* Class = "UIButton"; normalTitle = "HTTP"; ObjectID = "3Jx-cw-d4X"; */
+"3Jx-cw-d4X.normalTitle" = "HTTP";
+
+/* Class = "UIButton"; normalTitle = "Apply"; ObjectID = "3g7-Jf-gaQ"; */
+"3g7-Jf-gaQ.normalTitle" = "Apply";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "3kF-vE-nXn"; */
+"3kF-vE-nXn.text" = "Address";
+
+/* Class = "UILabel"; text = "Login Password"; ObjectID = "3uM-2R-yNk"; */
+"3uM-2R-yNk.text" = "Login Password";
+
+/* Class = "UILabel"; text = "面向路由器（基於 Koolshare 發佈的梅林固件）"; ObjectID = "3xy-Gh-AEJ"; */
+"3xy-Gh-AEJ.text" = "面向路由器（基於 Koolshare 發佈的梅林固件）";
+
+/* Class = "UILabel"; text = "Add"; ObjectID = "4NM-2o-wkQ"; */
+"4NM-2o-wkQ.text" = "Add";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "4vt-qh-uO7"; */
+"4vt-qh-uO7.text" = "Value";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "56p-mY-EWK"; */
+"56p-mY-EWK.text" = "Name";
+
+/* Class = "UILabel"; text = "ACL Setting"; ObjectID = "67E-NK-Vrw"; */
+"67E-NK-Vrw.text" = "ACL Setting";
+
+/* Class = "UILabel"; text = "Protocol"; ObjectID = "6m7-KD-K0R"; */
+"6m7-KD-K0R.text" = "Protocol";
+
+/* Class = "UILabel"; text = "具備 SSH 訪問的設備"; ObjectID = "7I1-bF-QTs"; */
+"7I1-bF-QTs.text" = "具備 SSH 訪問的設備";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "7fR-h8-LcG"; */
+"7fR-h8-LcG.text" = "Label";
+
+/* Class = "UILabel"; text = "設定完畢"; ObjectID = "90q-5n-2eq"; */
+"90q-5n-2eq.text" = "設定完畢";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "9ni-xa-JKa"; */
+"9ni-xa-JKa.text" = "Label";
+
+/* Class = "UILabel"; text = "請輸入路由器的 SSH 訪問信息"; ObjectID = "AAK-O0-Kxg"; */
+"AAK-O0-Kxg.text" = "請輸入路由器的 SSH 訪問信息";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "AZy-Lp-23H"; */
+"AZy-Lp-23H.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "驗證"; ObjectID = "Acw-c0-2e2"; */
+"Acw-c0-2e2.normalTitle" = "驗證";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "B4K-2l-M7b"; */
+"B4K-2l-M7b.text" = "Description";
+
+/* Class = "UIButton"; normalTitle = "Save Only"; ObjectID = "BLf-B9-gLD"; */
+"BLf-B9-gLD.normalTitle" = "Save Only";
+
+/* Class = "UILabel"; text = "obfs Param"; ObjectID = "BaC-h4-A4p"; */
+"BaC-h4-A4p.text" = "obfs Param";
+
+/* Class = "UITextField"; placeholder = "id:password"; ObjectID = "C3h-J8-VbL"; */
+"C3h-J8-VbL.placeholder" = "id:password";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "CX1-qO-4yp"; */
+"CX1-qO-4yp.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "obfs"; ObjectID = "Dax-ol-F23"; */
+"Dax-ol-F23.text" = "obfs";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "DeY-Ca-hKf"; */
+"DeY-Ca-hKf.text" = "...";
+
+/* Class = "UILabel"; text = "kb/s"; ObjectID = "Ews-QJ-PaJ"; */
+"Ews-QJ-PaJ.text" = "kb/s";
+
+/* Class = "UILabel"; text = "WAN IP"; ObjectID = "Fui-2T-0Tx"; */
+"Fui-2T-0Tx.text" = "WAN IP";
+
+/* Class = "UITextField"; placeholder = "cloudfront.net"; ObjectID = "H14-q3-4lv"; */
+"H14-q3-4lv.placeholder" = "cloudfront.net";
+
+/* Class = "UILabel"; text = "Protocol"; ObjectID = "HBh-Bd-vbs"; */
+"HBh-Bd-vbs.text" = "Protocol";
+
+/* Class = "UIButton"; normalTitle = "HTTPS"; ObjectID = "IHT-U2-hbE"; */
+"IHT-U2-hbE.normalTitle" = "HTTPS";
+
+/* Class = "UILabel"; text = "PlaneR 應用程式"; ObjectID = "IlE-qa-5sB"; */
+"IlE-qa-5sB.text" = "PlaneR 應用程式";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "Ix7-WD-cpr"; */
+"Ix7-WD-cpr.text" = "Name";
+
+/* Class = "UIButton"; normalTitle = "Connect"; ObjectID = "Jv1-zl-yd1"; */
+"Jv1-zl-yd1.normalTitle" = "Connect";
+
+/* Class = "UILabel"; text = "Subscribe Setting"; ObjectID = "K4K-CM-DCz"; */
+"K4K-CM-DCz.text" = "Subscribe Setting";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "KuZ-uq-gUr"; */
+"KuZ-uq-gUr.text" = "Label";
+
+/* Class = "UILabel"; text = "路由器地址"; ObjectID = "L2f-tj-lmb"; */
+"L2f-tj-lmb.text" = "路由器地址";
+
+/* Class = "UILabel"; text = "Base"; ObjectID = "MPM-pp-UFx"; */
+"MPM-pp-UFx.text" = "Base";
+
+/* Class = "UITextView"; text = "ASUSWRT-Merlin RT-AC68U 380.70-0-X7.9.1 Tue Sep 25 10:54:41 UTC 2018\nadmin@AC68U:/tmp/home/root# "; ObjectID = "Mth-f7-YiW"; */
+"Mth-f7-YiW.text" = "ASUSWRT-Merlin RT-AC68U 380.70-0-X7.9.1 Tue Sep 25 10:54:41 UTC 2018\nadmin@AC68U:/tmp/home/root# ";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "Mzl-Ti-iNI"; */
+"Mzl-Ti-iNI.text" = "...";
+
+/* Class = "UILabel"; text = "Password"; ObjectID = "NTP-fj-Abm"; */
+"NTP-fj-Abm.text" = "Password";
+
+/* Class = "UILabel"; text = "Method"; ObjectID = "NVo-cL-yvY"; */
+"NVo-cL-yvY.text" = "Method";
+
+/* Class = "UILabel"; text = "名稱"; ObjectID = "Ng4-Jk-qwM"; */
+"Ng4-Jk-qwM.text" = "名稱";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "O7V-Yh-8hU"; */
+"O7V-Yh-8hU.text" = "Status";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "ORh-LV-Sgh"; */
+"ORh-LV-Sgh.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "OXs-gy-tEQ"; */
+"OXs-gy-tEQ.text" = "Name";
+
+/* Class = "UILabel"; text = "Login Name"; ObjectID = "OxU-ZK-SjQ"; */
+"OxU-ZK-SjQ.text" = "Login Name";
+
+/* Class = "UILabel"; text = "Subscribe"; ObjectID = "PTT-x4-DXq"; */
+"PTT-x4-DXq.text" = "Subscribe";
+
+/* Class = "UIButton"; normalTitle = "Latency"; ObjectID = "QCx-8s-ZO7"; */
+"QCx-8s-ZO7.normalTitle" = "Latency";
+
+/* Class = "UILabel"; text = "00"; ObjectID = "QDW-9B-4ZY"; */
+"QDW-9B-4ZY.text" = "00";
+
+/* Class = "UIViewController"; title = "JSON View"; ObjectID = "RsN-Vz-1bq"; */
+"RsN-Vz-1bq.title" = "JSON View";
+
+/* Class = "UILabel"; text = "Information"; ObjectID = "SKI-TA-LDa"; */
+"SKI-TA-LDa.text" = "Information";
+
+/* Class = "UILabel"; text = "可安裝、管理 Shadowsock 客戶端"; ObjectID = "SSH-UU-cD1"; */
+"SSH-UU-cD1.text" = "可安裝、管理 Shadowsock 客戶端";
+
+/* Class = "UILabel"; text = "Time"; ObjectID = "TH2-8s-cdd"; */
+"TH2-8s-cdd.text" = "Time";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "ThN-Qq-75k"; */
+"ThN-Qq-75k.text" = "Title";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "TyY-oX-C63"; */
+"TyY-oX-C63.normalTitle" = "Save";
+
+/* Class = "UILabel"; text = " "; ObjectID = "Usj-GI-yFr"; */
+"Usj-GI-yFr.text" = " ";
+
+/* Class = "UILabel"; text = "New Hosts"; ObjectID = "VM4-9X-z24"; */
+"VM4-9X-z24.text" = "New Hosts";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "VYg-A1-eBO"; */
+"VYg-A1-eBO.text" = "Description";
+
+/* Class = "UILabel"; text = "Port"; ObjectID = "Vg3-G2-yT2"; */
+"Vg3-G2-yT2.text" = "Port";
+
+/* Class = "UILabel"; text = "Value"; ObjectID = "W7j-BR-lzO"; */
+"W7j-BR-lzO.text" = "Value";
+
+/* Class = "UIButton"; normalTitle = "Remove All Subscribe Node"; ObjectID = "X8x-GA-j57"; */
+"X8x-GA-j57.normalTitle" = "Remove All Subscribe Node";
+
+/* Class = "UILabel"; text = "kb/s"; ObjectID = "Xh6-KR-Bbn"; */
+"Xh6-KR-Bbn.text" = "kb/s";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "ZHu-cu-pmS"; */
+"ZHu-cu-pmS.text" = "Address";
+
+/* Class = "UILabel"; text = "error"; ObjectID = "ZJX-ju-988"; */
+"ZJX-ju-988.text" = "error";
+
+/* Class = "UILabel"; text = "Setting"; ObjectID = "a5X-EL-CsP"; */
+"a5X-EL-CsP.text" = "Setting";
+
+/* Class = "UIButton"; normalTitle = "..."; ObjectID = "awL-aZ-NuE"; */
+"awL-aZ-NuE.normalTitle" = "...";
+
+/* Class = "UILabel"; text = "可透過 JSON 腳本配置對應的管理功能"; ObjectID = "b4i-ZY-jAf"; */
+"b4i-ZY-jAf.text" = "可透過 JSON 腳本配置對應的管理功能";
+
+/* Class = "UIButton"; normalTitle = "開始設定"; ObjectID = "bL4-dD-2FC"; */
+"bL4-dD-2FC.normalTitle" = "開始設定";
+
+/* Class = "UIButton"; normalTitle = "收起鍵盤"; ObjectID = "cOw-oe-2qw"; */
+"cOw-oe-2qw.normalTitle" = "收起鍵盤";
+
+/* Class = "UITextField"; placeholder = "22"; ObjectID = "d08-r7-9Gk"; */
+"d08-r7-9Gk.placeholder" = "22";
+
+/* Class = "UITextField"; text = "22"; ObjectID = "d08-r7-9Gk"; */
+"d08-r7-9Gk.text" = "22";
+
+/* Class = "UILabel"; text = "用戶"; ObjectID = "d3Z-4C-OAf"; */
+"d3Z-4C-OAf.text" = "用戶";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "dHv-s0-RS5"; */
+"dHv-s0-RS5.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "功能"; ObjectID = "dPd-cZ-Y7V"; */
+"dPd-cZ-Y7V.text" = "功能";
+
+/* Class = "UILabel"; text = "Node"; ObjectID = "dYO-Mr-wd1"; */
+"dYO-Mr-wd1.text" = "Node";
+
+/* Class = "UITextField"; placeholder = "0.0.0.0"; ObjectID = "dwh-I2-nyg"; */
+"dwh-I2-nyg.placeholder" = "0.0.0.0";
+
+/* Class = "UIButton"; normalTitle = "Apply"; ObjectID = "e5A-Ov-NUI"; */
+"e5A-Ov-NUI.normalTitle" = "Apply";
+
+/* Class = "UITextField"; text = "Router"; ObjectID = "e7O-1s-wvM"; */
+"e7O-1s-wvM.text" = "Router";
+
+/* Class = "UILabel"; text = "Link"; ObjectID = "ha4-me-0LD"; */
+"ha4-me-0LD.text" = "Link";
+
+/* Class = "UIButton"; normalTitle = "Save & Update"; ObjectID = "hkQ-x8-RU5"; */
+"hkQ-x8-RU5.normalTitle" = "Save & Update";
+
+/* Class = "UITextView"; text = "..."; ObjectID = "hmy-QW-Mhg"; */
+"hmy-QW-Mhg.text" = "...";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "iFW-Qr-sLD"; */
+"iFW-Qr-sLD.text" = "Label";
+
+/* Class = "UILabel"; text = "Port"; ObjectID = "iGU-5J-IrO"; */
+"iGU-5J-IrO.text" = "Port";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "jBW-my-m96"; */
+"jBW-my-m96.text" = "Label";
+
+/* Class = "UITextField"; placeholder = "192.168.x.x / router.asus.com"; ObjectID = "kU0-2p-Tce"; */
+"kU0-2p-Tce.placeholder" = "192.168.x.x / router.asus.com";
+
+/* Class = "UITextField"; text = "router.asus.com"; ObjectID = "kU0-2p-Tce"; */
+"kU0-2p-Tce.text" = "router.asus.com";
+
+/* Class = "UILabel"; text = "Address"; ObjectID = "kog-02-Oc0"; */
+"kog-02-Oc0.text" = "Address";
+
+/* Class = "UIButton"; normalTitle = "Select"; ObjectID = "lGO-wM-XYD"; */
+"lGO-wM-XYD.normalTitle" = "Select";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "lXS-FN-ozF"; */
+"lXS-FN-ozF.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "關閉"; ObjectID = "lpV-lz-KuE"; */
+"lpV-lz-KuE.normalTitle" = "關閉";
+
+/* Class = "UIButton"; normalTitle = "Save"; ObjectID = "mlT-Xz-XMu"; */
+"mlT-Xz-XMu.normalTitle" = "Save";
+
+/* Class = "UILabel"; text = "Mode"; ObjectID = "ne5-l3-MjE"; */
+"ne5-l3-MjE.text" = "Mode";
+
+/* Class = "UILabel"; text = "安裝、管理 Shadowsock 服務器端\n重啟服務器\n可透過 JSON 腳本配置更多功能"; ObjectID = "oDH-5v-9xh"; */
+"oDH-5v-9xh.text" = "安裝、管理 Shadowsock 服務器端\n重啟服務器\n可透過 JSON 腳本配置更多功能";
+
+/* Class = "UILabel"; text = "密碼"; ObjectID = "p7A-H6-w26"; */
+"p7A-H6-w26.text" = "密碼";
+
+/* Class = "UILabel"; text = "面向梅林路由器的 Shadowsock 管理面板"; ObjectID = "pES-Wx-fkY"; */
+"pES-Wx-fkY.text" = "面向梅林路由器的 Shadowsock 管理面板";
+
+/* Class = "UILabel"; text = "..."; ObjectID = "pYv-8j-fyM"; */
+"pYv-8j-fyM.text" = "...";
+
+/* Class = "UILabel"; text = "設定路由器"; ObjectID = "qgw-bd-eNB"; */
+"qgw-bd-eNB.text" = "設定路由器";
+
+/* Class = "UITextField"; placeholder = "Required"; ObjectID = "r6M-CI-XkN"; */
+"r6M-CI-XkN.placeholder" = "Required";
+
+/* Class = "UILabel"; text = "Running Node"; ObjectID = "r9w-nu-J8T"; */
+"r9w-nu-J8T.text" = "Running Node";
+
+/* Class = "UILabel"; text = "訪問信息已保存"; ObjectID = "rWd-E4-D9N"; */
+"rWd-E4-D9N.text" = "訪問信息已保存";
+
+/* Class = "UILabel"; text = "Apply option"; ObjectID = "rhb-qq-U3Q"; */
+"rhb-qq-U3Q.text" = "Apply option";
+
+/* Class = "UILabel"; text = "Speed"; ObjectID = "sOs-EU-mqf"; */
+"sOs-EU-mqf.text" = "Speed";
+
+/* Class = "UILabel"; text = "多個訂閱來源以多行形式輸入"; ObjectID = "tEG-dT-EsN"; */
+"tEG-dT-EsN.text" = "多個訂閱來源以多行形式輸入";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "tN1-eE-ftT"; */
+"tN1-eE-ftT.text" = "Title";
+
+/* Class = "UILabel"; text = "Router SSH"; ObjectID = "tTN-1j-zUG"; */
+"tTN-1j-zUG.text" = "Router SSH";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "tUc-TR-GRK"; */
+"tUc-TR-GRK.text" = "Label";
+
+/* Class = "UILabel"; text = "了解如何開啟路由器 SSH"; ObjectID = "to8-rr-cna"; */
+"to8-rr-cna.text" = "了解如何開啟路由器 SSH";
+
+/* Class = "UITextField"; placeholder = "Connect Name"; ObjectID = "tyD-VF-at5"; */
+"tyD-VF-at5.placeholder" = "Connect Name";
+
+/* Class = "UILabel"; text = "Nodes"; ObjectID = "uUc-8S-dwo"; */
+"uUc-8S-dwo.text" = "Nodes";
+
+/* Class = "UILabel"; text = "Protocol Param"; ObjectID = "uXB-Tv-JcT"; */
+"uXB-Tv-JcT.text" = "Protocol Param";
+
+/* Class = "UILabel"; text = "00"; ObjectID = "upO-SV-6Pn"; */
+"upO-SV-6Pn.text" = "00";
+
+/* Class = "UILabel"; text = "Row"; ObjectID = "vPb-P0-g2h"; */
+"vPb-P0-g2h.text" = "Row";
+
+/* Class = "UILabel"; text = "面向服務器（Ubuntu / Debian）"; ObjectID = "xVU-N4-UA8"; */
+"xVU-N4-UA8.text" = "面向服務器（Ubuntu / Debian）";
+
+/* Class = "UILabel"; text = "Connect"; ObjectID = "xwv-zi-0hS"; */
+"xwv-zi-0hS.text" = "Connect";
+
+/* Class = "UITextField"; placeholder = "admin / root"; ObjectID = "ywM-am-N0R"; */
+"ywM-am-N0R.placeholder" = "admin / root";
+
+/* Class = "UILabel"; text = "Version"; ObjectID = "zZ7-wi-14g"; */
+"zZ7-wi-14g.text" = "Version";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "zqn-8H-Fv9"; */
+"zqn-8H-Fv9.text" = "Title";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "zvn-gO-c1p"; */
+"zvn-gO-c1p.text" = "Name";

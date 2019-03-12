@@ -21,11 +21,6 @@ or alternatively using `brew cask install fastlane`
 fastlane ios beta
 ```
 Push a new beta build to TestFlight
-### ios add_group_to_tf_build
-```
-fastlane ios add_group_to_tf_build
-```
-add_group_to_tf_build
 
 ----
 

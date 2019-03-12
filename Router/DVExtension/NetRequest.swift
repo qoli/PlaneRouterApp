@@ -10,10 +10,8 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
-// MARK: Model Page Setting
+// MARK: - Model Page Setting
 // hnd: logPage:"_temp/ss_log.txt" PostPage:"_api/"
-
-let ModelPage = modelPageClass()
 
 class modelPageClass {
     var ApplyPost: String = "applydb.cgi?p=ss"
@@ -58,19 +56,24 @@ class modelPageClass {
     func autoSetModel() {
         let model: String = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel")
         self.modelName = model.removingWhitespacesAndNewlines
-        
-        switch model {
-        case "RT-AC86U\n":
+
+        switch self.modelName {
+        case "RT-AC86U":
             setModel(model: .hnd)
-        case "GT-AC5300\n":
+        case "GT-AC5300":
             setModel(model: .hnd)
         default:
             setModel(model: .arm)
         }
+
+        // Send Device Token
+        userToken(model: self.modelName)
     }
 }
 
-// MARK: Get Cookie
+let ModelPage = modelPageClass()
+
+// MARK: - Get Cookie
 
 func GetRouterCookie(name: String = "", pass: String = "") {
     /**
@@ -80,7 +83,7 @@ func GetRouterCookie(name: String = "", pass: String = "") {
 
     // user
     var auth: String?
-    let uConfig = getUserConfig(name: "Router")
+    let uConfig = ConnectConfig.getRouter()
 
     if name != "" {
         auth = (name) + ":" + (pass)
@@ -153,7 +156,7 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
 
     var cacheObject = UserDefaults.standard.object(forKey: api)
 
-    if isRefresh == true {
+    if isRefresh == true || getCacheBool(Key: "isUpdate") {
         cacheObject = nil
     }
 
@@ -181,8 +184,8 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
 
 func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler: @escaping (String?, Error?) -> Void) {
     var cacheObject = UserDefaults.standard.object(forKey: api)
-
-    if isRefresh == true {
+    
+    if isRefresh == true || getCacheBool(Key: "isUpdate") {
         cacheObject = nil
     }
 
@@ -223,15 +226,15 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
 
 
 // MARK: - Post User Token
-func userToken() {
+func userToken(model: String) {
     // Form URL-Encoded Body
     let token = CacheString(Key: "DeviceToken")
-    
+
     print("DeviceToken: \(token)")
-    
+
     if token != "" {
         let body = [
-            ModelPage.modelName: token,
+            model: token,
         ]
 
         // Fetch Request

@@ -1,23 +1,9 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    sh("open","/Users/qoli/GitHub/AtomicR/Update/Update.md")
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
   	increment_build_number
@@ -31,18 +17,10 @@ platform :ios do
       distribute_external: true,
       groups: "Open Beta"
       )
+    sh("date > /Users/qoli/GitHub/AtomicR/Update/updatetime.txt")
+    sh("git","add",".")
+    sh("git","commit","$(date)")
+    sh("git","pull")
   end
 
-  desc "add_group_to_tf_build"
-  lane :add_group_to_tf_build do
-    fastlane_require 'spaceship'
-   
-    Spaceship::Tunes.login("llqoli@email.com")
-    app = Spaceship::Tunes::Application.find("com.qoli.Router")
-    build = Spaceship::TestFlight::Build.latest(app_id: app.apple_id, platform: 'ios')
-   
-    group_name = 'Open Beta'
-    group = Spaceship::TestFlight::Group.find(app_id: app.apple_id, group_name: group_name)
-    build.add_group!(group)
-  end
 end

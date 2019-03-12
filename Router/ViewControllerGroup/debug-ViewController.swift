@@ -11,7 +11,6 @@ import UIKit
 class debugPage_ViewController: UIViewController {
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
     }
-
 }

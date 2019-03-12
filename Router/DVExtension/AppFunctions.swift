@@ -12,56 +12,9 @@ import Alamofire
 import SwiftyJSON
 import NotificationBannerSwift
 
-
-// MARK: - app service list
-
-func addServiceList(serviceName: String) {
-    let cacheKey = "com.qoli.ServiceList"
-    var cacheResult = UserDefaults.standard.array(forKey: cacheKey)
-    if cacheResult == nil {
-        cacheResult = []
-    }
-    cacheResult?.append(serviceName)
-
-    if serviceName == "" {
-        cacheResult = []
-    }
-
-    UserDefaults.standard.set(cacheResult, forKey: cacheKey)
-}
-
-func removeServiceList(serviceName: String) {
-    let cacheKey = "com.qoli.ServiceList"
-    var cacheResult = UserDefaults.standard.array(forKey: cacheKey)
-    if cacheResult == nil {
-        cacheResult = []
-    } else {
-        cacheResult = cacheResult?.filter { $0 as! String != serviceName }
-    }
-
-    if serviceName == "" {
-        cacheResult = []
-    }
-
-    UserDefaults.standard.set(cacheResult, forKey: cacheKey)
-}
-
-func getServiceList() -> Array<Any> {
-    let cacheKey = "com.qoli.ServiceList"
-    let cacheResult = UserDefaults.standard.array(forKey: cacheKey)
-    return cacheResult ?? []
-}
-
 // MARK: - run in ssh
 
-func SSHRun(
-    command: String,
-    cacheKey: String = "",
-    isRefresh: Bool = false,
-    isRouter: Bool = true,
-    isShowResponse: Bool = false,
-    isTest: Bool = false
-) -> String {
+func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isRouter: Bool = true, isShowResponse: Bool = false, isTest: Bool = false) -> String {
 
     if isTest {
         print("[SSHRun] not Run: \(command)")
@@ -75,7 +28,7 @@ func SSHRun(
     var password: String!
 
     if isRouter {
-        let uConfig = getUserConfig(name: "Router")
+        let uConfig = ConnectConfig.getRouter()
         host = uConfig.address
         username = uConfig.loginName
         password = uConfig.loginPassword
@@ -85,7 +38,7 @@ func SSHRun(
         password = UserDefaults.standard.string(forKey: "serverPass")
     }
 
-    if cacheKey == "" {
+    if cacheKey == "" || getCacheBool(Key: "isUpdate") {
         isR = true
     }
 
@@ -133,6 +86,13 @@ func CacheString(text: String = "", Key: String) -> String {
     }
 }
 
+func setCacheBool(value: Bool, Key: String) {
+    UserDefaults.standard.set(value, forKey: Key)
+}
+
+func getCacheBool(Key: String) -> Bool{
+    return UserDefaults.standard.bool(forKey: Key)
+}
 
 
 // MARK: - 十六进制转十进制
@@ -179,3 +139,21 @@ func buttonTapAnimate(button: UIButton) {
             })
         })
 }
+
+func getCurrentLanguage() -> String {
+    let preferredLang = Bundle.main.preferredLocalizations.first! as NSString
+    print("当前系统语言:\(preferredLang)")
+    
+    switch String(describing: preferredLang) {
+    case "en-US", "en-CN":
+        return "en"//英文
+    case "zh-Hans-US","zh-Hans-CN","zh-Hans":
+        return "sc"//中文
+    case "zh-TW","zh-HK","zh-Hant","zh-Hant-CN":
+        return "tc"//中文
+    default:
+        return "en"
+    }
+}
+
+let OSLanguage = getCurrentLanguage()

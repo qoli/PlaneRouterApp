@@ -14,6 +14,8 @@ import NotificationBannerSwift
 
 class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChannelDelegate, UITextViewDelegate {
 
+    // MARK: - var
+    
     var session: NMSSHSession!
     var category = ""
     var lastCommand = ""
@@ -23,6 +25,8 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
     var password = ""
     var isKeyboard: Bool = false
 
+    var Service: serviceListClass.serviceStruct?
+    
     @IBOutlet weak var textView: UITextView!
 
 
@@ -106,21 +110,28 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         self.lastCommand = ""
     }
 
-    func SSHConnect() {
+    // MARK: - SSH Connect
+    
+    func SSHConnect() -> Void {
         print("SSHConnect()")
-        message(message: "Connecting...")
+        
+        let connectName = self.Service?.connectName
+        
+        if connectName == "" {
+            self.exitMessage(message: "No Config")
+            return
+        } else {
+            message(message: "Connecting...")
+        }
+        
         DispatchQueue.main.async(execute: {
-
-            let uConfig = getUserConfig(name: "Router")
-            var host = uConfig.address
-            var username = uConfig.loginName
-            var password = uConfig.loginPassword
-
-            if self.category == "server" {
-                host = UserDefaults.standard.string(forKey: "serverAddress") ?? ""
-                username = UserDefaults.standard.string(forKey: "serverUser") ?? ""
-                password = UserDefaults.standard.string(forKey: "serverPass") ?? ""
-            }
+            
+            let uConfig = ConnectConfig.getByID(identifier: self.Service?.connectID ?? "")
+            
+//            let uConfig = getUserConfig(name: connectName!)
+            let host = uConfig.address
+            let username = uConfig.loginName
+            let password = uConfig.loginPassword
 
             if host != "" {
                 self.session = NMSSHSession(host: host, andUsername: username)
@@ -150,7 +161,7 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
                 }
             } else {
                 // Host == ""
-                self.exitMessage(message: "Missing configuration")
+                self.exitMessage(message: "Missing Host")
             }
 
 

@@ -10,6 +10,7 @@ import UIKit
 import Hero
 import SwiftyJSON
 import SafariServices
+import Localize_Swift
 
 class settingTitleCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
@@ -83,7 +84,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Setting Page
     
     @IBOutlet weak var pageTitle: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -107,14 +108,14 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
     var isAdd: Bool = true
     var isRouter: Bool = false
-    var configName: String = ""
+    var config: connectClass.ConnectStruct!
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goSettingDetailSegue" {
             if let destinationVC = segue.destination as? SettingDetail_ViewController {
                 destinationVC.isAdd = self.isAdd
                 destinationVC.isRouter = self.isRouter
-                destinationVC.name = self.configName
+                destinationVC.config = self.config
             }
         }
     }
@@ -134,8 +135,9 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func loadUserConfig() {
+
         userJSON = []
-        let uConfig = getAllUserConfig()
+        let uConfig = ConnectConfig.getAllJSON()
         let userData = uConfig
         for u in userData {
             if let data = u.data(using: .utf8) {
@@ -169,14 +171,28 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch self.tableData[indexPath.row]["type"].stringValue {
         case "title":
             let cell = tableView.dequeueReusableCell(withIdentifier: "title") as! settingTitleCell
             cell.title.text = self.tableData[indexPath.row]["title"].stringValue
+            if OSLanguage == "sc" {
+                cell.title.text = self.tableData[indexPath.row]["titlesc"].stringValue
+            }
+            if OSLanguage == "tc" {
+                cell.title.text = self.tableData[indexPath.row]["titletc"].stringValue
+            }
+            
             return cell
         case "row":
             let cell = tableView.dequeueReusableCell(withIdentifier: "row") as! settingRowCell
             cell.row.text = self.tableData[indexPath.row]["title"].stringValue
+            if OSLanguage == "sc" {
+                cell.row.text = self.tableData[indexPath.row]["titlesc"].stringValue
+            }
+            if OSLanguage == "tc" {
+                cell.row.text = self.tableData[indexPath.row]["titletc"].stringValue
+            }
             if self.tableData[indexPath.row]["icon"].stringValue != "" {
                 cell.imageRow.image = UIImage(named: self.tableData[indexPath.row]["icon"].stringValue)
             }
@@ -225,7 +241,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             } else {
                 self.isRouter = false
             }
-            self.configName = self.tableData[indexPath.row]["name"].stringValue
+            self.config = ConnectConfig.getByID(identifier: self.tableData[indexPath.row]["identifier"].stringValue)
             self.performSegue(withIdentifier: "goSettingDetailSegue", sender: nil)
 
         }
@@ -244,11 +260,11 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: -
     
     func showMessageResetApp(){
-        let exitAppAlert = UIAlertController(title: "Restart App is needed",
-                                             message: "We need to exit the app on Clear all Data.\nPlease reopen the app after this.",
+        let exitAppAlert = UIAlertController(title: "Restart App is needed".localized(),
+                                             message: "We need to exit the app on Clear all Data.\nPlease reopen the app after this.".localized(),
                                              preferredStyle: .alert)
         
-        let resetApp = UIAlertAction(title: "Close Now", style: .destructive) {
+        let resetApp = UIAlertAction(title: "Close Now".localized(), style: .destructive) {
             (alert) -> Void in
             
             let domain = Bundle.main.bundleIdentifier!
@@ -263,7 +279,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             })
         }
         
-        let laterAction = UIAlertAction(title: "Later", style: .cancel) {
+        let laterAction = UIAlertAction(title: "Later".localized(), style: .cancel) {
             (alert) -> Void in
 //            self.dismiss(animated: true, completion: nil)
         }

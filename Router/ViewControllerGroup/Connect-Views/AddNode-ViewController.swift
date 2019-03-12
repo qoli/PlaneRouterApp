@@ -61,7 +61,7 @@ class AddNode_ViewController: UIViewController {
         } else {
             nodeModeName.text = "Shadowsock node  \(lastNumber)"
             
-            obfsParamTitle.text = "obfs Host"
+            obfsParamTitle.text = "obfs Host".localized()
             obfsTop.constant = 10
             obfsParamTitle.isHidden = true
             obfsParam.isHidden = true
@@ -199,15 +199,15 @@ class AddNode_ViewController: UIViewController {
         var description: String {
             switch self {
             case .GFWList:
-                return "GFW List"
+                return "GFW List".localized()
             case .WhiteList:
-                return "White List"
+                return "White List".localized()
             case .GameMode:
-                return "Game Mode"
+                return "Game Mode".localized()
             case .Global:
-                return "Global"
+                return "Global".localized()
             case .backtoChina:
-                return "Back to China"
+                return "Back to China".localized()
             }
         }
     }
@@ -294,7 +294,7 @@ class AddNode_ViewController: UIViewController {
                     }))
         }
 
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
         self.present(alertController, animated: true, completion: nil)
     }
 
@@ -314,7 +314,7 @@ class AddNode_ViewController: UIViewController {
                 }))
         }
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
         self.present(alertController, animated: true, completion: nil)
     }
 
@@ -334,7 +334,7 @@ class AddNode_ViewController: UIViewController {
                 }))
         }
         
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
         self.present(alertController, animated: true, completion: nil)
     }
 
@@ -358,7 +358,7 @@ class AddNode_ViewController: UIViewController {
                     }))
             }
             
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
             self.present(alertController, animated: true, completion: nil)
         case false:
             // ss
@@ -383,7 +383,7 @@ class AddNode_ViewController: UIViewController {
                     }))
             }
             
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
             self.present(alertController, animated: true, completion: nil)
         }
     }
@@ -400,7 +400,7 @@ class AddNode_ViewController: UIViewController {
         ss_obfs: String,
         ss_obfs_host: String) {
         if name == "" {
-            messageNotification(message: "name cannot empty")
+            messageNotification(message: "name cannot empty".localized())
         }
         
         let urlParams = [
@@ -468,7 +468,7 @@ class AddNode_ViewController: UIViewController {
         rss_obfs_param: String) {
         
         if name == "" {
-            messageNotification(message: "name cannot empty")
+            messageNotification(message: "name cannot empty".localized())
         }
         
         let urlParams = [

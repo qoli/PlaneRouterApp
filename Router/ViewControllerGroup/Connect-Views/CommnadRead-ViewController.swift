@@ -11,6 +11,7 @@ import Hero
 import Alamofire
 import SwiftyJSON
 import JGProgressHUD
+import Localize_Swift
 
 class CommnadRead_ViewController: UIViewController {
 
@@ -168,7 +169,7 @@ class CommnadRead_ViewController: UIViewController {
 
                 if value?.contains("XU6J03M6") ?? false {
                     self.isAppear = false
-                    self.pageTitle.text = "Finish"
+                    self.pageTitle.text = "Finish".localized()
                     self.hud = JGProgressHUD(style: .dark)
                     self.hud.textLabel.text = nil
                     self.hud.detailTextLabel.text = nil

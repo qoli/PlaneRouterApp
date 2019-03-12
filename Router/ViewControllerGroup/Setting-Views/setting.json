@@ -2,55 +2,75 @@
     "dataTop": [
         {
             "type": "title",
-            "title": "Hosts"
+            "title": "Hosts",
+            "titlesc": "连接",
+            "titletc": "連線"
         }
     ],
     "dataBottom": [
         {
             "type": "add",
-            "title": "New Hosts"
+            "title": "New Hosts",
+            "titlesc": "新建连接",
+            "titletc": "新建連接"
         },
         {
             "type": "title",
-            "title": "Setting"
+            "title": "Setting",
+            "titlesc": "设置",
+            "titletc": "設定"
         },
         {
             "type": "row",
             "title": "Reset local storage data",
+            "titlesc": "重置本次储存",
+            "titletc": "重置 App 數據",
             "icon": "iconFontEraser16",
             "do": "reset"
         },
         {
             "type": "title",
-            "title": "Help & About"
+            "title": "Help & About",
+            "titlesc": "关于与帮助",
+            "titletc": "關於和幫助",
         },
         {
             "type": "row",
             "title": "How to turn on router SSH",
+            "titlesc": "如何打开路由器的 SSH",
+            "titletc": "如何打開路由器的 SSH",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/HowtoSSH.md"
         },
         {
             "type": "row",
             "title": "How to write your own scripts",
+            "titlesc": "学习怎么编写自己的脚本",
+            "titletc": "如何編寫自己的腳本",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/BuildMyScript.md"
         },
         {
             "type": "row",
             "title": "Join TestFlight",
+            "titlesc": "加入测试计划",
+            "titletc": "加入 TestFlight",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/invitation.md"
         },
         {
             "type": "row",
             "title": "Feedback",
+            "titlesc": "反馈问题",
+            "titletc": "反饋問題",
             "do": "sendMail",
             "value": "qoli@me.com"
         },
         {
             "type": "row",
             "title": "Share App",
+            "titlesc": "分享应用程式",
+            "titletc": "分享 App",
             "do": "share"
         }
     ]

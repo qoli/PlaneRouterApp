@@ -6,6 +6,9 @@ target 'Router' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
+  source 'https://github.com/CocoaPods/Specs.git'
+  pod 'Localize-Swift', '~> 2.0'
+  
   # UI
   pod 'Hero'
   pod 'Charts'

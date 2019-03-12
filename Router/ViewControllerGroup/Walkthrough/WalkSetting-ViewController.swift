@@ -64,21 +64,28 @@ class WalkSetting_ViewController: UIViewController {
             banner.subtitleLabel?.text = "開始嘗試連接"
 
             delay(0.6) {
-                let uConfig = userConfig(
-                    name: "Router",
-                    mode: "http",
+                
+                _ = ConnectConfig.routerConfig(
+                    mode: .http,
                     address: self.address.text ?? "router.asus.com",
                     port: 80,
                     loginName: self.name.text ?? "",
-                    loginPassword: self.pass.text ?? "")
+                    loginPassword: self.pass.text ?? "",
+                    type: .Router
+                )
 
-                let r = saveUserConfig(userConfig: uConfig)
-                print(r)
-                if !r.0 {
-                    self.banner.subtitleLabel?.text = r.1
-                } else {
-                    self.SSHRun()
-                }
+//                let uConfig = userConfig(
+//                    name: "Router",
+//                    mode: "http",
+//                    address: self.address.text ?? "router.asus.com",
+//                    port: 80,
+//                    loginName: self.name.text ?? "",
+//                    loginPassword: self.pass.text ?? "")
+
+//                let r = saveUserConfig(userConfig: uConfig)
+//                ConnectConfig.add(connect: config)
+                
+                self.SSHRun()
             }
         }
 
@@ -88,7 +95,7 @@ class WalkSetting_ViewController: UIViewController {
 
     func SSHRun() {
 
-        let uConfig = getUserConfig(name: "Router")
+        let uConfig = ConnectConfig.getRouter()
 
         print(uConfig)
 

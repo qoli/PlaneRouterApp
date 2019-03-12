@@ -11,7 +11,7 @@
 		F900A7112222564D00F206FA /* ACL-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A7102222564D00F206FA /* ACL-ViewController.swift */; };
 		F900A71322229A3B00F206FA /* SettingTable-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A71222229A3B00F206FA /* SettingTable-ViewController.swift */; };
 		F900A7162222A66100F206FA /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F900A7152222A66100F206FA /* DictionaryExtensions.swift */; };
-		F91B41632235AE7D0063D632 /* NodeManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91B41622235AE7D0063D632 /* NodeManage.swift */; };
+		F91AAE082237D22200B190D1 /* ServiceListClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91AAE072237D22200B190D1 /* ServiceListClass.swift */; };
 		F91C3035220BDD6200703AF2 /* CoreRunningStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91C3034220BDD6200703AF2 /* CoreRunningStatusButton.swift */; };
 		F929430F221A6F08000E8BF2 /* App-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F929430E221A6F08000E8BF2 /* App-ViewController.swift */; };
 		F92C220B2228123D0045ACBA /* UnderlinedLabel+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C220A2228123D0045ACBA /* UnderlinedLabel+UILabel.swift */; };
@@ -20,9 +20,9 @@
 		F95350A42220A21B00B2486D /* List-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95350A32220A21B00B2486D /* List-ViewController.swift */; };
 		F95350A822218A4300B2486D /* CommnadRead-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95350A722218A4300B2486D /* CommnadRead-ViewController.swift */; };
 		F955F8ED220C1CCF00202323 /* ServiceStatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F955F8EC220C1CCF00202323 /* ServiceStatusView.xib */; };
+		F959AA1C22382A3A00551405 /* ConnectClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F959AA1B22382A3A00551405 /* ConnectClass.swift */; };
 		F95A3A70222E8F7E00FEF460 /* setting.json in Resources */ = {isa = PBXBuildFile; fileRef = F95A3A6F222E8F7E00FEF460 /* setting.json */; };
 		F95A3A72222E9AF500FEF460 /* SettingDetail-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95A3A71222E9AF500FEF460 /* SettingDetail-ViewController.swift */; };
-		F95A3A74222EA14800FEF460 /* UserConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95A3A73222EA14800FEF460 /* UserConfig.swift */; };
 		F95E3FD4220C1F31003046FB /* ServiceStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E3FD3220C1F31003046FB /* ServiceStatusView.swift */; };
 		F95E3FD6220C29B5003046FB /* Setting-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E3FD5220C29B5003046FB /* Setting-ViewController.swift */; };
 		F971F970220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */; };
@@ -48,6 +48,7 @@
 		F9BC9210221A95E90078BD67 /* NetRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC920F221A95E90078BD67 /* NetRequest.swift */; };
 		F9BC9216221AAA5F0078BD67 /* JSON-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9BC9215221AAA5F0078BD67 /* JSON-ViewController.swift */; };
 		F9E7A9B722116FF000332A01 /* UIFont+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9E7A9B622116FF000332A01 /* UIFont+Additions.swift */; };
+		F9F62958223865DC002C49CD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = F9F6295A223865DC002C49CD /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,7 +58,7 @@
 		F900A7102222564D00F206FA /* ACL-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ACL-ViewController.swift"; sourceTree = "<group>"; };
 		F900A71222229A3B00F206FA /* SettingTable-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingTable-ViewController.swift"; sourceTree = "<group>"; };
 		F900A7152222A66100F206FA /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
-		F91B41622235AE7D0063D632 /* NodeManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeManage.swift; sourceTree = "<group>"; };
+		F91AAE072237D22200B190D1 /* ServiceListClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceListClass.swift; sourceTree = "<group>"; };
 		F91C3034220BDD6200703AF2 /* CoreRunningStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreRunningStatusButton.swift; sourceTree = "<group>"; };
 		F929430E221A6F08000E8BF2 /* App-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App-ViewController.swift"; sourceTree = "<group>"; };
 		F92C220A2228123D0045ACBA /* UnderlinedLabel+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UnderlinedLabel+UILabel.swift"; sourceTree = "<group>"; };
@@ -66,9 +67,9 @@
 		F95350A32220A21B00B2486D /* List-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List-ViewController.swift"; sourceTree = "<group>"; };
 		F95350A722218A4300B2486D /* CommnadRead-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CommnadRead-ViewController.swift"; sourceTree = "<group>"; };
 		F955F8EC220C1CCF00202323 /* ServiceStatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServiceStatusView.xib; sourceTree = "<group>"; };
+		F959AA1B22382A3A00551405 /* ConnectClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectClass.swift; sourceTree = "<group>"; };
 		F95A3A6F222E8F7E00FEF460 /* setting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setting.json; sourceTree = "<group>"; };
 		F95A3A71222E9AF500FEF460 /* SettingDetail-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingDetail-ViewController.swift"; sourceTree = "<group>"; };
-		F95A3A73222EA14800FEF460 /* UserConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserConfig.swift; sourceTree = "<group>"; };
 		F95E3FD3220C1F31003046FB /* ServiceStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStatusView.swift; sourceTree = "<group>"; };
 		F95E3FD5220C29B5003046FB /* Setting-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Setting-ViewController.swift"; sourceTree = "<group>"; };
 		F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+ExtendedHitAreaButton.swift"; sourceTree = "<group>"; };
@@ -97,6 +98,12 @@
 		F9BC920F221A95E90078BD67 /* NetRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetRequest.swift; sourceTree = "<group>"; };
 		F9BC9215221AAA5F0078BD67 /* JSON-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSON-ViewController.swift"; sourceTree = "<group>"; };
 		F9E7A9B622116FF000332A01 /* UIFont+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont+Additions.swift"; sourceTree = "<group>"; };
+		F9F6295222385D8D002C49CD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		F9F6295322385D8D002C49CD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F9F6295422385D93002C49CD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		F9F6295522385D93002C49CD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F9F62959223865DC002C49CD /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		F9F6295B223865DE002C49CD /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +239,7 @@
 				F971F96D220BC38600C5F4B9 /* IBInspectable */,
 				F971F974220BD13800C5F4B9 /* Zeplin */,
 				F9990F53220E829D006EA8D7 /* DVExtension */,
+				F9F6295A223865DC002C49CD /* Localizable.strings */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -240,8 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				F9A93027220EB8E100FF7482 /* AppFunctions.swift */,
-				F91B41622235AE7D0063D632 /* NodeManage.swift */,
-				F95A3A73222EA14800FEF460 /* UserConfig.swift */,
+				F91AAE072237D22200B190D1 /* ServiceListClass.swift */,
+				F959AA1B22382A3A00551405 /* ConnectClass.swift */,
 				F9BC920F221A95E90078BD67 /* NetRequest.swift */,
 				F9990F51220E8298006EA8D7 /* StringExtensions.swift */,
 				F92C220A2228123D0045ACBA /* UnderlinedLabel+UILabel.swift */,
@@ -296,6 +304,9 @@
 		F984A946220A9D6C0037FE29 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "庫倪";
@@ -329,6 +340,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hant",
 			);
 			mainGroup = F984A945220A9D6C0037FE29;
 			productRefGroup = F984A94F220A9D6C0037FE29 /* Products */;
@@ -348,6 +360,7 @@
 				F95A3A70222E8F7E00FEF460 /* setting.json in Resources */,
 				F984A95F220A9D6C0037FE29 /* LaunchScreen.storyboard in Resources */,
 				F955F8ED220C1CCF00202323 /* ServiceStatusView.xib in Resources */,
+				F9F62958223865DC002C49CD /* Localizable.strings in Resources */,
 				F984A95C220A9D6C0037FE29 /* Assets.xcassets in Resources */,
 				F984A957220A9D6C0037FE29 /* Main.storyboard in Resources */,
 				F9B4129B220BD56D00756DF8 /* CoreRunningStatusButton.xib in Resources */,
@@ -369,6 +382,7 @@
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/Localize-Swift/Localize_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/MarkdownKit/MarkdownKit.framework",
 				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/NMSSH/NMSSH.framework",
@@ -385,6 +399,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Localize_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarkdownKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NMSSH.framework",
@@ -424,7 +439,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F95A3A74222EA14800FEF460 /* UserConfig.swift in Sources */,
 				F9E7A9B722116FF000332A01 /* UIFont+Additions.swift in Sources */,
 				F9990F52220E8298006EA8D7 /* StringExtensions.swift in Sources */,
 				F900A7162222A66100F206FA /* DictionaryExtensions.swift in Sources */,
@@ -441,10 +455,10 @@
 				F984A95A220A9D6C0037FE29 /* Router.xcdatamodeld in Sources */,
 				F900A7112222564D00F206FA /* ACL-ViewController.swift in Sources */,
 				F9BC9216221AAA5F0078BD67 /* JSON-ViewController.swift in Sources */,
+				F959AA1C22382A3A00551405 /* ConnectClass.swift in Sources */,
 				F95350A42220A21B00B2486D /* List-ViewController.swift in Sources */,
 				F9ADC519222946EE00175CB1 /* WalkSetting-ViewController.swift in Sources */,
 				F95350A822218A4300B2486D /* CommnadRead-ViewController.swift in Sources */,
-				F91B41632235AE7D0063D632 /* NodeManage.swift in Sources */,
 				F984A952220A9D6C0037FE29 /* AppDelegate.swift in Sources */,
 				F971F970220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift in Sources */,
 				F971F971220BC38600C5F4B9 /* UIView+cornerRadius.swift in Sources */,
@@ -453,6 +467,7 @@
 				F93F1D64221BCC7700094CE0 /* Add-ViewController.swift in Sources */,
 				F95A3A72222E9AF500FEF460 /* SettingDetail-ViewController.swift in Sources */,
 				F900A71322229A3B00F206FA /* SettingTable-ViewController.swift in Sources */,
+				F91AAE082237D22200B190D1 /* ServiceListClass.swift in Sources */,
 				F9990F50220DECF9006EA8D7 /* Terminal-ViewController.swift in Sources */,
 				F9BC9210221A95E90078BD67 /* NetRequest.swift in Sources */,
 				F9A93028220EB8E100FF7482 /* AppFunctions.swift in Sources */,
@@ -468,6 +483,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				F984A956220A9D6C0037FE29 /* Base */,
+				F9F6295222385D8D002C49CD /* zh-Hans */,
+				F9F6295422385D93002C49CD /* zh-Hant */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -476,8 +493,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				F984A95E220A9D6C0037FE29 /* Base */,
+				F9F6295322385D8D002C49CD /* zh-Hans */,
+				F9F6295522385D93002C49CD /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		F9F6295A223865DC002C49CD /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9F62959223865DC002C49CD /* zh-Hans */,
+				F9F6295B223865DE002C49CD /* zh-Hant */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -487,6 +515,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -548,6 +577,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -607,9 +637,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 41;
+				DYLIB_CURRENT_VERSION = 44;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -633,9 +663,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 44;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 41;
+				DYLIB_CURRENT_VERSION = 44;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (

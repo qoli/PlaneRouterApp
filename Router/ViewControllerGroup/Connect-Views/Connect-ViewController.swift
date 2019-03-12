@@ -11,7 +11,7 @@ import Hero
 import Alamofire
 import SwiftyJSON
 import PopMenu
-
+import Localize_Swift
 
 class Connect_ViewController: UIViewController {
 
@@ -73,7 +73,7 @@ class Connect_ViewController: UIViewController {
 
         let controller = PopMenuViewController(sourceView: self.pageButton, actions: [
             PopMenuDefaultAction(
-                title: "Add node",
+                title: "Add node".localized(),
                 image: UIImage(named: "iconFontPlusCircle"),
                 didSelect: { action in
                     delay {
@@ -82,7 +82,7 @@ class Connect_ViewController: UIViewController {
                 }
             ),
             PopMenuDefaultAction(
-                title: "Subscribe",
+                title: "Subscribe".localized(),
                 image: UIImage(named: "iconFontServer"),
                 didSelect: { action in
                     delay {
@@ -91,7 +91,7 @@ class Connect_ViewController: UIViewController {
                 }
             ),
             PopMenuDefaultAction(
-                title: "Nodes",
+                title: "Nodes".localized(),
                 image: UIImage(named: "iconFontThList"),
                 didSelect: { action in
                     delay {
@@ -100,7 +100,7 @@ class Connect_ViewController: UIViewController {
             }
             ),
             PopMenuDefaultAction(
-                title: "ACL Setting",
+                title: "ACL Setting".localized(),
                 image: UIImage(named: "iconFontNetworkWired"),
                 didSelect: { action in
                     delay {
@@ -222,13 +222,13 @@ class Connect_ViewController: UIViewController {
             let ssEnable = SSHRun(command: "dbus get ss_basic_enable", isRefresh: true)
             if ssEnable == "\n" {
                 delay(0) {
-                    self.statusLabel.text = "Shadowsock not ready"
+                    self.statusLabel.text = "Shadowsock not ready".localized()
                 }
                 return false
             } else {
                 if ssEnable == "0" {
                     delay(0) {
-                        self.statusLabel.text = "Shadowsock not enable"
+                        self.statusLabel.text = "Shadowsock not enable".localized()
                     }
                     return false
                 } else {
@@ -248,7 +248,7 @@ class Connect_ViewController: UIViewController {
     func loopUpdateStatus() {
 
         if !isAppear {
-            self.statusTimeLabel.text = "Pause"
+            self.statusTimeLabel.text = "Pause".localized()
             print("Connect_ViewController: Pause")
         }
 
@@ -325,14 +325,14 @@ class Connect_ViewController: UIViewController {
     func updateStatusView(isSuccess: Bool, text: String) {
         if isSuccess {
             UIView.animate(withDuration: 0.4, animations: {
-                self.statusLabel.text = "Success"
+                self.statusLabel.text = "Success".localized()
                 self.statusView.backgroundColor = UIColor.appleGreen
                 self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
                 self.statusTimeLabel.text = text
             })
         } else {
             UIView.animate(withDuration: 0.4, animations: {
-                self.statusLabel.text = "Failure"
+                self.statusLabel.text = "Failure".localized()
                 self.statusView.backgroundColor = UIColor.coralPink
                 self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
                 self.statusTimeLabel.text = text
@@ -353,7 +353,7 @@ class Connect_ViewController: UIViewController {
                 let node = value["ssconf_basic_node"] ?? ""
                 let name = value["ssconf_basic_name_\(node)"] ?? ""
                 self.lineListButton.setTitle(name, for: .normal)
-                self.connectButton.setTitle("Reconnect", for: .normal)
+                self.connectButton.setTitle("Reconnect".localized(), for: .normal)
                 self.lineListButton.isEnabled = true
                 self.connectButton.isEnabled = true
             }

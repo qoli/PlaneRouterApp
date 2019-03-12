@@ -14,6 +14,7 @@ import JGProgressHUD
 import PopMenu
 import NotificationBannerSwift
 import SafariServices
+import Localize_Swift
 
 class tableLableCell: UITableViewCell {
     @IBOutlet weak var title: UILabel!
@@ -27,11 +28,11 @@ class tableLableCell: UITableViewCell {
 class tableDataCell: UITableViewCell {
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var label: UILabel!
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.selectionStyle = .none
-        
+
         if selected {
             UIView.animate(withDuration: 0.1, animations: {
                 self.layer.opacity = 0.3
@@ -47,11 +48,11 @@ class tableDataCell: UITableViewCell {
 class tableActionCell: UITableViewCell {
     @IBOutlet weak var value: UILabel!
     @IBOutlet weak var label: UILabel!
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.selectionStyle = .none
-        
+
         if selected {
             UIView.animate(withDuration: 0.1, animations: {
                 self.layer.opacity = 0.3
@@ -66,11 +67,11 @@ class tableActionCell: UITableViewCell {
 
 class tableLinkCell: UITableViewCell {
     @IBOutlet weak var link: UILabel!
-    
+
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.selectionStyle = .none
-        
+
         if selected {
             UIView.animate(withDuration: 0.1, animations: {
                 self.layer.opacity = 0.3
@@ -86,7 +87,7 @@ class tableLinkCell: UITableViewCell {
 // MARK: - JSON_ViewController
 
 class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     @IBOutlet weak var pageTitleLabel: UILabel!
     @IBOutlet weak var pageDesc: UILabel!
     @IBOutlet weak var pageButton: UIButton!
@@ -94,7 +95,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
 
     // MARK: - view
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -105,9 +106,9 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         table_init()
         page_init()
     }
-    
+
     // MARK: - Notification
-    
+
     func addNotification() {
         NotificationCenter.default.addObserver(
             self,
@@ -118,33 +119,49 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     @objc func JSONCall(_ notification: Notification) {
-        self.jsonName = notification.object as! String
+//        self.jsonName = notification.object
+        let no = notification.object as! serviceListClass.serviceStruct
+        self.jsonName = no.name
+        self.Service = no
         page_init()
     }
 
     // MARK: - Page init
+    var Service: serviceListClass.serviceStruct!
     var jsonName = "Shadowsock"
-    
+
     func page_init() {
         pageGetSrouce()
 
         if jsonName == "Shadowsock" {
             switch ModelPage.runningModel {
             case .arm:
-                pageDesc.text = "My Router: ARM Model"
+                pageDesc.text = "Router: ARM Model · \(ModelPage.modelName)"
             case .hnd:
-                pageDesc.text = "My Router: HND Model"
+                pageDesc.text = "Router: HND Model  · \(ModelPage.modelName)"
             }
-            
+
             pageButton.isHidden = true
         } else {
-            pageDesc.text = "SSH: ..."
+            updateService()
             pageButton.isHidden = false
         }
     }
 
+    func updateService() {
+        Service = ServiceList.getSerivce(identifier: Service.identifier)
+        print(Service)
+        var name = Service.connectID
+        if name == "" {
+            name = "No Setup.".localized()
+        } else {
+            name = ConnectConfig.getByID(identifier: Service.connectID).name
+        }
+        pageDesc.text = "SSH: \(name)"
+    }
+
     // MARK: - Page Action
-    
+
     @IBAction func pageAction(_ sender: UIButton) {
         // 1. Hidden install category & items
         // 2. switch SSH Config
@@ -153,17 +170,43 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let manager = PopMenuManager.default
         manager.actions = []
         manager.actions.append(PopMenuDefaultAction(
-            title: "Setup SSH",
+            title: "Setup SSH".localized(),
             image: UIImage(named: "iconFontPlug"),
             didSelect: { action in
-                //
+                delay {
+
+                    let managerSSH = PopMenuManager.default
+                    managerSSH.actions = []
+                    for config in ConnectConfig.getAll() {
+                        managerSSH.actions.append(PopMenuDefaultAction(
+                            title: config.name,
+                            didSelect: { action in
+                                delay {
+                                    print("Select: \(config)")
+                                    ServiceList.updateSerivceConnectID(identifier: self.Service.identifier, connectID: config.identifier)
+                                    self.updateService()
+                                }
+                            }))
+                    }
+
+                    managerSSH.actions.append(PopMenuDefaultAction(
+                        title: "Add Hosts".localized(),
+                        didSelect: { action in
+                            delay {
+                                self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+                            }
+                        }))
+                    managerSSH.present(on: self)
+
+                }
             }))
         manager.actions.append(PopMenuDefaultAction(
-            title: "Remove Screen",
+            title: "Remove Screen".localized(),
             image: UIImage(named: "iconFontEraser"),
             didSelect: { action in
                 delay {
-                    removeServiceList(serviceName: self.jsonName)
+//                    removeServiceList(serviceName: self.jsonName)
+                    ServiceList.removeSerice(identifier: self.Service.identifier)
                     NotificationCenter.default.post(name: NSNotification.Name.init("updateCollection"), object: nil)
                 }
             }))
@@ -173,7 +216,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     // MARK: - Load Page
     var isReload = false
-    
+
     func forceReload() {
         print("ForceReload")
         self.isReload = true
@@ -193,21 +236,22 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: - Segue pass data
-    
+
     var category = ""
     var passCommand = ""
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goTerminalViewandRun" {
             if let destinationVC = segue.destination as? Terminal_ViewController {
                 destinationVC.passCommand = self.passCommand
                 destinationVC.category = self.category
+                destinationVC.Service = self.Service
             }
         }
     }
 
     // MARK: - Table
-    
+
     var isRouter = true
     var tableData: JSON = []
 
@@ -319,7 +363,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: tap row
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableData["data"][indexPath.row]["type"].stringValue {
         case "action":

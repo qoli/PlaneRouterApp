@@ -7,6 +7,7 @@ PODS:
   - Hero (1.4.0)
   - IQKeyboardManagerSwift (6.2.0)
   - JGProgressHUD (2.0.3)
+  - Localize-Swift (2.0.0)
   - MarkdownKit (1.5)
   - MarqueeLabel/Swift (3.2.0)
   - NewPopMenu (2.1.2)
@@ -25,6 +26,7 @@ DEPENDENCIES:
   - Hero
   - IQKeyboardManagerSwift
   - JGProgressHUD
+  - Localize-Swift (~> 2.0)
   - MarkdownKit
   - NewPopMenu (~> 2.0)
   - NMSSH
@@ -40,6 +42,7 @@ SPEC REPOS:
     - Hero
     - IQKeyboardManagerSwift
     - JGProgressHUD
+    - Localize-Swift
     - MarkdownKit
     - MarqueeLabel
     - NewPopMenu
@@ -56,6 +59,7 @@ SPEC CHECKSUMS:
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
+  Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   MarkdownKit: 379028e9cd3ebf05ccac87205cd9aead446159d4
   MarqueeLabel: 440a502b91a9179bd98f9fff00ba1150650a1c0e
   NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
@@ -65,6 +69,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: a6dd015130626972f8478e7b322d6a898e3e0820
+PODFILE CHECKSUM: f0fe18dd6551b358836511f71dc2cb3f52bc07df
 
 COCOAPODS: 1.5.2
