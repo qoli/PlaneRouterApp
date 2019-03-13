@@ -414,6 +414,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func pingNext() {
         guard pings.count > 0 else {
+            // ping 的數量小於或等於 0
             UIView.animate(withDuration: 0.1, animations: {
                 self.hud.textLabel.text = nil
                 self.hud.detailTextLabel.text = nil
@@ -426,20 +427,26 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.tableView.reloadData()
             return
         }
+        // ping 的數量大於 0
         
         let ping = pings.removeFirst()
-        PlainPing.ping(ping, withTimeout: 1.0, completionBlock: { (timeElapsed: Double?, error: Error?) in
+        PlainPing.ping(ping, completionBlock: { (timeElapsed: Double?, error: Error?) in
             self.hud.detailTextLabel.text = "\(ping)\n\(self.pings.count) / \(self.pingsCount ?? 0)"
             
+            // 正常
             if let latency = timeElapsed {
                 print("\(ping) latency (ms): \(latency)")
                 self.delayData[ping] = String(format: "%.2f", latency)
             }
+            
             if let error = error {
+                // 遇到錯誤
                 print("error: \(error.localizedDescription)")
                 self.delayData[ping] = "0"
             }
+            
             self.pingNext()
+            
         })
     }
     
