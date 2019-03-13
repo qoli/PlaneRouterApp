@@ -115,9 +115,9 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
     func SSHConnect() -> Void {
         print("SSHConnect()")
         
-        let connectName = self.Service?.connectName
+        let connectID = self.Service?.connectID
         
-        if connectName == "" {
+        if connectID == "" {
             self.exitMessage(message: "No Config")
             return
         } else {
@@ -127,8 +127,6 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
         DispatchQueue.main.async(execute: {
             
             let uConfig = ConnectConfig.getByID(identifier: self.Service?.connectID ?? "")
-            
-//            let uConfig = getUserConfig(name: connectName!)
             let host = uConfig.address
             let username = uConfig.loginName
             let password = uConfig.loginPassword

@@ -13,14 +13,10 @@ platform :ios do
     	xcargs: "-UseModernBuildSystem=0"
     	)
     upload_to_testflight(
-      changelog: changelog,
+      changelog: "New build for testing",
       distribute_external: true,
       groups: "Open Beta"
       )
-    sh("date > /Users/qoli/GitHub/AtomicR/Update/updatetime.txt")
-    sh("git","add",".")
-    sh("git","commit","Fastlane - $(date)")
-    sh("git","pull")
   end
 
 end
