@@ -14,7 +14,7 @@ class WalkDone_ViewController: UIViewController {
         super.viewDidLoad()
         UserDefaults.standard.set(true, forKey: "isApp")
 
-        delay(1) {
+        delay(2) {
             self.performSegue(withIdentifier: "goAppSegue", sender: nil)
         }
     }

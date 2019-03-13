@@ -11,7 +11,7 @@
 "Global" = "全局代理";
 "Later" = "稍后";
 "No Proxy" = "不通过代理";
-"Nodes" = "节点";
+"Nodes" = "节点列表";
 "Pause" = "暂停中";
 "Reconnect" = "重新连线";
 "Remove" = "移除";
@@ -46,3 +46,10 @@
 "Connect" = "连接节点";
 
 "Setup SSH" = "选择 SSH";
+
+"Test Successful" = "验证成功";
+"TEST" = "验证";
+"Test failed, please check the account password is correct" = "验证失败，请检查账号密码是否正确";
+"Connection failed, please check whether SSH connection function is enabled" = "连接失败，请检查 SSH 功能是否启用。";
+"DONE" = "完毕";
+"Done" = "完成";

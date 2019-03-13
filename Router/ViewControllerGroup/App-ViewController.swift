@@ -18,7 +18,7 @@ class ServiceiconCollectionViewCell: UICollectionViewCell {
 
 class App_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    // MARK: - 
+    // MARK: - IBOutlet
     
     @IBOutlet weak var PanSwipe: UIPanGestureRecognizer!
     @IBOutlet weak var appTitle: UILabel!
@@ -36,28 +36,16 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var childJSONView: UIView!
     @IBOutlet weak var childAddView: UIView!
 
+    // MARK: - var
+    
     var isMenuOpen: Bool = true
     var selectServiceNumber: Int = 0
-
     var lastScreenID = ""
 
+    // MARK: - view
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        //dev
-//        delay {
-//            self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
-//        }
-        
-        // ERROR ExceptionHandler
-        if let exception = UserDefaults.standard.object(forKey: "ExceptionHandler") as? [String] {
-            
-            print("Error was occured on previous session! \n", exception, "\n\n-------------------------")
-            var exceptions = ""
-            for e in exception {
-                exceptions = exceptions + e + "\n"
-            }
-        }
         
         //goWalkSegue
         delay {
@@ -120,7 +108,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - SettingAction
     
     @IBAction func SettingAction(_ sender: UIButton) {
-        self.collectionView.alpha = 0
         self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
     }
     

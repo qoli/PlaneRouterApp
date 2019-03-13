@@ -11,7 +11,7 @@
 "Global" = "全局代理";
 "Later" = "稍後";
 "No Proxy" = "不通過代理";
-"Nodes" = "節點";
+"Nodes" = "節點列表";
 "Pause" = "暫停中";
 "Reconnect" = "重新連線";
 "Remove" = "移除";
@@ -46,3 +46,11 @@
 "Connect" = "連接節點";
 
 "Setup SSH" = "選擇 SSH";
+
+"Test Successful" = "驗證成功";
+"TEST" = "驗證";
+"Test failed, please check the account password is correct" = "驗證失敗，請檢查賬號密碼是否正確";
+"Connection failed, please check whether SSH connection function is enabled" = "連接失敗，請檢查 SSH 功能是否啟用。";
+"DONE" = "完畢";
+
+"Done" = "完畢";

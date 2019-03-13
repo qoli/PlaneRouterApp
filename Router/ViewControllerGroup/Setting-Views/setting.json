@@ -29,6 +29,14 @@
             "do": "reset"
         },
         {
+            "type": "row",
+            "title": "Refresh model data",
+            "titlesc": "刷新型号数据",
+            "titletc": "刷新型號數據",
+            "icon": "iconFontEraser16",
+            "do": "refreshModel"
+        },
+        {
             "type": "title",
             "title": "Help & About",
             "titlesc": "关于与帮助",

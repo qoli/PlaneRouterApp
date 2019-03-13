@@ -255,6 +255,7 @@ class Net_ViewController: UIViewController {
                     
                     // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
+                        print(value)
                         print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login".localized()
                         //try login

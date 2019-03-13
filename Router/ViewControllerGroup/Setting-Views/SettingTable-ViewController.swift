@@ -209,7 +209,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
     }
 
-    // MARK: - did Select Row
+    // MARK: did Select Row
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -218,6 +218,12 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             break
         case "row":
             switch self.tableData[indexPath.row]["do"].stringValue {
+            case "refreshModel":
+                let model = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel",isRefresh: true)
+                let alert = UIAlertController(title: model.removingWhitespacesAndNewlines, message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
             case "openweb":
                 let url = NSURL(string: self.tableData[indexPath.row]["value"].stringValue)
                 let svc = SFSafariViewController(url: url! as URL)
@@ -285,9 +291,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             UserDefaults.standard.removePersistentDomain(forName: domain)
             UserDefaults.standard.synchronize()
 
-            // home button pressed programmatically - to thorw app to background
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-            // terminaing app in background
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1), execute: {
                 exit(EXIT_SUCCESS)
             })
@@ -295,13 +299,12 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
         let laterAction = UIAlertAction(title: "Later".localized(), style: .cancel) {
             (alert) -> Void in
-//            self.dismiss(animated: true, completion: nil)
+            //
         }
 
         exitAppAlert.addAction(resetApp)
         exitAppAlert.addAction(laterAction)
         present(exitAppAlert, animated: true, completion: nil)
-
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {

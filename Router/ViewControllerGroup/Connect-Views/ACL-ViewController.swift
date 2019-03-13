@@ -297,85 +297,78 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
+    // MARK: - ACL Setting
+
     func ACLSetting(number: String, mode: String, ip: String = "", name: String = "") {
         print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
-        switch ModelPage.runningModel {
-        case .arm:
 
-            var urlParams = ["": ""]
+        delay(0) {
+            self.hud = JGProgressHUD(style: .dark)
+            self.hud.show(in: self.view)
+        }
 
-            if mode == "6" {
-                urlParams = [
-                    "use_rm": "1",
-                    "p": "ss_acl",
-                    "ss_acl_ip_\(number)": "",
-                    "ss_acl_name_\(number)": "",
-                    "ss_acl_port_\(number)": "",
-                    "ss_acl_mode_\(number)": "",
-                ]
-            } else {
-                if ip == "" {
+        delay {
+            switch ModelPage.runningModel {
+            case .arm:
+
+                var urlParams = ["": ""]
+
+                if mode == "6" {
                     urlParams = [
+                        "use_rm": "1",
                         "p": "ss_acl",
-                        "ss_acl_ip_\(number)": self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "",
-                        "ss_acl_name_\(number)": self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "",
-                        "ss_acl_port_\(number)": getMode(mode: mode).1,
-                        "ss_acl_mode_\(number)": mode,
-                    ]
-                } else {
-                    urlParams = [
-                        "p": "ss_acl",
-                        "ss_acl_ip_\(number)": ip,
-                        "ss_acl_name_\(number)": name,
-                        "ss_acl_port_\(number)": getMode(mode: mode).1,
-                        "ss_acl_mode_\(number)": mode,
-                    ]
-                }
-            }
-
-            print(urlParams)
-
-            // Fetch Request
-            Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
-                .validate(statusCode: 200..<300)
-                .responseString(encoding: String.Encoding.utf8) { response in
-                    switch response.result {
-                    case .success(_):
-                        self.isNeedApply = true
-                        self.table_update(isRefresh: true)
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-            }
-
-        case .hnd:
-
-            var body: [String: Any]?
-
-            if mode == "6" {
-                // remove
-                body = [
-                    "fields": [
                         "ss_acl_ip_\(number)": "",
                         "ss_acl_name_\(number)": "",
                         "ss_acl_port_\(number)": "",
                         "ss_acl_mode_\(number)": "",
-                    ],
-                    "id": 65940754,
-                    "method": "dummy_script.sh",
-                    "params": [
-
                     ]
-                ]
-            } else {
-                if ip == "" {
-                    // JSON Body
+                } else {
+                    if ip == "" {
+                        urlParams = [
+                            "p": "ss_acl",
+                            "ss_acl_ip_\(number)": self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "",
+                            "ss_acl_name_\(number)": self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "",
+                            "ss_acl_port_\(number)": self.getMode(mode: mode).1,
+                            "ss_acl_mode_\(number)": mode,
+                        ]
+                    } else {
+                        urlParams = [
+                            "p": "ss_acl",
+                            "ss_acl_ip_\(number)": ip,
+                            "ss_acl_name_\(number)": name,
+                            "ss_acl_port_\(number)": self.getMode(mode: mode).1,
+                            "ss_acl_mode_\(number)": mode,
+                        ]
+                    }
+                }
+
+                print(urlParams)
+
+                // Fetch Request
+                Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
+                    .validate(statusCode: 200..<300)
+                    .responseString(encoding: String.Encoding.utf8) { response in
+                        switch response.result {
+                        case .success(_):
+                            self.isNeedApply = true
+                            self.table_update(isRefresh: true)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                }
+
+            case .hnd:
+
+                var body: [String: Any]?
+
+                if mode == "6" {
+                    // remove
                     body = [
                         "fields": [
-                            "ss_acl_ip_\(number)": "\(self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "")",
-                            "ss_acl_name_\(number)": "\(self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "")",
-                            "ss_acl_port_\(number)": "\(getMode(mode: mode).1)",
-                            "ss_acl_mode_\(number)": "\(mode)"
+                            "ss_acl_ip_\(number)": "",
+                            "ss_acl_name_\(number)": "",
+                            "ss_acl_port_\(number)": "",
+                            "ss_acl_mode_\(number)": "",
                         ],
                         "id": 65940754,
                         "method": "dummy_script.sh",
@@ -384,37 +377,62 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                         ]
                     ]
                 } else {
-                    // JSON Body
-                    body = [
-                        "fields": [
-                            "ss_acl_ip_\(number)": "\(ip)",
-                            "ss_acl_name_\(number)": "\(name)",
-                            "ss_acl_port_\(number)": "\(getMode(mode: mode).1)",
-                            "ss_acl_mode_\(number)": "\(mode)"
-                        ],
-                        "id": 65940754,
-                        "method": "dummy_script.sh",
-                        "params": [
+                    if ip == "" {
+                        // JSON Body
+                        body = [
+                            "fields": [
+                                "ss_acl_ip_\(number)": "\(self.dataDict["ss_acl_ip_\((number as NSString).integerValue)"] ?? "")",
+                                "ss_acl_name_\(number)": "\(self.dataDict["ss_acl_name_\((number as NSString).integerValue)"] ?? "")",
+                                "ss_acl_port_\(number)": "\(self.getMode(mode: mode).1)",
+                                "ss_acl_mode_\(number)": "\(mode)"
+                            ],
+                            "id": 65940754,
+                            "method": "dummy_script.sh",
+                            "params": [
 
+                            ]
                         ]
-                    ]
-                }
-            }
+                    } else {
+                        // JSON Body
+                        body = [
+                            "fields": [
+                                "ss_acl_ip_\(number)": "\(ip)",
+                                "ss_acl_name_\(number)": "\(name)",
+                                "ss_acl_port_\(number)": "\(self.getMode(mode: mode).1)",
+                                "ss_acl_mode_\(number)": "\(mode)"
+                            ],
+                            "id": 65940754,
+                            "method": "dummy_script.sh",
+                            "params": [
 
-            // Fetch Request
-            Alamofire.request("\(buildUserURL())/_api/", method: .post, parameters: body, encoding: JSONEncoding.default)
-                .validate(statusCode: 200..<300)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success(_):
-                        self.isNeedApply = true
-                        self.table_update(isRefresh: true)
-                    case .failure(let error):
-                        print(error.localizedDescription)
+                            ]
+                        ]
                     }
-            }
+                }
+
+                // Fetch Request
+                Alamofire.request("\(buildUserURL())/_api/", method: .post, parameters: body, encoding: JSONEncoding.default)
+                    .validate(statusCode: 200..<300)
+                    .responseJSON { response in
+                        switch response.result {
+                        case .success(_):
+                            self.isNeedApply = true
+                            self.table_update(isRefresh: true)
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                }
 
 
+            } // switch
+        } // delay
+        
+        
+        delay(0.3) {
+            self.hud.dismiss(afterDelay: 1.0)
         }
-    }
+    } // func
+
+
+
 }

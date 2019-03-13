@@ -10,6 +10,7 @@ import UIKit
 import NMSSH
 import NotificationBannerSwift
 import SafariServices
+import Localize_Swift
 
 class WalkSetting_ViewController: UIViewController {
 
@@ -58,10 +59,10 @@ class WalkSetting_ViewController: UIViewController {
             self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
         } else {
             saveButton.isEnabled = false
-            self.saveButton.setTitle("驗證中", for: .normal)
-            banner = NotificationBanner(title: "設定路由器", subtitle: "...", style: .info)
+            self.saveButton.setTitle("Trying", for: .normal)
+            banner = NotificationBanner(title: "Setup Router".localized(), subtitle: "...", style: .info)
             banner.show()
-            banner.subtitleLabel?.text = "開始嘗試連接"
+            banner.subtitleLabel?.text = "Start Connecting...".localized()
 
             delay(0.6) {
                 
@@ -73,17 +74,6 @@ class WalkSetting_ViewController: UIViewController {
                     loginPassword: self.pass.text ?? "",
                     type: .Router
                 )
-
-//                let uConfig = userConfig(
-//                    name: "Router",
-//                    mode: "http",
-//                    address: self.address.text ?? "router.asus.com",
-//                    port: 80,
-//                    loginName: self.name.text ?? "",
-//                    loginPassword: self.pass.text ?? "")
-
-//                let r = saveUserConfig(userConfig: uConfig)
-//                ConnectConfig.add(connect: config)
                 
                 self.SSHRun()
             }
@@ -97,8 +87,6 @@ class WalkSetting_ViewController: UIViewController {
 
         let uConfig = ConnectConfig.getRouter()
 
-        print(uConfig)
-
         let host = uConfig.address
         let username = uConfig.loginName
         let password = uConfig.loginPassword
@@ -110,20 +98,20 @@ class WalkSetting_ViewController: UIViewController {
             session.authenticate(byPassword: password )
 
             if session.isAuthorized {
-                banner.subtitleLabel?.text = "驗證成功"
+                banner.subtitleLabel?.text = "Test Successful".localized()
                 saveButton.isEnabled = true
-                self.saveButton.setTitle("設定完畢", for: .normal)
+                self.saveButton.setTitle("DONE".localized(), for: .normal)
                 self.isTest = true
                 self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
             } else {
-                banner.subtitleLabel?.text = "驗證失敗，請檢查賬號密碼是否正確"
-                self.saveButton.setTitle("驗證", for: .normal)
+                banner.subtitleLabel?.text = "Test failed, please check the account password is correct".localized()
+                self.saveButton.setTitle("TEST".localized(), for: .normal)
                 saveButton.isEnabled = true
             }
 
         } else {
-            banner.subtitleLabel?.text = "連線失敗，請檢查是否啟用 SSH 連線功能"
-            self.saveButton.setTitle("驗證", for: .normal)
+            banner.subtitleLabel?.text = "Connection failed, please check whether SSH connection function is enabled".localized()
+            self.saveButton.setTitle("TEST", for: .normal)
             saveButton.isEnabled = true
         }
 

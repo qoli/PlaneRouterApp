@@ -38,9 +38,8 @@ class Connect_ViewController: UIViewController {
             name: NSNotification.Name(rawValue: "ConnectViewonShow"),
             object: nil
         )
-
+        
         pageDesc.text = "SSH: Router".localized()
-
     }
 
     //MARK: - 通知

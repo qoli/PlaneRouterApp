@@ -57,6 +57,8 @@ class modelPageClass {
         let model: String = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel")
         self.modelName = model.removingWhitespacesAndNewlines
 
+        print("Model: \(self.modelName)")
+        
         switch self.modelName {
         case "RT-AC86U":
             setModel(model: .hnd)

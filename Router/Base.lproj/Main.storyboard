@@ -260,21 +260,21 @@
         <scene sceneID="cW3-g7-uIG">
             <objects>
                 <viewController id="rya-U1-BhR" customClass="SettingTable_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="wEo-hU-uSd">
+                    <view key="view" contentMode="scaleToFill" id="wEo-hU-uSd">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-In-Rrl">
-                                <rect key="frame" x="0.0" y="-264" width="375" height="100"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-In-Rrl">
+                                <rect key="frame" x="0.0" y="528" width="375" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5X-EL-CsP">
-                                        <rect key="frame" x="20" y="66" width="58" height="20"/>
+                                        <rect key="frame" x="20" y="22" width="58" height="20"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                         <color key="textColor" name="gray29"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3kc-oQ-kuD">
-                                        <rect key="frame" x="272" y="58" width="44" height="46"/>
+                                        <rect key="frame" x="272" y="14" width="44" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="H5d-RK-zEa"/>
                                             <constraint firstAttribute="width" constant="44" id="niM-yx-m1Q"/>
@@ -289,7 +289,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="szh-xa-58u">
-                                        <rect key="frame" x="321" y="58" width="44" height="46"/>
+                                        <rect key="frame" x="321" y="14" width="44" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="44" id="Udw-9P-llh"/>
                                             <constraint firstAttribute="height" constant="46" id="X0M-0i-wab"/>
@@ -312,8 +312,8 @@
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="HK8-1t-wli"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maH-Ia-lsQ">
-                                <rect key="frame" x="0.0" y="-164" width="375" height="150"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="maH-Ia-lsQ">
+                                <rect key="frame" x="0.0" y="628" width="375" height="150"/>
                                 <color key="backgroundColor" name="paleGrey"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="xQi-fi-Chq"/>
@@ -399,7 +399,7 @@
                                         <rect key="frame" x="0.0" y="128" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ljR-DE-M63" id="pNj-EF-u0w">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.666666666666664"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconFontPlus16" translatesAutoresizingMaskIntoConstraints="NO" id="4uR-fg-vak">
@@ -461,8 +461,8 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-wi-14g">
-                                <rect key="frame" x="20" y="-35" width="335" height="11"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-wi-14g">
+                                <rect key="frame" x="20" y="757" width="335" height="11"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                 <color key="textColor" name="gray80"/>
                                 <nil key="highlightedColor"/>
@@ -583,14 +583,14 @@
                                     <constraint firstAttribute="width" constant="18" id="vFs-jk-1T5"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="面向路由器（基於 Koolshare 發佈的梅林固件）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xy-Gh-AEJ">
-                                <rect key="frame" x="44" y="182" width="279.66666666666669" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Router (based on Koolshare firmware)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3xy-Gh-AEJ">
+                                <rect key="frame" x="44" y="182" width="229" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" name="gray29"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可安裝、管理 Shadowsock 客戶端" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSH-UU-cD1">
-                                <rect key="frame" x="43.999999999999986" y="203" width="202.66666666666663" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shadowsock installed, managed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SSH-UU-cD1">
+                                <rect key="frame" x="44.000000000000014" y="203" width="192.33333333333337" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" name="gray35"/>
                                 <nil key="highlightedColor"/>
@@ -602,17 +602,17 @@
                                     <constraint firstAttribute="height" constant="18" id="TCd-l4-jWa"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="面向服務器（Ubuntu / Debian）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVU-N4-UA8">
-                                <rect key="frame" x="43.999999999999986" y="240" width="191.66666666666663" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server（Ubuntu / Debian）" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVU-N4-UA8">
+                                <rect key="frame" x="44" y="240" width="164.33333333333334" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" name="gray29"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDH-5v-9xh">
                                 <rect key="frame" x="44" y="261" width="311" height="46.666666666666686"/>
-                                <string key="text">安裝、管理 Shadowsock 服務器端
-重啟服務器
-可透過 JSON 腳本配置更多功能</string>
+                                <string key="text">Install and manage the Shadowsock server side
+Restart the server
+You can configure more with JSON scripts</string>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" name="gray35"/>
                                 <nil key="highlightedColor"/>
@@ -624,14 +624,14 @@
                                     <constraint firstAttribute="width" constant="18" id="ihC-PJ-g0x"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="具備 SSH 訪問的設備" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-bF-QTs">
-                                <rect key="frame" x="44" y="328.66666666666669" width="126" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SSH Device" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I1-bF-QTs">
+                                <rect key="frame" x="44" y="328.66666666666669" width="71" height="16"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" name="gray29"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="可透過 JSON 腳本配置對應的管理功能" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4i-ZY-jAf">
-                                <rect key="frame" x="44" y="349.66666666666669" width="227" height="16"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="administrative functions through JSON scripts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b4i-ZY-jAf">
+                                <rect key="frame" x="44" y="349.66666666666669" width="275.33333333333331" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" name="gray35"/>
                                 <nil key="highlightedColor"/>
@@ -2959,7 +2959,7 @@ admin@AC68U:/tmp/home/root# </string>
         <segue reference="QRx-Bx-Enf"/>
         <segue reference="Fga-VA-fEH"/>
         <segue reference="UhI-fY-yJ5"/>
-        <segue reference="0H0-y0-gnm"/>
+        <segue reference="Qzu-lr-SLt"/>
         <segue reference="8DW-Sz-a4Q"/>
     </inferredMetricsTieBreakers>
 </document>
