@@ -233,7 +233,7 @@ func userToken(model: String) {
     let token = CacheString(Key: "DeviceToken")
 
     print("DeviceToken: \(token)")
-
+    
     if token != "" {
         let body = [
             model: token,

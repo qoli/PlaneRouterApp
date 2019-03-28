@@ -9,8 +9,7 @@ platform :ios do
   	increment_build_number
     build_app(
     	workspace: "Router.xcworkspace",
-    	scheme: "Router",
-    	xcargs: "-UseModernBuildSystem=0"
+    	scheme: "Router"
     	)
     upload_to_testflight(
       changelog: "New build for testing",

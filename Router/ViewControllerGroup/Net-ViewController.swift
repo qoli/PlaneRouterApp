@@ -296,7 +296,16 @@ class Net_ViewController: UIViewController {
         fetchRequest(api: "http://ip.360.cn/IPShare/info", completionHandler: { value, error in
             if value != nil {
                 let rJSON = JSON(value as Any)
-                self.WANIPLabel.text = rJSON["ip"].stringValue
+                let remoteIP = rJSON["ip"].stringValue
+                self.WANIPLabel.text = remoteIP
+                delay {
+                    let sshIP = SSHRun(command: "nvram get wan0_ipaddr" , isRefresh: true)
+                    if sshIP.removingWhitespacesAndNewlines == remoteIP.removingWhitespacesAndNewlines {
+                        self.WANIPTitle.text = "WAN IP · Public IP".localized()
+                    } else {
+                        self.WANIPTitle.text = "WAN IP · Private IP: \(sshIP)".localized()
+                    }
+                }
             } else {
                 fetchRequest(api: "https://ifconfig.co/json", completionHandler: { value, error in
                     if value != nil {

@@ -67,7 +67,9 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         delay {
             self.collection_select(selected: 0)
         }
+
     }
+
     
     // MARK: - Notification
 

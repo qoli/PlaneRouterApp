@@ -100,7 +100,7 @@ class WalkSetting_ViewController: UIViewController {
             if session.isAuthorized {
                 banner.subtitleLabel?.text = "Test Successful".localized()
                 saveButton.isEnabled = true
-                self.saveButton.setTitle("DONE".localized(), for: .normal)
+                self.saveButton.setTitle("Done".localized(), for: .normal)
                 self.isTest = true
                 self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
             } else {

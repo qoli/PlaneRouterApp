@@ -4,6 +4,9 @@ PODS:
   - Charts (3.2.1):
     - Charts/Core (= 3.2.1)
   - Charts/Core (3.2.1)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - Fabric (1.9.0)
   - Hero (1.4.0)
   - IQKeyboardManagerSwift (6.2.0)
   - JGProgressHUD (2.0.3)
@@ -23,6 +26,8 @@ DEPENDENCIES:
   - Alamofire (~> 4.5)
   - BaiduMobStatCodeless
   - Charts
+  - Crashlytics
+  - Fabric
   - Hero
   - IQKeyboardManagerSwift
   - JGProgressHUD
@@ -39,6 +44,8 @@ SPEC REPOS:
     - Alamofire
     - BaiduMobStatCodeless
     - Charts
+    - Crashlytics
+    - Fabric
     - Hero
     - IQKeyboardManagerSwift
     - JGProgressHUD
@@ -56,6 +63,8 @@ SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   BaiduMobStatCodeless: 8fa2c6bf1cc9f5ec3ec77c69fbf4d5ed195c959a
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
@@ -69,6 +78,6 @@ SPEC CHECKSUMS:
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   SwiftyJSON: c4bcba26dd9ec7a027fc8eade48e2c911f229e96
 
-PODFILE CHECKSUM: f0fe18dd6551b358836511f71dc2cb3f52bc07df
+PODFILE CHECKSUM: dee9c14f3235aa84947c999a7550f717b8b37805
 
 COCOAPODS: 1.5.2

@@ -33,6 +33,8 @@
 "No Setup." = "未指定 SSH";
 "Remove Screen" = "移除页面";
 "Updating" = "正在更新";
+"WAN IP · Private IP: \(sshIP)" = "公网 IP · 运营商提供私有 IP: \(sshIP)";
+"WAN IP · Public IP" = "公网 IP · 运营商提供公网 IP";
 "WAN IP (by ifconfig.co)" = "公网 IP 由 ifconfig.co 查询";
 "Waiting Data" = "等待数据";
 "Waiting for login" = "等待登入";
@@ -51,5 +53,6 @@
 "TEST" = "验证";
 "Test failed, please check the account password is correct" = "验证失败，请检查账号密码是否正确";
 "Connection failed, please check whether SSH connection function is enabled" = "连接失败，请检查 SSH 功能是否启用。";
-"DONE" = "完毕";
 "Done" = "完成";
+
+"Delete" = "删除"; 

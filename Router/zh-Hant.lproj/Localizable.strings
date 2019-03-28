@@ -33,6 +33,8 @@
 "No Setup." = "未指定 SSH";
 "Remove Screen" = "移除頁面";
 "Updating" = "正在更新";
+"WAN IP · Private IP: \(sshIP)" = "公網 IP · 運營商提供私有 IP: \(sshIP)";
+"WAN IP · Public IP" = "公網 IP · 運營商提供公網 IP";
 "WAN IP (by ifconfig.co)" = "公網 IP 由 ifconfig.co 查詢";
 "Waiting Data" = "等待數據";
 "Waiting for login" = "等待登入";
@@ -51,6 +53,5 @@
 "TEST" = "驗證";
 "Test failed, please check the account password is correct" = "驗證失敗，請檢查賬號密碼是否正確";
 "Connection failed, please check whether SSH connection function is enabled" = "連接失敗，請檢查 SSH 功能是否啟用。";
-"DONE" = "完畢";
-
 "Done" = "完畢";
+"Delete" = "刪除";

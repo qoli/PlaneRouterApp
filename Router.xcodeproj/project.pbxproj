@@ -282,6 +282,7 @@
 				F984A94B220A9D6C0037FE29 /* Frameworks */,
 				F984A94C220A9D6C0037FE29 /* Resources */,
 				532866836839B6390CDB5660 /* [CP] Embed Pods Frameworks */,
+				F9D6488E224A05660016BABD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -335,6 +336,7 @@
 				en,
 				Base,
 				"zh-Hant",
+				"zh-Hans",
 			);
 			mainGroup = F984A945220A9D6C0037FE29;
 			productRefGroup = F984A94F220A9D6C0037FE29 /* Products */;
@@ -425,6 +427,24 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		F9D6488E224A05660016BABD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 12a4e60df5c2c1593ead865e24d143215ceb9500 ea771ee35145e3b0673a1ca0e35a4e5f2a05587c38480c3be8736252393aca96\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -538,7 +558,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -629,9 +649,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 54;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -655,9 +675,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 52;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 52;
+				DYLIB_CURRENT_VERSION = 54;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (

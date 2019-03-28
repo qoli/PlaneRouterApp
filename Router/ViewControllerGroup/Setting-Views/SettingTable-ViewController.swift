@@ -139,6 +139,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
 
         userJSON = []
         let uConfig = ConnectConfig.getAllJSON()
+        print(uConfig)
         let userData = uConfig
         for u in userData {
             if let data = u.data(using: .utf8) {
