@@ -24,6 +24,7 @@
 		F95A3A70222E8F7E00FEF460 /* setting.json in Resources */ = {isa = PBXBuildFile; fileRef = F95A3A6F222E8F7E00FEF460 /* setting.json */; };
 		F95A3A72222E9AF500FEF460 /* SettingDetail-ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95A3A71222E9AF500FEF460 /* SettingDetail-ViewController.swift */; };
 		F95E3FD4220C1F31003046FB /* ServiceStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F95E3FD3220C1F31003046FB /* ServiceStatusView.swift */; };
+		F96C81D5224DD9360019B2BA /* AppClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96C81D4224DD9360019B2BA /* AppClass.swift */; };
 		F971F970220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */; };
 		F971F971220BC38600C5F4B9 /* UIView+cornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F96F220BC38600C5F4B9 /* UIView+cornerRadius.swift */; };
 		F971F976220BD13800C5F4B9 /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F971F975220BD13800C5F4B9 /* UIColor+Additions.swift */; };
@@ -69,6 +70,7 @@
 		F95A3A6F222E8F7E00FEF460 /* setting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = setting.json; sourceTree = "<group>"; };
 		F95A3A71222E9AF500FEF460 /* SettingDetail-ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingDetail-ViewController.swift"; sourceTree = "<group>"; };
 		F95E3FD3220C1F31003046FB /* ServiceStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceStatusView.swift; sourceTree = "<group>"; };
+		F96C81D4224DD9360019B2BA /* AppClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppClass.swift; sourceTree = "<group>"; };
 		F971F96E220BC38600C5F4B9 /* UIButton+ExtendedHitAreaButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+ExtendedHitAreaButton.swift"; sourceTree = "<group>"; };
 		F971F96F220BC38600C5F4B9 /* UIView+cornerRadius.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+cornerRadius.swift"; sourceTree = "<group>"; };
 		F971F975220BD13800C5F4B9 /* UIColor+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Additions.swift"; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				F9A93027220EB8E100FF7482 /* AppFunctions.swift */,
+				F96C81D4224DD9360019B2BA /* AppClass.swift */,
 				F91AAE072237D22200B190D1 /* ServiceListClass.swift */,
 				F959AA1B22382A3A00551405 /* ConnectClass.swift */,
 				F9BC920F221A95E90078BD67 /* NetRequest.swift */,
@@ -460,6 +463,7 @@
 				F95E3FD4220C1F31003046FB /* ServiceStatusView.swift in Sources */,
 				F95350A12220083300B2486D /* Connect-ViewController.swift in Sources */,
 				F92C220B2228123D0045ACBA /* UnderlinedLabel+UILabel.swift in Sources */,
+				F96C81D5224DD9360019B2BA /* AppClass.swift in Sources */,
 				F9B81464222BBC1600EFF2CF /* UpdateNotes-ViewController.swift in Sources */,
 				F9823F3622359D5E006A2411 /* AddNode-ViewController.swift in Sources */,
 				F983DF5B222692CA003C1FDD /* Subscribe-ViewController.swift in Sources */,
@@ -649,9 +653,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 56;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 54;
+				DYLIB_CURRENT_VERSION = 56;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -675,9 +679,9 @@
 				CODE_SIGN_ENTITLEMENTS = Router/Router.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 54;
+				CURRENT_PROJECT_VERSION = 56;
 				DEVELOPMENT_TEAM = WQY45CL427;
-				DYLIB_CURRENT_VERSION = 54;
+				DYLIB_CURRENT_VERSION = 56;
 				INFOPLIST_FILE = Router/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -32,29 +32,45 @@ class Connect_ViewController: UIViewController {
         super.viewDidLoad()
 
         //添加通知
+        addNotification()
+        
+        //pageDesc.text = "SSH: Router".localized()
+    }
+
+    //MARK: - 通知
+
+    func addNotification() {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(ConnectViewonShowNotification(_:)),
             name: NSNotification.Name(rawValue: "ConnectViewonShow"),
             object: nil
         )
-        
-        pageDesc.text = "SSH: Router".localized()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(ConnectViewonListNotification(_:)),
+            name: NSNotification.Name(rawValue: "ConnectViewonList"),
+            object: nil
+        )
     }
-
-    //MARK: - 通知
-
+    
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
             self.isAppear = true
             self.loopUpdateStatus()
         }
     }
+    
+    
+    @objc func ConnectViewonListNotification(_ notification: Notification) {
+        pageDesc.text = "\(App.appListON)"
+    }
 
     //MARK: - View 生命週期處理
 
     override func viewWillDisappear(_ animated: Bool) {
         isAppear = false
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +79,8 @@ class Connect_ViewController: UIViewController {
             lineButtonUpdate()
         }
     }
+    
+    
 
     //MARK: - page more action
 

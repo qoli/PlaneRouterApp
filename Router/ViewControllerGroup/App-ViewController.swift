@@ -38,7 +38,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     // MARK: - var
     
-    var isMenuOpen: Bool = true
     var selectServiceNumber: Int = 0
     var lastScreenID = ""
 
@@ -100,7 +99,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
 
     @objc func serviceListActionNotification(_ notification: Notification) {
-        serviceListDo((notification.object != nil))
+        servicePanelOnOff((notification.object != nil))
     }
     
     @objc func collectionSelectNotification(_ notification: Notification) {
@@ -138,44 +137,48 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         })
     }
 
-    // MARK: - service List open or close
+    // MARK: - Service Panel ON or OFF
     
     @IBAction func PanSwipeAction(_ sender: UIPanGestureRecognizer) {
         if self.PanSwipe.state == .changed {
             let offY = self.PanSwipe.velocity(in: childViews).y
             if offY <= -150 {
-                serviceListDo(true)
+                servicePanelOnOff(true)
             }
             if offY >= 150 {
-                serviceListDo(false)
+                servicePanelOnOff(false)
             }
         }
     }
     
     @IBAction func serviceListMenuAction(_ sender: UIButton) {
-        serviceListDo(self.isMenuOpen)
+        servicePanelOnOff(App.appListON)
     }
     
-    func serviceListDo(_ isOpen: Bool) {
-        isMenuOpen = isOpen
+    func servicePanelOnOff(_ isON: Bool) {
+        App.appListON = isON
         // 200 / 60
-        if isMenuOpen {
+        if App.appListON {
+            // 列表收起，面板展開
             self.childViewTop.constant = -158
-            isMenuOpen = false
+            App.appListON = false
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
                 self.view.layoutIfNeeded()
                 self.appTitle.alpha = 1
                 self.menuButton.setBackgroundImage(UIImage(named: "iconMenuNormal"), for: .normal)
             })
         } else {
+            // 列表展開，面板收起
             self.childViewTop.constant = 0
-            isMenuOpen = true
+            App.appListON = true
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn, animations: {
                 self.view.layoutIfNeeded()
                 self.appTitle.alpha = 0
                 self.menuButton.setBackgroundImage(UIImage(named: "iconMenuActive"), for: .normal)
             })
         }
+        
+        NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonList"), object: App.appListON)
     }
 
     // MARK: - collectionView
@@ -341,6 +344,8 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
 
     }
+    
+    // MARK: Switch View
 
     func switchView(showView: UIView) {
 
@@ -353,19 +358,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             showView.alpha = 1
         })
 
-    }
-
-    func loadSubView(vcID: String) {
-
-        for sView in self.childNetView.subviews {
-            sView.removeFromSuperview()
-        }
-
-        let subview = storyboard?.instantiateViewController(withIdentifier: vcID)
-        subview?.view.frame = view.bounds
-        subview?.willMove(toParent: self)
-        self.childNetView.addSubview(subview!.view)
-        subview?.didMove(toParent: self)
     }
 
 }

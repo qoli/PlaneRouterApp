@@ -420,6 +420,41 @@
                                             <outlet property="row" destination="vPb-P0-g2h" id="5aL-FN-Gev"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="version" id="e1D-YP-odb" customClass="versionCell" customModule="Router" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="228" width="375" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e1D-YP-odb" id="H5G-K2-LME">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="835-Rw-g9q">
+                                                    <rect key="frame" x="20" y="11" width="335" height="1"/>
+                                                    <color key="backgroundColor" name="Gray92"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="b9A-xE-dEE"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2po-Sg-TDh">
+                                                    <rect key="frame" x="20" y="18.333333333333332" width="335" height="13.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="11"/>
+                                                    <color key="textColor" name="gray80"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" name="paleGrey"/>
+                                            <constraints>
+                                                <constraint firstItem="2po-Sg-TDh" firstAttribute="leading" secondItem="835-Rw-g9q" secondAttribute="leading" id="OS7-3h-1AQ"/>
+                                                <constraint firstItem="835-Rw-g9q" firstAttribute="leading" secondItem="H5G-K2-LME" secondAttribute="leadingMargin" constant="5" id="aY9-Lc-SWc"/>
+                                                <constraint firstItem="2po-Sg-TDh" firstAttribute="trailing" secondItem="835-Rw-g9q" secondAttribute="trailing" id="dak-dW-GGw"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="835-Rw-g9q" secondAttribute="trailing" constant="5" id="oPh-Ko-eGL"/>
+                                                <constraint firstItem="835-Rw-g9q" firstAttribute="top" secondItem="H5G-K2-LME" secondAttribute="topMargin" id="oQk-Ue-fN4"/>
+                                                <constraint firstItem="2po-Sg-TDh" firstAttribute="centerY" secondItem="H5G-K2-LME" secondAttribute="centerY" id="rwN-V5-zKK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="version" destination="2po-Sg-TDh" id="tLs-pG-mkI"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5L4-In-Rrl">
@@ -470,12 +505,6 @@
                                 </constraints>
                                 <viewLayoutGuide key="safeArea" id="HK8-1t-wli"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-wi-14g">
-                                <rect key="frame" x="20" y="757" width="335" height="11"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                <color key="textColor" name="gray80"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" name="paleGrey"/>
                         <constraints>
@@ -483,11 +512,8 @@
                             <constraint firstItem="maH-Ia-lsQ" firstAttribute="leading" secondItem="avN-eP-vgy" secondAttribute="leading" id="EWy-0G-DRf"/>
                             <constraint firstItem="maH-Ia-lsQ" firstAttribute="top" secondItem="5L4-In-Rrl" secondAttribute="bottom" id="Sx8-DK-Bk6"/>
                             <constraint firstItem="5L4-In-Rrl" firstAttribute="trailing" secondItem="avN-eP-vgy" secondAttribute="trailing" id="faK-p2-4iG"/>
-                            <constraint firstItem="zZ7-wi-14g" firstAttribute="leading" secondItem="avN-eP-vgy" secondAttribute="leading" constant="20" id="hvX-us-cXJ"/>
                             <constraint firstItem="avN-eP-vgy" firstAttribute="trailing" secondItem="maH-Ia-lsQ" secondAttribute="trailing" id="ioG-nR-oPC"/>
-                            <constraint firstItem="avN-eP-vgy" firstAttribute="trailing" secondItem="zZ7-wi-14g" secondAttribute="trailing" constant="20" id="usk-mf-uY7"/>
                             <constraint firstItem="avN-eP-vgy" firstAttribute="bottom" secondItem="maH-Ia-lsQ" secondAttribute="bottom" id="wod-9M-hQl"/>
-                            <constraint firstItem="avN-eP-vgy" firstAttribute="bottom" secondItem="zZ7-wi-14g" secondAttribute="bottom" constant="10" id="x70-RT-eXP"/>
                             <constraint firstItem="5L4-In-Rrl" firstAttribute="top" secondItem="avN-eP-vgy" secondAttribute="top" id="ygE-mJ-GJL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="avN-eP-vgy"/>
@@ -498,7 +524,6 @@
                     <connections>
                         <outlet property="pageTitle" destination="a5X-EL-CsP" id="GG9-dO-wPN"/>
                         <outlet property="tableView" destination="maH-Ia-lsQ" id="efC-y7-c2X"/>
-                        <outlet property="versionLabel" destination="zZ7-wi-14g" id="GvB-DX-Wdd"/>
                         <segue destination="qYv-Ho-f6n" kind="show" identifier="goSettingDetailSegue" id="hvB-xw-fEz"/>
                     </connections>
                 </viewController>
@@ -2965,9 +2990,9 @@ admin@AC68U:/tmp/home/root# </string>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="QRx-Bx-Enf"/>
-        <segue reference="Fga-VA-fEH"/>
-        <segue reference="UhI-fY-yJ5"/>
+        <segue reference="sIq-KD-tcp"/>
+        <segue reference="sSP-Y3-MIA"/>
+        <segue reference="MpS-jZ-ZVk"/>
         <segue reference="Qzu-lr-SLt"/>
         <segue reference="8DW-Sz-a4Q"/>
     </inferredMetricsTieBreakers>

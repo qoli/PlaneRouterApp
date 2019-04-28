@@ -51,16 +51,16 @@ class Net_ViewController: UIViewController {
             name: NSNotification.Name(rawValue: "NetViewonShow"),
             object: nil
         )
-        
+
     }
     // MARK: - 通知
-    
+
     @objc func netViewonShowNotification(_ notification: Notification) {
         dataAppear(Appear: notification.object! as! Bool)
     }
 
     // MARK: - view
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         self.isViewAppear = false
     }
@@ -191,7 +191,7 @@ class Net_ViewController: UIViewController {
          GetSpeed
          post http://router.asus.com/update.cgi
          */
-        
+
         // Add Headers
         let headers = [
             "Referer": "\(buildUserURL())/update.cgi",
@@ -213,7 +213,7 @@ class Net_ViewController: UIViewController {
             .responseString { response in
                 switch response.result {
                 case .success(let value):
-                    
+
                     // 網速
                     if value.hasPrefix("\nnetdev = {") {
                         let rxtx = value.groups(for: "'INTERNET':\\{rx:(.*?),tx:(.*?)\\}")
@@ -222,20 +222,20 @@ class Net_ViewController: UIViewController {
                             self.downNow = hexTodec(number: rxtx[0][1])
                             let upSpeed = (self.upNow - self.upOld) / 1024
                             let downSpeed = (self.downNow - self.downOld) / 1024
-                            
+
                             if self.upOld == 0 {
                                 self.upOld = self.upNow
                                 self.downOld = self.downNow
                             } else {
                                 self.upOld = self.upNow
                                 self.downOld = self.downNow
-                                
+
                                 self.downloadLabel.text = String(format: "%.1f", self.unit(num: downSpeed).0)
                                 self.uploadLable.text = String(format: "%.1f", self.unit(num: upSpeed).0)
                                 self.downloadUnitLabel.text = self.unit(num: downSpeed).1
                                 self.uploadUnitLabel.text = self.unit(num: upSpeed).1
                                 self.updateTextLabel.text = "Updating".localized()
-                                
+
                                 self.DownloadNumbers.append(downSpeed)
                                 self.UploadNumbers.append(upSpeed)
                                 self.updateGraph()
@@ -246,13 +246,13 @@ class Net_ViewController: UIViewController {
                             messageNotification(message: "Data invalid", title: "Net Speed")
                         }
                     }
-                    
+
                     //404
                     if value.hasPrefix("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>") {
                         messageNotification(message: "Update 404", title: "Net Speed")
                         self.isViewAppear = false
                     }
-                    
+
                     // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
                         print(value)
@@ -293,13 +293,13 @@ class Net_ViewController: UIViewController {
 
     func sendChineseipRequest() {
 
-        fetchRequest(api: "http://ip.360.cn/IPShare/info", completionHandler: { value, error in
+        fetchRequest(api: "http://ip.360.cn/IPShare/info", isRefresh: true, completionHandler: { value, error in
             if value != nil {
                 let rJSON = JSON(value as Any)
                 let remoteIP = rJSON["ip"].stringValue
                 self.WANIPLabel.text = remoteIP
                 delay {
-                    let sshIP = SSHRun(command: "nvram get wan0_ipaddr" , isRefresh: true)
+                    let sshIP = SSHRun(command: "nvram get wan0_ipaddr", isRefresh: true)
                     if sshIP.removingWhitespacesAndNewlines == remoteIP.removingWhitespacesAndNewlines {
                         self.WANIPTitle.text = "WAN IP · Public IP".localized()
                     } else {
@@ -318,7 +318,7 @@ class Net_ViewController: UIViewController {
                 })
             }
         })
-    
+
     }
 
 

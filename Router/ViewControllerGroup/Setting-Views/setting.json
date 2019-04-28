@@ -33,14 +33,22 @@
             "title": "Refresh model data",
             "titlesc": "刷新型号数据",
             "titletc": "刷新型號數據",
-            "icon": "iconFontEraser16",
+            "icon": "iconFontBarcode16",
             "do": "refreshModel"
+        },
+        {
+            "type": "row",
+            "title": "Refresh model data",
+            "titlesc": "App 推送 ID",
+            "titletc": "App 推送 ID",
+            "icon": "iconFontBell16",
+            "do": "appPushID"
         },
         {
             "type": "title",
             "title": "Help & About",
             "titlesc": "关于与帮助",
-            "titletc": "關於和幫助",
+            "titletc": "關於和幫助"
         },
         {
             "type": "row",
@@ -76,10 +84,21 @@
         },
         {
             "type": "row",
+            "title": "Update Notes",
+            "titlesc": "更新日志",
+            "titletc": "更新日誌",
+            "do": "openweb",
+            "value": "https://github.com/qoli/AtomicR/blob/master/Update/Update.md"
+        },
+        {
+            "type": "row",
             "title": "Share App",
             "titlesc": "分享应用程式",
             "titletc": "分享 App",
             "do": "share"
+        },
+        {
+            "type": "version"
         }
     ]
 }

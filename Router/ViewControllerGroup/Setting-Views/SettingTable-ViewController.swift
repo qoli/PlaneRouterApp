@@ -63,11 +63,11 @@ class settingADDCell: UITableViewCell {
 class settingRowCell: UITableViewCell {
     @IBOutlet weak var row: UILabel!
     @IBOutlet weak var imageRow: UIImageView!
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         self.selectionStyle = .none
-
+        
         if selected {
             UIView.animate(withDuration: 0.1, animations: {
                 self.layer.opacity = 0.3
@@ -79,6 +79,18 @@ class settingRowCell: UITableViewCell {
         }
     }
 }
+
+class versionCell: UITableViewCell {
+    
+    @IBOutlet weak var version: UILabel!
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        self.selectionStyle = .none
+    }
+}
+
+
 
 class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate {
 
@@ -97,8 +109,6 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         // table
         self.tableView.delegate = self
         self.tableView.dataSource = self
-
-        UpdateVersion()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -202,6 +212,12 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         case "add":
             let cell = tableView.dequeueReusableCell(withIdentifier: "add") as! settingADDCell
             return cell
+        case "version":
+            let cell = tableView.dequeueReusableCell(withIdentifier: "version") as! versionCell
+            let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+            let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+            cell.version.text = "Version \(appVersion ?? "1.0") Build \(buildNumber ?? "0") © 2019 R.ONE"
+            return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ssh") as! settingSSHCell
             cell.name.text = self.tableData[indexPath.row]["name"].stringValue
@@ -219,18 +235,26 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             break
         case "row":
             switch self.tableData[indexPath.row]["do"].stringValue {
+                //
             case "refreshModel":
-                let model = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel",isRefresh: true)
+                let model = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel", isRefresh: true)
                 let alert = UIAlertController(title: model.removingWhitespacesAndNewlines, message: nil, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
-                
+
                 self.present(alert, animated: true)
+            case "appPushID":
+                let PushID = CacheString(Key: "DeviceToken")
+                let alert = UIAlertController(title: PushID.removingWhitespacesAndNewlines, message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
+
+                self.present(alert, animated: true)
+            case "reset":
+                showMessageResetApp()
+                //
             case "openweb":
                 let url = NSURL(string: self.tableData[indexPath.row]["value"].stringValue)
                 let svc = SFSafariViewController(url: url! as URL)
                 present(svc, animated: true, completion: nil)
-            case "reset":
-                showMessageResetApp()
             case "sendMail":
                 if MFMailComposeViewController.canSendMail() {
                     let mail = MFMailComposeViewController()
@@ -268,15 +292,6 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
 
-    // MARK: - Version
-
-    @IBOutlet weak var versionLabel: UILabel!
-
-    func UpdateVersion() {
-        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
-        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        versionLabel.text = "Version \(appVersion ?? "1.0") Build \(buildNumber ?? "0")\n© 2019 R.ONE"
-    }
 
     // MARK: -
 
@@ -307,7 +322,7 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
         exitAppAlert.addAction(laterAction)
         present(exitAppAlert, animated: true, completion: nil)
     }
-    
+
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         controller.dismiss(animated: true)
     }
