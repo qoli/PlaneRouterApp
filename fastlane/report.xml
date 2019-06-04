@@ -5,37 +5,37 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.008506">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.014704">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: open /Users/qoli/GitHub/AtomicR/Update/Update.md" time="0.194079">
+      <testcase classname="fastlane.lanes" name="1: open /Users/qoli/GitHub/AtomicR/Update/Update.md" time="0.274075">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: get_certificates" time="14.588834">
+      <testcase classname="fastlane.lanes" name="2: get_certificates" time="15.942831">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: get_provisioning_profile" time="6.997321">
+      <testcase classname="fastlane.lanes" name="3: get_provisioning_profile" time="10.588491">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: increment_build_number" time="1.374185">
+      <testcase classname="fastlane.lanes" name="4: increment_build_number" time="1.472447">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: build_app" time="140.989883">
+      <testcase classname="fastlane.lanes" name="5: build_app" time="140.06713">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: upload_to_testflight" time="717.288129">
+      <testcase classname="fastlane.lanes" name="6: upload_to_testflight" time="1924.982537">
         
       </testcase>
     
