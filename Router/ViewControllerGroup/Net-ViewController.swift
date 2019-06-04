@@ -151,7 +151,7 @@ class Net_ViewController: UIViewController {
             lineUploadChartEntry.append(valueUpload)
         }
 
-        let lineDownload = LineChartDataSet(values: lineDownloadChartEntry, label: "Download Speed") //Here we convert lineChartEntry to a LineChartDataSet
+        let lineDownload = LineChartDataSet(entries: lineDownloadChartEntry, label: "Download Speed") //Here we convert lineChartEntry to a LineChartDataSet
         lineDownload.axisDependency = .left
         lineDownload.colors = [UIColor.appleGreen]
         lineDownload.mode = .cubicBezier
@@ -164,7 +164,7 @@ class Net_ViewController: UIViewController {
         lineDownload.drawValuesEnabled = false
         lineDownload.drawCircleHoleEnabled = true
 
-        let lineUpload = LineChartDataSet(values: lineUploadChartEntry, label: "Upload Speed") //Here we convert lineChartEntry to a LineChartDataSet
+        let lineUpload = LineChartDataSet(entries: lineUploadChartEntry, label: "Upload Speed") //Here we convert lineChartEntry to a LineChartDataSet
         lineUpload.axisDependency = .left
         lineUpload.colors = [UIColor.mainBlue]
         lineUpload.mode = .cubicBezier

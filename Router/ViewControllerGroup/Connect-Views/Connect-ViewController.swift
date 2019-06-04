@@ -34,7 +34,7 @@ class Connect_ViewController: UIViewController {
         //添加通知
         addNotification()
         
-        //pageDesc.text = "SSH: Router".localized()
+        pageDesc.text = "SSH: Router".localized()
     }
 
     //MARK: - 通知

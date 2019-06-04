@@ -671,7 +671,7 @@ You can configure more with JSON scripts</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-7c-vkB">
-                                <rect key="frame" x="20" y="415.66666666666669" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="20" y="415.66666666666674" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="HMT-l0-3Gp"/>
                                     <constraint firstAttribute="width" constant="168" id="coe-ac-qWh"/>
@@ -742,7 +742,7 @@ You can configure more with JSON scripts</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="Hmw-eG-y5B">
-                                <rect key="frame" x="20" y="64" width="168" height="183"/>
+                                <rect key="frame" x="20" y="64" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="fhm-yV-E6p"/>
                                     <constraint firstAttribute="width" constant="168" id="pxH-Lb-4uR"/>
@@ -2493,7 +2493,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="QFF-NK-Mks">
-                                <rect key="frame" x="103.66666666666669" y="314.66666666666669" width="168" height="183"/>
+                                <rect key="frame" x="103.66666666666669" y="314.66666666666674" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="2K9-At-Lkw"/>
                                     <constraint firstAttribute="width" constant="168" id="TCJ-ot-Y1A"/>
