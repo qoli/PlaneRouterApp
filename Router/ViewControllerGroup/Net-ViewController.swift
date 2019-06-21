@@ -42,8 +42,14 @@ class Net_ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        Chart_Setup()
-        self.sendChineseipRequest()
+        self.Chart_Setup()
+        self.getWANIP()
+
+        delay(2) {
+            print("Loop NetSpeed_Update")
+            self.isViewAppear = true
+            self.NetSpeed_Update()
+        }
 
         //添加通知
         NotificationCenter.default.addObserver(
@@ -76,7 +82,7 @@ class Net_ViewController: UIViewController {
                 DownloadNumbers = []
                 UploadNumbers = []
                 self.isViewAppear = true
-                self.NetSpeed_Loop()
+                self.NetSpeed_Update()
             } else {
                 print("Net_ViewController: Pause")
                 self.isViewAppear = false
@@ -85,45 +91,44 @@ class Net_ViewController: UIViewController {
 
         lastViewAppearBool = Appear
     }
-    
-    // MARK: - Tap Chart
-    
-    var hud: JGProgressHUD!
-    
-    @IBAction func tapChart(_ sender: UITapGestureRecognizer) {
-        print("tap")
-//        self.NetSpeed_Loop()
-        
-        delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
-        }
-        
-        delay {
-            _ = SSHRun(command: "nvram unset login_ip_str")
-            _ = SSHRun(command: "nvram unset login_timestamp")
-            _ = SSHRun(command: "nvram unset login_ip")
-            _ = SSHRun(command: "nvram commit")
-        }
-        
-        delay(0) {
-            self.hud.dismiss()
-        }
-    }
-    
-    
-    // MARK: - Loop Net Speed
 
-    func NetSpeed_Loop() {
-        delay(1) {
-            if self.isViewAppear {
-                self.NetSpeed_Update()
-                self.NetSpeed_Loop()
-            } else {
-                self.updateTextLabel.text = "Pause".localized()
+    // MARK: - Tap Chart
+
+    var hud: JGProgressHUD!
+
+    @IBAction func tapChart(_ sender: UITapGestureRecognizer) {
+//        if self.isViewAppear {
+//            self.isViewAppear = false
+//        } else {
+//            self.isViewAppear = true
+//            self.NetSpeed_Update()
+//        }
+//
+        print("tapChart \(isViewAppear)")
+    }
+
+    // MARK: - Restart WAN
+
+    @IBOutlet weak var RestartWANButton: UIButton!
+
+    @IBAction func RestartWAN(_ sender: UIButton) {
+        self.WANIPLabel.text = "Restarting..."
+        self.RestartWANButton.isEnabled = false
+
+        delay {
+            _ = SSHRun(command: "service restart_dnsmasq")
+            _ = SSHRun(command: "service restart_wan")
+
+            delay(3) {
+                self.getWANIP()
             }
         }
+
     }
+
+
+
+    // MARK: - Loop Net Speed
 
     func Chart_Setup() {
 
@@ -215,7 +220,12 @@ class Net_ViewController: UIViewController {
 
     }
 
+    var netSpeedTime: Int = 0
+
     func NetSpeed_Update() {
+
+        netSpeedTime = netSpeedTime + 1
+
         /**
          GetSpeed
          post http://router.asus.com/update.cgi
@@ -263,11 +273,25 @@ class Net_ViewController: UIViewController {
                                 self.uploadLable.text = String(format: "%.1f", self.unit(num: upSpeed).0)
                                 self.downloadUnitLabel.text = self.unit(num: downSpeed).1
                                 self.uploadUnitLabel.text = self.unit(num: upSpeed).1
-                                self.updateTextLabel.text = "Updating".localized()
+
+                                if self.netSpeedTime % 2 == 0 {
+                                    self.updateTextLabel.text = "⊷"
+                                } else {
+                                    self.updateTextLabel.text = "⊶"
+                                }
 
                                 self.DownloadNumbers.append(downSpeed)
                                 self.UploadNumbers.append(upSpeed)
                                 self.Chart_Update()
+
+                                // MARK: Loop
+                                delay(1) {
+                                    if self.isViewAppear {
+                                        self.NetSpeed_Update()
+                                    } else {
+                                        self.updateTextLabel.text = "Pause".localized()
+                                    }
+                                }
                             }
                         } else {
                             // rxtx 無有效數據
@@ -288,7 +312,14 @@ class Net_ViewController: UIViewController {
                         print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login".localized()
                         //try login
-                         GetRouterCookie()
+                        GetRouterCookie()
+
+                        // MARK: Loop
+                        delay(1) {
+                            if self.isViewAppear {
+                                self.NetSpeed_Update()
+                            }
+                        }
                     }
 
 
@@ -320,13 +351,18 @@ class Net_ViewController: UIViewController {
 
     }
 
-    func sendChineseipRequest() {
+    func getWANIP() {
+
+        self.WANIPLabel.text = "Connecting..."
 
         fetchRequest(api: "http://ip.360.cn/IPShare/info", isRefresh: true, completionHandler: { value, error in
             if value != nil {
                 let rJSON = JSON(value as Any)
                 let remoteIP = rJSON["ip"].stringValue
                 self.WANIPLabel.text = remoteIP
+
+                self.RestartWANButton.isEnabled = true
+
                 delay {
                     let sshIP = SSHRun(command: "nvram get wan0_ipaddr", isRefresh: true)
                     if sshIP.removingWhitespacesAndNewlines == remoteIP.removingWhitespacesAndNewlines {
@@ -336,13 +372,18 @@ class Net_ViewController: UIViewController {
                     }
                 }
             } else {
-                fetchRequest(api: "https://ifconfig.co/json", completionHandler: { value, error in
+                fetchRequest(api: "https://ifconfig.co/json", isRefresh: true, completionHandler: { value, error in
                     if value != nil {
+                        self.RestartWANButton.isEnabled = true
+
                         let rJSON = JSON(value as Any)
                         self.WANIPLabel.text = rJSON["ip"].stringValue
                         self.WANIPTitle.text = "WAN IP (by ifconfig.co)".localized()
                     } else {
                         self.WANIPLabel.text = error?.localizedDescription
+                        delay(2) {
+                            self.getWANIP()
+                        }
                     }
                 })
             }

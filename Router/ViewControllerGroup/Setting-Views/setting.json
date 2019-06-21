@@ -52,19 +52,11 @@
         },
         {
             "type": "row",
-            "title": "How to write your own scripts",
+            "title": "How to write your scripts",
             "titlesc": "学习怎么编写自己的脚本",
             "titletc": "如何編寫自己的腳本",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/Tutorial/BuildMyScript.md"
-        },
-        {
-            "type": "row",
-            "title": "Join TestFlight",
-            "titlesc": "加入测试计划",
-            "titletc": "加入 TestFlight",
-            "do": "openweb",
-            "value": "https://github.com/qoli/AtomicR/blob/master/invitation.md"
         },
         {
             "type": "row",
@@ -76,11 +68,11 @@
         },
         {
             "type": "row",
-            "title": "Feedback",
-            "titlesc": "反馈和建议",
-            "titletc": "反饋和建議",
-            "do": "sendMail",
-            "value": "qoli@me.com"
+            "title": "Join TestFlight",
+            "titlesc": "加入 TestFlight",
+            "titletc": "加入 TestFlight",
+            "do": "openweb",
+            "value": "https://github.com/qoli/AtomicR/blob/master/invitation.md"
         },
         {
             "type": "row",
@@ -92,7 +84,15 @@
         },
         {
             "type": "row",
-            "title": "Share App",
+            "title": "Feedback",
+            "titlesc": "反馈和建议",
+            "titletc": "反饋和建議",
+            "do": "sendMail",
+            "value": "qoli@me.com"
+        },
+        {
+            "type": "row",
+            "title": "Share",
             "titlesc": "分享应用程式",
             "titletc": "分享 App",
             "do": "share"

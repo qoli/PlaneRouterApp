@@ -11,6 +11,7 @@ import Hero
 import Alamofire
 import SwiftyJSON
 import PopMenu
+import PlainPing
 import Localize_Swift
 
 class Connect_ViewController: UIViewController {
@@ -26,7 +27,7 @@ class Connect_ViewController: UIViewController {
     @IBOutlet weak var lineListButton: UIButton!
     @IBOutlet weak var connectButton: UIButton!
 
-    var isAppear = false
+    var isLooping = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +57,8 @@ class Connect_ViewController: UIViewController {
 
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
-            self.isAppear = true
-            self.loopUpdateStatus()
+//            self.isLooping = true
+//            self.loopUpdateStatus()
         }
     }
 
@@ -69,12 +70,13 @@ class Connect_ViewController: UIViewController {
     //MARK: - View 生命週期處理
 
     override func viewWillDisappear(_ animated: Bool) {
-        isAppear = false
+        isLooping = false
+        print("viewWillDisappear")
         NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        self.loopUpdateStatus()
+//        self.loopUpdateStatus()
         if checkSSInstall() {
             lineButtonUpdate()
         }
@@ -259,39 +261,69 @@ class Connect_ViewController: UIViewController {
 
     }
 
-    //MARK: - Status loop
-
-    // Status
-    func loopUpdateStatus() {
-
-        if !isAppear {
-            self.statusTimeLabel.text = "Pause".localized()
-            print("Connect_ViewController: Pause")
-        }
-
-        delay(2) {
-            self.Status_inAppUpdate()
-            // self.Status_Update() // 舊版
-            if self.isAppear {
-                self.loopUpdateStatus()
-            }
-        }
-    }
-
     // MARK: - Status Update
 
-    func Status_inAppUpdate() {        
+    // Status
+    func loopUpdateStatus(isLoop: Bool = false) {
+
+        if isLoop == true {
+            self.isLooping = true
+            self.Status_inAppUpdate()
+        } else {
+            self.loopLabel.text = "Pause, Tap to Continue"
+            self.updateStatusView(isSuccess: true, text: "", isPause: true)
+        }
+        
+    }
+
+    
+    @IBOutlet weak var loopLabel: UILabel!
+    
+    @IBAction func tapStatus(_ sender: UITapGestureRecognizer) {
+        if self.isLooping == true {
+            self.loopUpdateStatus(isLoop: false)
+            self.isLooping = false
+        } else {
+            self.loopUpdateStatus(isLoop: true)
+        }
+    }
+    
+    
+    func Status_inAppUpdate() {
+
+        let StartTime = Date.timeIntervalSinceReferenceDate
+        self.loopLabel.text = "···"
+        
         Alamofire.request("https://www.google.com.hk/generate_204")
             .responseString { response in
-
+                let EndTime = Date.timeIntervalSinceReferenceDate
+                let delayTime = (EndTime - StartTime) * 1000
+                
                 switch response.result {
                 case .success(_):
                     if let headers = response.response?.allHeaderFields as? [String: String] {
-                        self.updateStatusView(isSuccess: true, text: headers["Date"] ?? "")
+                        print("\(headers["Date"] ?? "") \(EndTime) \(StartTime) \(delayTime)")
+                        self.updateStatusView(isSuccess: true, text: "\(String(format: "%.3f", delayTime)) ms")
+//                        self.loopLabel.text = "***"
+                        
+                        delay(1) {
+                            self.loopLabel.text = "*··"
+                            delay(1) {
+                                self.loopLabel.text = "·*·"
+                                delay(1) {
+                                    self.loopLabel.text = "··*"
+                                    delay(1) {
+                                        self.loopUpdateStatus(isLoop: self.isLooping)
+                                    }
+                                }
+                            }
+                        }
+
                     }
                 case .failure(let error):
-                    print(error)
-                    self.updateStatusView(isSuccess: false, text: error.localizedDescription)
+                    self.isLooping = false
+                    self.loopUpdateStatus(isLoop: self.isLooping)
+                    self.updateStatusView(isSuccess: false, text: "\(error.localizedDescription) · \(String(format: "%.2f", delayTime)) ms")
                 }
 
         }
@@ -358,21 +390,30 @@ class Connect_ViewController: UIViewController {
 
     }
 
-    func updateStatusView(isSuccess: Bool, text: String) {
-        if isSuccess {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.statusLabel.text = "Success".localized()
-                self.statusView.backgroundColor = UIColor.appleGreen
-                self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
-                self.statusTimeLabel.text = text
+    func updateStatusView(isSuccess: Bool, text: String, isPause: Bool = false) {
+        
+        if isPause {
+            UIView.animate(withDuration: 0.8, animations: {
+                self.statusView.backgroundColor = UIColor.gray80
+                self.statusView.layer.shadowColor = UIColor.gray80.cgColor
             })
+            
         } else {
-            UIView.animate(withDuration: 0.4, animations: {
-                self.statusLabel.text = "Failure".localized()
-                self.statusView.backgroundColor = UIColor.coralPink
-                self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
-                self.statusTimeLabel.text = text
-            })
+            if isSuccess {
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.statusLabel.text = "Google.com".localized()
+                    self.statusView.backgroundColor = UIColor.appleGreen
+                    self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
+                    self.statusTimeLabel.text = text
+                })
+            } else {
+                UIView.animate(withDuration: 0.4, animations: {
+                    self.statusLabel.text = "Failure".localized()
+                    self.statusView.backgroundColor = UIColor.coralPink
+                    self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
+                    self.statusTimeLabel.text = text
+                })
+            }
         }
     }
 
