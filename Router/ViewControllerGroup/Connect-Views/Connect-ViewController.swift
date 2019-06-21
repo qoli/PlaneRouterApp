@@ -33,7 +33,7 @@ class Connect_ViewController: UIViewController {
 
         //添加通知
         addNotification()
-        
+
         pageDesc.text = "SSH: Router".localized()
     }
 
@@ -53,15 +53,15 @@ class Connect_ViewController: UIViewController {
             object: nil
         )
     }
-    
+
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
             self.isAppear = true
             self.loopUpdateStatus()
         }
     }
-    
-    
+
+
     @objc func ConnectViewonListNotification(_ notification: Notification) {
         pageDesc.text = "\(App.appListON)"
     }
@@ -79,8 +79,8 @@ class Connect_ViewController: UIViewController {
             lineButtonUpdate()
         }
     }
-    
-    
+
+
 
     //MARK: - page more action
 
@@ -114,7 +114,7 @@ class Connect_ViewController: UIViewController {
                     delay {
                         self.performSegue(withIdentifier: "goListSegue", sender: nil)
                     }
-            }
+                }
             ),
             PopMenuDefaultAction(
                 title: "ACL Setting".localized(),
@@ -123,7 +123,7 @@ class Connect_ViewController: UIViewController {
                     delay {
                         self.performSegue(withIdentifier: "goACLSegue", sender: nil)
                     }
-            }
+                }
             ),
         ])
 
@@ -142,18 +142,18 @@ class Connect_ViewController: UIViewController {
                     delay {
                         //1. Create the alert controller.
                         let alert = UIAlertController(title: "URI", message: "ss:// or ssr://", preferredStyle: .alert)
-                        
+
                         //1.1 cancel button
                         let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .cancel) { action -> Void in
                             //cancel code
                         }
                         alert.addAction(cancelAction)
-                        
+
                         //2. Add the text field. You can configure it however you need.
                         alert.addTextField { (textField) in
                             textField.placeholder = "ss:// or ssr://"
                         }
-                        
+
                         // 3. Grab the value from the text field, and print it when the user clicks OK.
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
                             let textField = alert!.textFields![0] // Force unwrapping because we know it exists.
@@ -165,9 +165,9 @@ class Connect_ViewController: UIViewController {
                             } else {
                                 messageNotification(message: "Invalid URI")
                             }
-                            
+
                         }))
-                        
+
                         // 4. Present the alert.
                         self.present(alert, animated: true, completion: nil)
                     }
@@ -198,11 +198,11 @@ class Connect_ViewController: UIViewController {
     }
 
     // MARK: Segue pass data
-    
+
     var goButton: Bool = false
     var script: String = "ss_config.sh"
     var ssLinks: String = ""
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goAddNodeSegue" {
             if let destinationVC = segue.destination as? AddNode_ViewController {
@@ -270,15 +270,34 @@ class Connect_ViewController: UIViewController {
         }
 
         delay(2) {
-            self.sendStatusRequest()
+            self.Status_inAppUpdate()
+            // self.Status_Update() // 舊版
             if self.isAppear {
                 self.loopUpdateStatus()
             }
         }
     }
 
-    // ARM Model
-    func sendStatusRequest() {
+    // MARK: - Status Update
+
+    func Status_inAppUpdate() {        
+        Alamofire.request("https://www.google.com.hk/generate_204")
+            .responseString { response in
+
+                switch response.result {
+                case .success(_):
+                    if let headers = response.response?.allHeaderFields as? [String: String] {
+                        self.updateStatusView(isSuccess: true, text: headers["Date"] ?? "")
+                    }
+                case .failure(let error):
+                    print(error)
+                    self.updateStatusView(isSuccess: false, text: error.localizedDescription)
+                }
+
+        }
+    }
+
+    func Status_Update() {
 
         switch ModelPage.runningModel {
         case .arm:

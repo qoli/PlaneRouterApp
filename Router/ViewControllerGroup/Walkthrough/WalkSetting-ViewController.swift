@@ -70,12 +70,12 @@ class WalkSetting_ViewController: UIViewController {
                     mode: .http,
                     address: self.address.text ?? "router.asus.com",
                     port: 80,
-                    loginName: self.name.text ?? "",
+                    loginName: self.name.text ?? "admin",
                     loginPassword: self.pass.text ?? "",
                     type: .Router
                 )
                 
-                self.SSHRun()
+                self.SSH_Check()
             }
         }
 
@@ -83,7 +83,7 @@ class WalkSetting_ViewController: UIViewController {
     
     // check
 
-    func SSHRun() {
+    func SSH_Check() {
 
         let uConfig = ConnectConfig.getRouter()
 
@@ -104,7 +104,7 @@ class WalkSetting_ViewController: UIViewController {
                 self.isTest = true
                 self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
             } else {
-                banner.subtitleLabel?.text = "Test failed, please check the account password is correct".localized()
+                banner.subtitleLabel?.text = "Test Failed. Please check your name and password.".localized()
                 self.saveButton.setTitle("TEST".localized(), for: .normal)
                 saveButton.isEnabled = true
             }

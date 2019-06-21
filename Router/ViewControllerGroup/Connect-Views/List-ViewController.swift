@@ -24,9 +24,9 @@ class listTableCell: UITableViewCell {
 
 class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
-    
+
     var goBottom: Bool = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,10 +35,10 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         // func
         table_init()
-        
+
         delay(0.5) {
             if self.goBottom {
-                let indexPath = IndexPath(row: self.sourceData.count-1, section: 0)
+                let indexPath = IndexPath(row: self.sourceData.count - 1, section: 0)
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
             }
         }
@@ -50,7 +50,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var passCommand = ""
     var editNumber: Int = 0
     var isSSR: Bool = false
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goTerminalViewandRun" {
             if let destinationVC = segue.destination as? Terminal_ViewController {
@@ -189,9 +189,9 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         manager.present(on: self)
 
     }
-    
+
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
+
         let editAction = UITableViewRowAction(style: .normal, title: "Edit".localized()) { action, index in
             self.editNumber = (self.sourceData[indexPath.row][1] as NSString).integerValue
             if self.dataDict["ssconf_basic_type_\(self.sourceData[indexPath.row][1])"] == "0" {
@@ -203,27 +203,27 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.performSegue(withIdentifier: "goAddNodeSegue", sender: nil)
         }
         editAction.backgroundColor = UIColor.mainBlue
-        
+
         let removeAction = UITableViewRowAction(style: .normal, title: "Remove".localized()) { action, index in
             //print("删除", self.sourceData[indexPath.row][2], self.sourceData[indexPath.row][1])
             let alertController = UIAlertController(title: "\(self.sourceData[indexPath.row][2]) \(self.sourceData[indexPath.row][1])", message: nil, preferredStyle: .actionSheet)
-            
+
             alertController.addAction(
                 UIAlertAction(
                     title: "Remove".localized(),
                     style: .destructive,
                     handler: { (action) -> Void in
                         self.removeNode(number: (self.sourceData[indexPath.row][1] as NSString).integerValue)
-                }))
-            
+                    }))
+
             alertController.addAction(UIAlertAction(title: "Cancel".localized(), style: .cancel))
             self.present(alertController, animated: true, completion: nil)
         }
         removeAction.backgroundColor = UIColor.watermelon
-        
+
         return [removeAction, editAction]
     }
-    
+
     // MARK: - connect Node
 
     var hud: JGProgressHUD!
@@ -268,7 +268,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: - remove Node
-    
+
     func removeNode(number: Int) {
         switch ModelPage.runningModel {
         case .arm:
@@ -311,7 +311,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 "ssconf_basic_v2ray_mux_enable_\(number)": "",
                 "ssconf_basic_type_\(number)": ""
             ]
-            
+
             // Fetch Request
             Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
                 .validate(statusCode: 200..<300)
@@ -324,9 +324,9 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     }
             }
         case .hnd:
-            
+
             // JSON Body
-            let body: [String : Any] = [
+            let body: [String: Any] = [
                 "fields": [
                     "ssconf_basic_name_\(number)": "",
                     "ssconf_basic_server_\(number)": "",
@@ -368,7 +368,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 "method": "dummy_script.sh",
                 "params": []
             ]
-            
+
             // Fetch Request
             Alamofire.request("\(buildUserURL())/_api/", method: .post, parameters: body, encoding: JSONEncoding.default)
                 .validate(statusCode: 200..<300)
@@ -383,35 +383,35 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }// end switch
     }
 
-    
+
     // MARK: - Ping
-    
+
     var isPing = false
     var pings: [String] = []
     var delayData: [String: String] = [:]
     var pingsCount: Int?
     @IBOutlet weak var pingButton: UIButton!
-    
+
     @IBAction func PingAction(_ sender: UIButton) {
         buttonTapAnimate(button: pingButton)
         self.isPing = true
         ping()
     }
-    
+
     func ping() {
         for i in self.sourceData {
             pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "")
         }
-        
+
         self.hud = JGProgressHUD(style: .dark)
         hud.detailTextLabel.text = "Total: \(pings.count)".localized()
         self.pingsCount = pings.count
         hud.textLabel.text = "Checking Latency".localized()
         hud.show(in: self.view)
-        
+
         pingNext()
     }
-    
+
     func pingNext() {
         guard pings.count > 0 else {
             // ping 的數量小於或等於 0
@@ -420,34 +420,36 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                 self.hud.detailTextLabel.text = nil
                 self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
             })
-            
+
             hud.dismiss(afterDelay: 1.0)
-            
+
             UserDefaults.standard.set(self.delayData, forKey: "ssPing")
             self.tableView.reloadData()
             return
         }
         // ping 的數量大於 0
-        
+
         let ping = pings.removeFirst()
-        PlainPing.ping(ping, completionBlock: { (timeElapsed: Double?, error: Error?) in
+        PlainPing.ping(ping, withTimeout: 2.0, completionBlock: { (timeElapsed: Double?, error: Error?) in
             self.hud.detailTextLabel.text = "\(ping)\n\(self.pings.count) / \(self.pingsCount ?? 0)"
-            
+
             // 正常
             if let latency = timeElapsed {
                 print("\(ping) latency (ms): \(latency)")
                 self.delayData[ping] = String(format: "%.2f", latency)
+            } else {
+                if let error = error {
+                    // 遇到錯誤
+                    print("error: \(error.localizedDescription)")
+                    self.delayData[ping] = "0"
+                }
             }
-            
-            if let error = error {
-                // 遇到錯誤
-                print("error: \(error.localizedDescription)")
-                self.delayData[ping] = "0"
-            }
-            
+
             self.pingNext()
+
             
+
         })
     }
-    
+
 }

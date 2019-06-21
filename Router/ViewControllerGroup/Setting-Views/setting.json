@@ -38,7 +38,7 @@
         },
         {
             "type": "row",
-            "title": "Refresh model data",
+            "title": "App Push ID",
             "titlesc": "App 推送 ID",
             "titletc": "App 推送 ID",
             "icon": "iconFontBell16",

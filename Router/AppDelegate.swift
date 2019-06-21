@@ -10,9 +10,7 @@ import UIKit
 import CoreData
 import IQKeyboardManagerSwift
 import UserNotifications
-import Fabric
 import Bugly
-import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         Bugly.start(withAppId: "7629fe96e8")
-        Fabric.with([Crashlytics.self])
         
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true

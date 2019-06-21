@@ -671,7 +671,7 @@ You can configure more with JSON scripts</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-7c-vkB">
-                                <rect key="frame" x="20" y="415.66666666666674" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="20" y="415.66666666666669" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="HMT-l0-3Gp"/>
                                     <constraint firstAttribute="width" constant="168" id="coe-ac-qWh"/>
@@ -742,7 +742,7 @@ You can configure more with JSON scripts</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="Hmw-eG-y5B">
-                                <rect key="frame" x="20" y="64" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="20" y="64" width="168" height="183"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="fhm-yV-E6p"/>
                                     <constraint firstAttribute="width" constant="168" id="pxH-Lb-4uR"/>
@@ -817,13 +817,13 @@ You can configure more with JSON scripts</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7A-H6-w26">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7A-H6-w26">
                                 <rect key="frame" x="20" y="530" width="335" height="14"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <color key="textColor" name="brownGreyTwo"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-78-TCu">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A8Y-78-TCu">
                                 <rect key="frame" x="20" y="544" width="335" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -845,7 +845,7 @@ You can configure more with JSON scripts</string>
                                 <color key="textColor" name="brownGreyTwo"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="admin" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1qf-yF-lhh">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="admin" borderStyle="roundedRect" placeholder="User" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1qf-yF-lhh">
                                 <rect key="frame" x="20" y="480" width="335" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1266,9 +1266,13 @@ admin@AC68U:/tmp/home/root# </string>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbv-kI-g76" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="21" y="217" width="333" height="180"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="OkP-2z-Dll"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="rm1-UB-duT" appends="YES" id="qbU-Aj-ihM"/>
+                                </connections>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageDownload" translatesAutoresizingMaskIntoConstraints="NO" id="zeF-VD-BTU">
                                 <rect key="frame" x="21" y="407" width="24" height="24"/>
@@ -1365,6 +1369,11 @@ admin@AC68U:/tmp/home/root# </string>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ex6-bE-zX8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rm1-UB-duT">
+                    <connections>
+                        <action selector="tapChart:" destination="dHL-Fk-HCH" id="msE-nN-8Pe"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="303" y="-971"/>
         </scene>
@@ -2493,7 +2502,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="QFF-NK-Mks">
-                                <rect key="frame" x="103.66666666666669" y="314.66666666666674" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="103.66666666666669" y="314.66666666666669" width="168" height="183"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="2K9-At-Lkw"/>
                                     <constraint firstAttribute="width" constant="168" id="TCJ-ot-Y1A"/>

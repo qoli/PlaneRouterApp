@@ -13,6 +13,7 @@ import SwiftyJSON
 import Charts
 import SafariServices
 import Localize_Swift
+import JGProgressHUD
 
 class Net_ViewController: UIViewController {
 
@@ -41,7 +42,7 @@ class Net_ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        chartSetup()
+        Chart_Setup()
         self.sendChineseipRequest()
 
         //添加通知
@@ -75,7 +76,7 @@ class Net_ViewController: UIViewController {
                 DownloadNumbers = []
                 UploadNumbers = []
                 self.isViewAppear = true
-                self.runLoop()
+                self.NetSpeed_Loop()
             } else {
                 print("Net_ViewController: Pause")
                 self.isViewAppear = false
@@ -84,19 +85,47 @@ class Net_ViewController: UIViewController {
 
         lastViewAppearBool = Appear
     }
+    
+    // MARK: - Tap Chart
+    
+    var hud: JGProgressHUD!
+    
+    @IBAction func tapChart(_ sender: UITapGestureRecognizer) {
+        print("tap")
+//        self.NetSpeed_Loop()
+        
+        delay(0) {
+            self.hud = JGProgressHUD(style: .dark)
+            self.hud.show(in: self.view)
+        }
+        
+        delay {
+            _ = SSHRun(command: "nvram unset login_ip_str")
+            _ = SSHRun(command: "nvram unset login_timestamp")
+            _ = SSHRun(command: "nvram unset login_ip")
+            _ = SSHRun(command: "nvram commit")
+        }
+        
+        delay(0) {
+            self.hud.dismiss()
+        }
+    }
+    
+    
+    // MARK: - Loop Net Speed
 
-    func runLoop() {
+    func NetSpeed_Loop() {
         delay(1) {
             if self.isViewAppear {
-                self.UpdateNetSpeed()
-                self.runLoop()
+                self.NetSpeed_Update()
+                self.NetSpeed_Loop()
             } else {
                 self.updateTextLabel.text = "Pause".localized()
             }
         }
     }
 
-    func chartSetup() {
+    func Chart_Setup() {
 
         chtChart.noDataText = "Waiting Data".localized()
 
@@ -137,13 +166,13 @@ class Net_ViewController: UIViewController {
         chtChart.minOffset = 0
     }
 
-    func updateGraph() {
-//        print("updateGraph() \(DownloadNumbers.count)")
+    func Chart_Update() {
+        // print("updateGraph() \(DownloadNumbers.count)")
         var lineDownloadChartEntry = [ChartDataEntry]()
         var lineUploadChartEntry = [ChartDataEntry]()
         let data = LineChartData()
 
-        //here is the for loop
+        // here is the for loop
         for i in 0..<DownloadNumbers.count {
             let valueDownload = ChartDataEntry(x: Double(i), y: DownloadNumbers[i])
             let valueUpload = ChartDataEntry(x: Double(i), y: UploadNumbers[i])
@@ -186,7 +215,7 @@ class Net_ViewController: UIViewController {
 
     }
 
-    func UpdateNetSpeed() {
+    func NetSpeed_Update() {
         /**
          GetSpeed
          post http://router.asus.com/update.cgi
@@ -238,7 +267,7 @@ class Net_ViewController: UIViewController {
 
                                 self.DownloadNumbers.append(downSpeed)
                                 self.UploadNumbers.append(upSpeed)
-                                self.updateGraph()
+                                self.Chart_Update()
                             }
                         } else {
                             // rxtx 無有效數據
@@ -259,7 +288,7 @@ class Net_ViewController: UIViewController {
                         print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login".localized()
                         //try login
-                        GetRouterCookie()
+                         GetRouterCookie()
                     }
 
 
