@@ -38,6 +38,7 @@
             landmarkType = "7">
             <Locations>
                <Location
+                  uuid = "DC8C3803-9F8D-487B-AA21-793CD8C72126 - b971eafdb34a34a3"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -45,14 +46,14 @@
                   moduleName = "Router"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/qoli/Documents/Xcode/Router/Router/ViewControllerGroup/Connect-Views/List-ViewController.swift"
-                  timestampString = "582810467.1720721"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "433"
                   endingLineNumber = "433"
-                  offsetFromSymbolStart = "389">
+                  offsetFromSymbolStart = "336">
                </Location>
                <Location
+                  uuid = "DC8C3803-9F8D-487B-AA21-793CD8C72126 - 879dbabf4d9e21c8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -60,12 +61,11 @@
                   moduleName = "Router"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/qoli/Documents/Xcode/Router/Router/ViewControllerGroup/Connect-Views/List-ViewController.swift"
-                  timestampString = "582810467.17448"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "434"
                   endingLineNumber = "434"
-                  offsetFromSymbolStart = "420">
+                  offsetFromSymbolStart = "356">
                </Location>
             </Locations>
          </BreakpointContent>
