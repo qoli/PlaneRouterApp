@@ -59,22 +59,22 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         // Notification
         addNotification()
         
-        // goWalkSegue
-        delay {
-            if UserDefaults.standard.bool(forKey: "isApp") == false {
-                self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
-            } else {
-                // update
-                self.showUpdateNotes()
-                
-                // select collection
-                self.collection_select(selected: 0)
-            }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if UserDefaults.standard.bool(forKey: "isApp") == false {
+            // goWalkSegue
+            self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
+        } else {
+            // select collection
+//            self.collection_select(selected: 0)
             
+            self.showUpdateNotes(isForce: false)
         }
-
-        
-
     }
 
 
@@ -126,7 +126,15 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     // MARK: - Update Notes
 
-    func showUpdateNotes() {
+    func showUpdateNotes(isForce: Bool = false) {
+        
+        if isForce {
+            delay(2) {
+                self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
+            }
+            return
+        }
+        
         setCacheBool(value: false, Key: "isUpdate")
         let updateTimeCacheKey = "updateTime"
         let updateTime = CacheString(Key: updateTimeCacheKey)
@@ -140,9 +148,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 if value != nil {
                     if updateTime != valueDate {
                         isUpdate = true
-                        self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
                         setCacheBool(value: true, Key: "isUpdate")
                         _ = CacheString(text: valueDate, Key: updateTimeCacheKey)
+                        delay(2) {
+                            self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
+                        }
                     }
                 }
                 print("Update Time Remote: \(valueDate) · Loacl: \(updateTime) · isUpdate: \(isUpdate)")
@@ -361,14 +371,22 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
     func switchView(showView: UIView) {
 
-        self.childNetView.alpha = 0
-        self.childSSView.alpha = 0
-        self.childJSONView.alpha = 0
-        self.childAddView.alpha = 0
-
-        UIView.animate(withDuration: 0.3, animations: {
-            showView.alpha = 1
+        UIView.animate(withDuration: 0.1, animations: {
+            self.childNetView.alpha = 0
+            self.childSSView.alpha = 0
+            self.childJSONView.alpha = 0
+            self.childAddView.alpha = 0
+            
+            delay(0) {
+                UIView.animate(withDuration: 0.4, animations: {
+                    showView.alpha = 1
+                })
+            }
         })
+        
+        
+
+        
 
     }
 

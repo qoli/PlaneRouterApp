@@ -35,21 +35,17 @@ class Net_ViewController: UIViewController {
     var DownloadNumbers: [Double] = []
     var UploadNumbers: [Double] = []
 
-    var isViewAppear = false
-    var lastViewAppearBool = false
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.Chart_Setup()
         self.getWANIP()
-
-        delay(2) {
-            print("Loop NetSpeed_Update")
-            self.isViewAppear = true
+        
+        delay(1) {
+            print("viewDidLoad: NetSpeed_Update")
             self.NetSpeed_Update()
         }
-
+        
         //添加通知
         NotificationCenter.default.addObserver(
             self,
@@ -62,24 +58,36 @@ class Net_ViewController: UIViewController {
     // MARK: - 通知
 
     @objc func netViewonShowNotification(_ notification: Notification) {
-        dataAppear(Appear: notification.object! as! Bool)
+        print("NotificationCenter: netViewonShowNotification \(String(describing: notification.object))")
+        delay(1) {
+            self.dataAppear(Appear: notification.object! as! Bool)
+        }
     }
 
     // MARK: - view
 
     override func viewWillDisappear(_ animated: Bool) {
         self.isViewAppear = false
+        // NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         self.isViewAppear = true
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+
+    }
+    
+    var isViewAppear = false
+    var lastViewAppearBool = false
 
     func dataAppear(Appear: Bool) {
         if lastViewAppearBool != Appear {
             if Appear {
                 DownloadNumbers = []
                 UploadNumbers = []
+                netSpeedTime = 0
                 self.isViewAppear = true
                 self.NetSpeed_Update()
             } else {
@@ -93,9 +101,8 @@ class Net_ViewController: UIViewController {
 
     // MARK: - Tap Chart
 
-
     @IBAction func tapChart(_ sender: UITapGestureRecognizer) {
-        print("tapChart \(isViewAppear)")
+        print("tapChart \(isViewAppear) netSpeedTime \(netSpeedTime)")
     }
 
     // MARK: - Restart WAN
@@ -216,11 +223,6 @@ class Net_ViewController: UIViewController {
     func NetSpeed_Update() {
 
         netSpeedTime = netSpeedTime + 1
-
-        /**
-         GetSpeed
-         post http://router.asus.com/update.cgi
-         */
 
         // Add Headers
         let headers = [
@@ -351,7 +353,6 @@ class Net_ViewController: UIViewController {
                 let rJSON = JSON(value as Any)
                 let remoteIP = rJSON["ip"].stringValue
                 self.WANIPLabel.text = remoteIP
-
                 self.RestartWANButton.isEnabled = true
 
                 delay {

@@ -8,39 +8,31 @@
 
 import UIKit
 import Alamofire
-import MarkdownKit
+import Chrysan
 
 class UpdateNotes_ViewController: UIViewController {
 
-    @IBOutlet weak var text: UITextView!
+    @IBOutlet weak var updateTextView: UITextView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        getNotes()
+        self.chrysan.show(.running, message: nil, hideDelay: 1)
+        
+        getUpdateNotes()
     }
 
     @IBAction func goAction(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }
 
-    func getNotes() {
-        /**
-         Request
-         get https://raw.githubusercontent.com/qoli/AtomicR/master/Update/Update.md
-         */
-
-        // Fetch Request
-
+    func getUpdateNotes() {
         fetchRequestString(
-            api: "https://raw.githubusercontent.com/qoli/AtomicR/master/Update/Update.md",
+            api: "https://raw.githubusercontent.com/qoli/AtomicR/master/Update/changelog.txt",
             isRefresh: true,
             completionHandler: { value, error in
                 if (value != nil) {
-                    let markdownParser = MarkdownParser(font: UIFont.systemFont(ofSize: 13))
-                    markdownParser.header.fontIncrease = 1
-                    let markdown = value
-                    self.text.attributedText = markdownParser.parse(markdown ?? "")
+                    self.updateTextView.text = "\(value ?? "Update Notes")"
                 } else {
                     self.chrysan.show(.error, message: error?.localizedDescription, hideDelay: 2)
                 }

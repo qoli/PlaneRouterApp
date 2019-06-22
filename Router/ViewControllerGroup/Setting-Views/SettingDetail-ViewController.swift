@@ -53,7 +53,7 @@ class SettingDetail_ViewController: UIViewController {
             loginPasswordText.text = config.loginPassword
             portText.text = "\(config.port)"
             removeButton.isHidden = false
-            print(config)
+            print(config ?? "")
         }
         
         if !isRouter {

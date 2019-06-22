@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
         UNUserNotificationCenter.current().delegate = self
 
+        App.appDataNeedUpdate(isUpdate: true)
+        
         return true
     }
 

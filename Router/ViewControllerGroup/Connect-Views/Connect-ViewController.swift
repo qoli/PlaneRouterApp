@@ -57,7 +57,8 @@ class Connect_ViewController: UIViewController {
     
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
-            delay {
+            delay(0.4) {
+                print("ConnectViewonShowNotification")
                 self.updateRunningNodeButton()
             }
         }
@@ -72,8 +73,8 @@ class Connect_ViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         isLooping = false
-        print("viewWillDisappear")
-        NotificationCenter.default.removeObserver(self)
+        print("Connect: viewWillDisappear")
+        // NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -81,8 +82,6 @@ class Connect_ViewController: UIViewController {
             updateRunningNodeButton()
         }
     }
-
-
 
     //MARK: - page more action
 
@@ -226,11 +225,6 @@ class Connect_ViewController: UIViewController {
         self.performSegue(withIdentifier: "goListSegue", sender: nil)
     }
 
-    @IBAction func ConnectAction(_ sender: UIButton) {
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
-    }
-
     //MARK: - 檢查 SS 安裝狀態
 
     func checkSSInstall() -> Bool {
@@ -304,7 +298,6 @@ class Connect_ViewController: UIViewController {
                     if let headers = response.response?.allHeaderFields as? [String: String] {
                         print("\(headers["Date"] ?? "") \(EndTime) \(StartTime) \(delayTime)")
                         self.updateStatusView(isSuccess: true, text: "\(String(format: "%.3f", delayTime)) ms")
-//                        self.loopLabel.text = "***"
                         
                         delay(1) {
                             self.loopLabel.text = "*··"
@@ -327,66 +320,6 @@ class Connect_ViewController: UIViewController {
                 }
 
         }
-    }
-
-    func Status_Update() {
-
-        switch ModelPage.runningModel {
-        case .arm:
-            // Fetch Request
-            Alamofire.request("\(buildUserURL())/\(ModelPage.Status)", method: .get)
-                .responseJSON { response in
-                    switch response.result {
-                    case .success(let value):
-                        //
-                        let r = JSON(value)
-                        if r[0].stringValue != "" {
-                            let status = r[0].stringValue.groups(for: "color=(.*?)>国外连接 - \\[ (.*?) \\]")
-                            if status[0][1] == "#fc0" {
-                                self.updateStatusView(isSuccess: true, text: status[0][2])
-                            } else {
-                                self.updateStatusView(isSuccess: false, text: status[0][2])
-                            }
-                        }
-
-                    case .failure(_):
-                        break
-                    }
-                }
-                .responseString { response in
-                    switch response.result {
-                    case .success(let value):
-                        // check login
-                        if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
-                            GetRouterCookie()
-                            self.statusTimeLabel.text = "Waiting for login"
-                        } else {
-                            self.lineListButton.isEnabled = true
-                        }
-
-                    case .failure(let error):
-                        self.statusTimeLabel.text = error.localizedDescription
-                    }
-            }
-        case .hnd:
-            fetchRequest(
-                api: "\(buildUserURL())/\(ModelPage.Status)",
-                isRefresh: true,
-                completionHandler: { value, error in
-                    if value != nil {
-                        let r = JSON(value as Any)
-                        if r["result"].stringValue != "" {
-                            let status = r["result"].stringValue.groups(for: "国外链接 【(.*?)】 (.*?)&nbsp;&nbsp;(.*?) ms")
-                            if status[0][2] == "✓" {
-                                self.updateStatusView(isSuccess: true, text: "\(status[0][1]) \(status[0][3]) ms")
-                            } else {
-                                self.updateStatusView(isSuccess: false, text: "\(status[0][1])")
-                            }
-                        }
-                    }
-                })
-        }
-
     }
 
     func updateStatusView(isSuccess: Bool, text: String, isPause: Bool = false) {
@@ -422,7 +355,7 @@ class Connect_ViewController: UIViewController {
         self.lineListButton.setTitle("...", for: .disabled)
         self.lineListButton.isEnabled = false
         //
-        updateSSData(isRefresh: true, completionHandler: { value, error in
+        updateSSData(isRefresh: App.appDataneedUpdate, completionHandler: { value, error in
             if value != [:] {
                 let node = value["ssconf_basic_node"] ?? ""
                 let name = value["ssconf_basic_name_\(node)"] ?? ""

@@ -38,6 +38,7 @@ func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isR
     }
 
     if cacheKey == "" || getCacheBool(Key: "isUpdate") {
+//        print("[SSHRun] getCacheBool(Key: 'isUpdate'): \(getCacheBool(Key: "isUpdate"))")
         isR = true
     }
 

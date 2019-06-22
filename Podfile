@@ -13,7 +13,6 @@ target 'Router' do
   pod 'Hero'
   pod 'Charts'
   pod 'NewPopMenu'
-  pod 'MarkdownKit'
   pod 'Chrysan'
   
   # Func

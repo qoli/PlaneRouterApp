@@ -102,7 +102,14 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         //
         table_init()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         page_init()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        // NotificationCenter.default.removeObserver(self)
     }
 
     // MARK: - Notification
@@ -148,7 +155,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func updateService() {
         Service = ServiceList.getSerivce(identifier: Service.identifier)
-        print(Service)
+        print(Service ?? "")
         var name = Service.connectID
         if name == "" {
             name = "No Setup.".localized()

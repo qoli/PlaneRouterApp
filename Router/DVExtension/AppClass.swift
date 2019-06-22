@@ -16,7 +16,7 @@ class appClass {
     
     func appDataNeedUpdate(isUpdate: Bool = false) {
         self.appDataneedUpdate = isUpdate
-        delay(5) {
+        delay(3) {
             self.appDataneedUpdate = false
         }
     }

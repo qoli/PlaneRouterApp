@@ -46,7 +46,11 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         //
         self.tableView_init()
 
-        getAddList()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        getAddList(isReload: false)
     }
 
     func getAddList(isReload: Bool = false) {
@@ -57,6 +61,7 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if value != nil {
                     self.tableSource = JSON(value as Any)
                     self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
                 }
             })
     }
@@ -77,14 +82,7 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
     }()
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        fetchRequest(
-            api: "https://raw.githubusercontent.com/qoli/AtomicR/master/app/addList.json",
-            isRefresh: true,
-            completionHandler: { value, error in
-                self.tableSource = JSON(value!)
-                self.tableView.reloadData()
-                refreshControl.endRefreshing()
-            })
+        self.getAddList(isReload: true)
     }
 
     func tableView_init() {

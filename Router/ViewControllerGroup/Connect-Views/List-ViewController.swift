@@ -92,6 +92,9 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
 
         if !goBottom {
+            
+            print("App.appDataneedUpdate: \(App.appDataneedUpdate)")
+            
             table_update(isRefresh: App.appDataneedUpdate)
         } else {
             table_update(isRefresh: true)

@@ -56,8 +56,8 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
         IQKeyboardManager.shared.enable = true
+        NotificationCenter.default.removeObserver(self)
     }
 
 
@@ -272,8 +272,8 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
 
 
     func exitMessage(message: String) {
-        chrysan.show(.plain, message: message, hideDelay: 2)
-        delay {
+        chrysan.show(.plain, message: message, hideDelay: 1)
+        delay(1) {
             self.dismiss(animated: true, completion: nil)
         }
     }
