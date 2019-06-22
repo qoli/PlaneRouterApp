@@ -135,7 +135,7 @@
 "Mth-f7-YiW.text" = "ASUSWRT-Merlin RT-AC68U 380.70-0-X7.9.1 Tue Sep 25 10:54:41 UTC 2018\nadmin@AC68U:/tmp/home/root# ";
 
 /* Class = "UILabel"; text = "..."; ObjectID = "Mzl-Ti-iNI"; */
-"Mzl-Ti-iNI.text" = "...";
+"Mzl-Ti-iNI.text" = "点击进行网络测试";
 
 /* Class = "UILabel"; text = "Password"; ObjectID = "NTP-fj-Abm"; */
 "NTP-fj-Abm.text" = "Password";
@@ -177,7 +177,7 @@
 "SSH-UU-cD1.text" = "可安裝、管理 Shadowsock 客戶端";
 
 /* Class = "UILabel"; text = "Time"; ObjectID = "TH2-8s-cdd"; */
-"TH2-8s-cdd.text" = "Time";
+"TH2-8s-cdd.text" = "...";
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "ThN-Qq-75k"; */
 "ThN-Qq-75k.text" = "Title";
@@ -375,3 +375,5 @@
 "zvn-gO-c1p.text" = "名称";
 
 "ziA-Un-8jE.normalTitle" = "删除";
+
+"AB4-6l-kgU.normalTitle" = "重新拨号";

@@ -10,9 +10,8 @@ import UIKit
 import Hero
 import Alamofire
 import SwiftyJSON
-import JGProgressHUD
+import Chrysan
 import PopMenu
-import NotificationBannerSwift
 import Localize_Swift
 
 class aclTableCell: UITableViewCell {
@@ -101,8 +100,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                     }
 
                 } else {
-                    let banner = NotificationBanner(title: "Net Error", subtitle: error?.localizedDescription, style: .warning)
-                    banner.show()
+                    self.chrysan.show(.error, message: error?.localizedDescription ?? "error", hideDelay: 1)
                 }
             })
         }
@@ -166,12 +164,10 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     // MARK: click ADD
 
-    var hud: JGProgressHUD!
     func devices() {
 
         delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
+            self.chrysan.show()
         }
 
         delay {
@@ -205,7 +201,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         delay(0.3) {
-            self.hud.dismiss(afterDelay: 1.0)
+            self.chrysan.show(hideDelay: 0.4)
         }
 
     }
@@ -303,8 +299,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         print("ACLSetting: number '\(number)' ,mode '\(mode)' ,ip '\(ip)' ,name '\(name)'")
 
         delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
+            self.chrysan.show()
         }
 
         delay {
@@ -429,7 +424,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
         delay(0.3) {
-            self.hud.dismiss(afterDelay: 1.0)
+            self.chrysan.show(hideDelay: 0.4)
         }
     } // func
 

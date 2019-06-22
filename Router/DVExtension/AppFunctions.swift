@@ -10,7 +10,6 @@ import Foundation
 import NMSSH
 import Alamofire
 import SwiftyJSON
-import NotificationBannerSwift
 
 // MARK: - run in ssh
 
@@ -119,10 +118,15 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
 // MARK: - UI
 
 func messageNotification(message: String, title: String = "Plane Router App") {
-    let banner = NotificationBanner(title: title, subtitle: message, style: .info)
-    banner.duration = 2
-    banner.dismiss()
-    banner.show()
+    
+    print("Message Notification: \(message)")
+    
+//    self.chrysan.show(.plain, message: message, hideDelay: 2)
+    
+//    let banner = NotificationBanner(title: title, subtitle: message, style: .info)
+//    banner.duration = 2
+//    banner.dismiss()
+//    banner.show()
 }
 
 // MARK: animate

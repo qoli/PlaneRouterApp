@@ -42,7 +42,7 @@ class UpdateNotes_ViewController: UIViewController {
                     let markdown = value
                     self.text.attributedText = markdownParser.parse(markdown ?? "")
                 } else {
-                    messageNotification(message: error?.localizedDescription ?? "")
+                    self.chrysan.show(.error, message: error?.localizedDescription, hideDelay: 2)
                 }
             })
     }

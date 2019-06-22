@@ -130,6 +130,14 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
+    @IBAction func goAppView(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextView = storyBoard.instantiateViewController(withIdentifier: "AppView") as! App_ViewController
+        nextView.modalPresentationStyle = .fullScreen
+        self.present(nextView, animated: true, completion: nil)
+    }
+    
+    
 
     // MARK: - load data
 

@@ -5,19 +5,14 @@ PODS:
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
+  - Chrysan (1.5.0)
   - Hero (1.4.0)
   - IQKeyboardManagerSwift (6.4.0)
-  - JGProgressHUD (2.0.3)
   - Localize-Swift (2.0.0)
   - MarkdownKit (1.5)
-  - MarqueeLabel (4.0.0)
   - NewPopMenu (2.1.2)
   - NMSSH (2.3.1)
-  - NotificationBannerSwift (2.2.2):
-    - MarqueeLabel (~> 4.0.0)
-    - SnapKit (~> 5.0.0)
   - PlainPing (0.5)
-  - SnapKit (5.0.0)
   - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
@@ -25,14 +20,13 @@ DEPENDENCIES:
   - BaiduMobStatCodeless
   - Bugly
   - Charts
+  - Chrysan
   - Hero
   - IQKeyboardManagerSwift
-  - JGProgressHUD
   - Localize-Swift
   - MarkdownKit
   - NewPopMenu
   - NMSSH
-  - NotificationBannerSwift
   - PlainPing
   - SwiftyJSON
 
@@ -42,17 +36,14 @@ SPEC REPOS:
     - BaiduMobStatCodeless
     - Bugly
     - Charts
+    - Chrysan
     - Hero
     - IQKeyboardManagerSwift
-    - JGProgressHUD
     - Localize-Swift
     - MarkdownKit
-    - MarqueeLabel
     - NewPopMenu
     - NMSSH
-    - NotificationBannerSwift
     - PlainPing
-    - SnapKit
     - SwiftyJSON
 
 SPEC CHECKSUMS:
@@ -60,19 +51,16 @@ SPEC CHECKSUMS:
   BaiduMobStatCodeless: 8f786558168e5af04c7dab92d0f314ca9f043007
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+  Chrysan: 6bf6682adb2db76f7f5c103930a8c6670f54eebe
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
-  JGProgressHUD: 12b20a8f4ffe05258f8635c1ab92816e451f904d
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   MarkdownKit: 379028e9cd3ebf05ccac87205cd9aead446159d4
-  MarqueeLabel: b55b26e690b6ad41faedd95cbf5eae6f1d1735b4
   NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
   NMSSH: cd689ae535a1581a6dd9fd4600ff71247df510a6
-  NotificationBannerSwift: 2d46cc1b4a0ebf4372baef383f2a2ca82bf0c235
   PlainPing: 6b248b94d92be7ec0410952d1b09af43b9a39015
-  SnapKit: fd22d10eb9aff484d79a8724eab922c1ddf89bcf
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 5660f35c5d3a5441961211b3fcdcfde5b4753945
+PODFILE CHECKSUM: e60665c6032250e3f64e7bafe49c1a1ce0900e32
 
 COCOAPODS: 1.7.1

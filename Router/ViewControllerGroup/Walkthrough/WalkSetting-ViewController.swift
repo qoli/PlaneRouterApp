@@ -8,7 +8,7 @@
 
 import UIKit
 import NMSSH
-import NotificationBannerSwift
+import Chrysan
 import SafariServices
 import Localize_Swift
 
@@ -52,20 +52,17 @@ class WalkSetting_ViewController: UIViewController {
         }
     }
 
-    var banner: NotificationBanner!
-
     @IBAction func saveAction(_ sender: UIButton) {
         if isTest {
             self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
         } else {
             saveButton.isEnabled = false
             self.saveButton.setTitle("Trying", for: .normal)
-            banner = NotificationBanner(title: "Setup Router".localized(), subtitle: "...", style: .info)
-            banner.show()
-            banner.subtitleLabel?.text = "Start Connecting...".localized()
+            chrysan.show(.running, message: "Setup Router".localized())
+            chrysan.show(.running, message: "Start Connecting...".localized(), hideDelay: 1)
 
             delay(0.6) {
-                
+
                 _ = ConnectConfig.routerConfig(
                     mode: .http,
                     address: self.address.text ?? "router.asus.com",
@@ -74,13 +71,13 @@ class WalkSetting_ViewController: UIViewController {
                     loginPassword: self.pass.text ?? "",
                     type: .Router
                 )
-                
+
                 self.SSH_Check()
             }
         }
 
     }
-    
+
     // check
 
     func SSH_Check() {
@@ -91,26 +88,28 @@ class WalkSetting_ViewController: UIViewController {
         let username = uConfig.loginName
         let password = uConfig.loginPassword
 
-        let session = NMSSHSession(host: host , andUsername: username)
+        let session = NMSSHSession(host: host, andUsername: username)
         session.connect()
 
         if session.isConnected {
-            session.authenticate(byPassword: password )
+            session.authenticate(byPassword: password)
 
             if session.isAuthorized {
-                banner.subtitleLabel?.text = "Test Successful".localized()
+                chrysan.show(.plain, message: "Test Successful".localized(), hideDelay: 1)
                 saveButton.isEnabled = true
                 self.saveButton.setTitle("Done".localized(), for: .normal)
                 self.isTest = true
                 self.performSegue(withIdentifier: "goWlakDoneSegue", sender: nil)
             } else {
-                banner.subtitleLabel?.text = "Test Failed. Please check your name and password.".localized()
+                chrysan.show(.plain, message: "Test Failed. Please check your name and password.".localized(), hideDelay: 1)
+//                banner.subtitleLabel?.text = "Test Failed. Please check your name and password.".localized()
                 self.saveButton.setTitle("TEST".localized(), for: .normal)
                 saveButton.isEnabled = true
             }
 
         } else {
-            banner.subtitleLabel?.text = "Connection failed, please check whether SSH connection function is enabled".localized()
+            chrysan.show(.plain, message: "Connection failed, please check whether SSH connection function is enabled".localized(), hideDelay: 1)
+//            banner.subtitleLabel?.text = "Connection failed, please check whether SSH connection function is enabled".localized()
             self.saveButton.setTitle("TEST", for: .normal)
             saveButton.isEnabled = true
         }

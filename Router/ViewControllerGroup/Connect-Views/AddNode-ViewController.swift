@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Chrysan
 import Alamofire
 
 class AddNode_ViewController: UIViewController {
@@ -400,7 +401,7 @@ class AddNode_ViewController: UIViewController {
         ss_obfs: String,
         ss_obfs_host: String) {
         if name == "" {
-            messageNotification(message: "name cannot empty".localized())
+            self.chrysan.show(.plain, message: "name cannot empty".localized(), hideDelay: 1)
         }
         
         let urlParams = [
@@ -428,7 +429,7 @@ class AddNode_ViewController: UIViewController {
                         self.saveDone()
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
         case .hnd:
@@ -448,7 +449,7 @@ class AddNode_ViewController: UIViewController {
                         self.saveDone()
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
             
@@ -468,7 +469,7 @@ class AddNode_ViewController: UIViewController {
         rss_obfs_param: String) {
         
         if name == "" {
-            messageNotification(message: "name cannot empty".localized())
+            self.chrysan.show(.plain, message: "name cannot empty".localized(), hideDelay: 1)
         }
         
         let urlParams = [
@@ -498,7 +499,7 @@ class AddNode_ViewController: UIViewController {
                         self.saveDone()
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
         case .hnd:
@@ -518,7 +519,7 @@ class AddNode_ViewController: UIViewController {
                         self.saveDone()
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
             

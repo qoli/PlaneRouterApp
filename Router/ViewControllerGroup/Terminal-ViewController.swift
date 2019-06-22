@@ -10,7 +10,7 @@ import UIKit
 import NMSSH
 import SwiftyJSON
 import IQKeyboardManagerSwift
-import NotificationBannerSwift
+import Chrysan
 
 class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChannelDelegate, UITextViewDelegate {
 
@@ -63,7 +63,7 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
 
     @objc func keyboardWillShow(notification: NSNotification) {
         //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
-        var userInfo = notification.userInfo!
+        let userInfo = notification.userInfo!
         var keyboardFrame: CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
         keyboardFrame = self.view.convert(keyboardFrame, from: nil)
 
@@ -191,7 +191,7 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
             self.appendToTextView(text: "\nShell closed\n")
             self.textView.isEditable = false
             delay {
-                self.exitMessage(message: "Shell Close", style: .info)
+                self.exitMessage(message: "Shell Close")
             }
         })
     }
@@ -270,27 +270,16 @@ class Terminal_ViewController: UIViewController, NMSSHSessionDelegate, NMSSHChan
 
     // MARK: - NotificationBanner
 
-    var banner: NotificationBanner?
 
-    func exitMessage(message: String, style: BannerStyle = .warning) {
-        if banner != nil {
-            banner?.dismiss()
-        }
-        banner = NotificationBanner(title: "Terminal", subtitle: message, style: style)
-        banner?.duration = 2
-        banner?.show()
+    func exitMessage(message: String) {
+        chrysan.show(.plain, message: message, hideDelay: 2)
         delay {
             self.dismiss(animated: true, completion: nil)
         }
     }
 
-    func message(message: String, style: BannerStyle = .info) {
-        if banner != nil {
-            banner?.dismiss()
-        }
-        banner = NotificationBanner(title: "Terminal", subtitle: message, style: style)
-        banner?.duration = 0.3
-        banner?.show()
+    func message(message: String) {
+        chrysan.show(.plain, message: message, hideDelay: 1)
     }
 
 }

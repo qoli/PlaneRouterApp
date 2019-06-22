@@ -10,7 +10,7 @@ import UIKit
 import Hero
 import Alamofire
 import SwiftyJSON
-import JGProgressHUD
+import Chrysan
 import Localize_Swift
 
 class CommnadRead_ViewController: UIViewController {
@@ -53,6 +53,7 @@ class CommnadRead_ViewController: UIViewController {
         //释放所有下级视图
         NotificationCenter.default.post(name: NSNotification.Name.init("collectionSelect"), object: 1)
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
+        App.appDataNeedUpdate(isUpdate: true)
         rootVC?.dismiss(animated: true, completion: nil)
     }
 
@@ -102,7 +103,7 @@ class CommnadRead_ViewController: UIViewController {
                     case .success(_):
                         self.LoopLoadText()
                     case .failure(let error):
-                        messageNotification(message: error.localizedDescription)
+                        self.chrysan.show(.error, message: error.localizedDescription, hideDelay: 1)
                     }
             }
 
@@ -144,13 +145,12 @@ class CommnadRead_ViewController: UIViewController {
                         self.LoopLoadText()
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.error, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
         }
     }
 
-    var hud: JGProgressHUD!
 
     func CommnadReadAjax() {
         let timestamp = Date().timeIntervalSince1970
@@ -170,12 +170,8 @@ class CommnadRead_ViewController: UIViewController {
                 if value?.contains("XU6J03M6") ?? false {
                     self.isAppear = false
                     self.pageTitle.text = "Finish".localized()
-                    self.hud = JGProgressHUD(style: .dark)
-                    self.hud.textLabel.text = nil
-                    self.hud.detailTextLabel.text = nil
-                    self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
-                    self.hud.show(in: self.view)
-                    delay(3) {
+                    self.chrysan.show(.succeed, hideDelay: 1)
+                    delay(2) {
                         self.returnToRoot()
                     }
                 }

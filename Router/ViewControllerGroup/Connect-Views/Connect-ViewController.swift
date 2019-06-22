@@ -11,7 +11,6 @@ import Hero
 import Alamofire
 import SwiftyJSON
 import PopMenu
-import PlainPing
 import Localize_Swift
 
 class Connect_ViewController: UIViewController {
@@ -25,7 +24,6 @@ class Connect_ViewController: UIViewController {
     @IBOutlet weak var statusTimeLabel: UILabel!
 
     @IBOutlet weak var lineListButton: UIButton!
-    @IBOutlet weak var connectButton: UIButton!
 
     var isLooping = false
 
@@ -35,7 +33,7 @@ class Connect_ViewController: UIViewController {
         //添加通知
         addNotification()
 
-        pageDesc.text = "SSH: Router".localized()
+        self.pageDesc.text = "SSH: Router".localized()
     }
 
     //MARK: - 通知
@@ -55,16 +53,19 @@ class Connect_ViewController: UIViewController {
         )
     }
 
+    // MARK: When Connect View on Appear
+    
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
         if notification.object! as! Bool {
-//            self.isLooping = true
-//            self.loopUpdateStatus()
+            delay {
+                self.updateRunningNodeButton()
+            }
         }
     }
 
 
     @objc func ConnectViewonListNotification(_ notification: Notification) {
-        pageDesc.text = "\(App.appListON)"
+//        pageDesc.text = "\(App.appListON)"
     }
 
     //MARK: - View 生命週期處理
@@ -76,9 +77,8 @@ class Connect_ViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-//        self.loopUpdateStatus()
         if checkSSInstall() {
-            lineButtonUpdate()
+            updateRunningNodeButton()
         }
     }
 
@@ -165,7 +165,7 @@ class Connect_ViewController: UIViewController {
                                 self.ssLinks = textField.text ?? ""
                                 self.performSegue(withIdentifier: "goCommandReadSegue", sender: nil)
                             } else {
-                                messageNotification(message: "Invalid URI")
+                                self.chrysan.show(.plain, message: "Invalid URI", hideDelay: 1)
                             }
 
                         }))
@@ -361,7 +361,6 @@ class Connect_ViewController: UIViewController {
                             GetRouterCookie()
                             self.statusTimeLabel.text = "Waiting for login"
                         } else {
-                            self.connectButton.isEnabled = true
                             self.lineListButton.isEnabled = true
                         }
 
@@ -419,20 +418,16 @@ class Connect_ViewController: UIViewController {
 
     //MARK: - Line Button
 
-    func lineButtonUpdate() {
+    func updateRunningNodeButton() {
         self.lineListButton.setTitle("...", for: .disabled)
-        self.connectButton.setTitle("...", for: .disabled)
         self.lineListButton.isEnabled = false
-        self.connectButton.isEnabled = false
         //
         updateSSData(isRefresh: true, completionHandler: { value, error in
             if value != [:] {
                 let node = value["ssconf_basic_node"] ?? ""
                 let name = value["ssconf_basic_name_\(node)"] ?? ""
                 self.lineListButton.setTitle(name, for: .normal)
-                self.connectButton.setTitle("Reconnect".localized(), for: .normal)
                 self.lineListButton.isEnabled = true
-                self.connectButton.isEnabled = true
             }
         })
     }

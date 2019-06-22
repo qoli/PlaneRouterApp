@@ -10,11 +10,11 @@ import UIKit
 import Hero
 import Alamofire
 import SwiftyJSON
-import JGProgressHUD
-import PlainPing
 import PopMenu
-import NotificationBannerSwift
+import Chrysan
 import Localize_Swift
+import PlainPing
+import Chrysan
 
 class listTableCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
@@ -22,7 +22,7 @@ class listTableCell: UITableViewCell {
     @IBOutlet weak var desc: UILabel!
 }
 
-class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SimplePingDelegate {
     @IBOutlet weak var tableView: UITableView!
 
     var goBottom: Bool = false
@@ -92,7 +92,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
 
         if !goBottom {
-            table_update()
+            table_update(isRefresh: App.appDataneedUpdate)
         } else {
             table_update(isRefresh: true)
         }
@@ -119,8 +119,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                     self.sourceData = self.sourceData.sorted(by: { ($0[1] as NSString).integerValue < ($1[1] as NSString).integerValue })
                     self.tableView.reloadData()
                 } else {
-                    let banner = NotificationBanner(title: "Net Error", subtitle: error?.localizedDescription, style: .warning)
-                    banner.show()
+                    self.chrysan.show(.error, message: error?.localizedDescription ?? "error", hideDelay: 1)
                 }
             })
         }
@@ -168,7 +167,8 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
             if self.delayData.count != 0 || isPing {
                 let domain: String = self.dataDict["ssconf_basic_server_\(sourceData[indexPath.row][1])"] ?? ""
-                cell.delayLabel.text = "\((self.delayData[domain] ?? "0")) ms"
+//                cell.delayLabel.text = "\((self.delayData[domain] ?? "0")) ms"
+                cell.delayLabel.text = self.delayData[domain]
             }
         }
         return cell
@@ -226,11 +226,9 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     // MARK: - connect Node
 
-    var hud: JGProgressHUD!
     func connectNode(indexPath: IndexPath) {
         delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
+            self.chrysan.show()
         }
 
         delay(0.1) {
@@ -263,7 +261,8 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
 
         delay(0.2) {
-            self.hud.dismiss(afterDelay: 1.0)
+//            self.hud.dismiss(afterDelay: 1.0)
+            self.chrysan.show(hideDelay: 0.4)
         }
     }
 
@@ -320,7 +319,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         self.table_update(isRefresh: true)
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
         case .hnd:
@@ -377,19 +376,123 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         self.table_update(isRefresh: true)
                     }
                     else {
-                        messageNotification(message: response.result.error?.localizedDescription ?? "error")
+                        self.chrysan.show(.plain, message: response.result.error?.localizedDescription, hideDelay: 1)
                     }
             }
         }// end switch
     }
 
+    // MARK: - ping
 
-    // MARK: - Ping
+    var pingHostName: String = "127.0.0.1"
+
+    func pingStart(forceIPv4: Bool, forceIPv6: Bool, hostName: String) {
+        self.pingHostName = hostName
+        
+        print("start \(hostName)")
+        self.delayData[self.pingHostName] = "..."
+        self.tableView.reloadData()
+
+        
+
+        let pinger = SimplePing(hostName: hostName)
+        self.pinger = pinger
+
+        // By default we use the first IP address we get back from host resolution (.Any)
+        // but these flags let the user override that.
+
+        if (forceIPv4 && !forceIPv6) {
+            pinger.addressStyle = .icmPv4
+        } else if (forceIPv6 && !forceIPv4) {
+            pinger.addressStyle = .icmPv6
+        }
+
+        pinger.delegate = self
+        pinger.start()
+    }
+
+    func pingStop() {
+        print("... STOP")
+        self.pinger?.stop()
+        self.pinger = nil
+
+        self.sendTimer?.invalidate()
+        self.sendTimer = nil
+
+        self.tableView.reloadData()
+        self.pingNext()
+
+    }
+
+    /// Sends a ping.
+    ///
+    /// Called to send a ping, both directly (as soon as the SimplePing object starts up) and
+    /// via a timer (to continue sending pings periodically).
+
+    @objc func sendPing() {
+        self.pinger!.send(with: nil)
+    }
+
+    var pinger: SimplePing?
+    var sendTimer: Timer?
+
+    // MARK: - pinger delegate callback
+
+    func simplePing(_ pinger: SimplePing, didStartWithAddress address: Data) {
+        print("pinging \(address as NSData)")
+
+        // Send the first ping straight away.
+        self.sendPing()
+
+        // And start a timer to send the subsequent pings.
+        assert(self.sendTimer == nil)
+        self.sendTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(List_ViewController.sendPing), userInfo: nil, repeats: true)
+    }
+
+    func simplePing(_ pinger: SimplePing, didFailWithError error: Error) {
+        print(error)
+        self.delayData[self.pingHostName] = "error"
+        self.pingStop()
+    }
+
+    var sentTime: TimeInterval = 0
+    func simplePing(_ pinger: SimplePing, didSendPacket packet: Data, sequenceNumber: UInt16) {
+        sentTime = Date().timeIntervalSince1970
+        print("\(sequenceNumber) sent")
+        
+        if sequenceNumber == 6 {
+            self.delayData[self.pingHostName] = "-"
+            self.pingStop()
+        }
+    }
+
+    func simplePing(_ pinger: SimplePing, didFailToSendPacket packet: Data, sequenceNumber: UInt16, error: Error) {
+        print("send failed \(sequenceNumber) \(error)")
+        self.delayData[self.pingHostName] = "send failed"
+    }
+
+    func simplePing(_ pinger: SimplePing, didReceivePingResponsePacket packet: Data, sequenceNumber: UInt16) {
+        let some = Int(((Date().timeIntervalSince1970 - sentTime).truncatingRemainder(dividingBy: 1)) * 1000)
+        print("PING: \(some) MS \(sequenceNumber) received size=\(packet.count)")
+        
+        self.delayData[self.pingHostName] = "\(String(some)) ms"
+        self.tableView.reloadData()
+        
+        if sequenceNumber >= 3 {
+            self.pingStop()
+        }
+    }
+
+    func simplePing(_ pinger: SimplePing, didReceiveUnexpectedPacket packet: Data) {
+        print("unexpected packet, size=\(packet.count)")
+        self.delayData[self.pingHostName] = "unexpected packet"
+    }
 
     var isPing = false
     var pings: [String] = []
     var delayData: [String: String] = [:]
-    var pingsCount: Int?
+    var pingsCount: Int = 0
+    var pingsCountTotal: Int = 0
     @IBOutlet weak var pingButton: UIButton!
 
     @IBAction func PingAction(_ sender: UIButton) {
@@ -400,56 +503,39 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func ping() {
         for i in self.sourceData {
-            pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "")
+            pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "127.0.0.1")
         }
-
-        self.hud = JGProgressHUD(style: .dark)
-        hud.detailTextLabel.text = "Total: \(pings.count)".localized()
-        self.pingsCount = pings.count
-        hud.textLabel.text = "Checking Latency".localized()
-        hud.show(in: self.view)
-
+        
+        pingsCountTotal = pings.count
+        
         pingNext()
     }
-
+    
+    func updateCount(finished: Int) {
+        let progress = CGFloat(finished) / CGFloat(pingsCountTotal)
+        chrysan.show(progress: progress, message: nil, progressText: "\(finished)/\(pingsCountTotal)")
+    }
+    
     func pingNext() {
         guard pings.count > 0 else {
             // ping 的數量小於或等於 0
-            UIView.animate(withDuration: 0.1, animations: {
-                self.hud.textLabel.text = nil
-                self.hud.detailTextLabel.text = nil
-                self.hud.indicatorView = JGProgressHUDSuccessIndicatorView()
-            })
 
-            hud.dismiss(afterDelay: 1.0)
-
+            self.chrysan.show(.succeed, message: nil, hideDelay: 0.4)
+            
             UserDefaults.standard.set(self.delayData, forKey: "ssPing")
-            self.tableView.reloadData()
             return
         }
-        // ping 的數量大於 0
+        
+        
+        
+        let indexPath = IndexPath(row: pingsCount, section: 0)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
 
         let ping = pings.removeFirst()
-        PlainPing.ping(ping, withTimeout: 2.0, completionBlock: { (timeElapsed: Double?, error: Error?) in
-            self.hud.detailTextLabel.text = "\(ping)\n\(self.pings.count) / \(self.pingsCount ?? 0)"
+        self.pingStart(forceIPv4: true, forceIPv6: false, hostName: ping)
 
-            // 正常
-            if let latency = timeElapsed {
-                print("\(ping) latency (ms): \(latency)")
-                self.delayData[ping] = String(format: "%.2f", latency)
-            } else {
-                if let error = error {
-                    // 遇到錯誤
-                    print("error: \(error.localizedDescription)")
-                    self.delayData[ping] = "0"
-                }
-            }
-
-            self.pingNext()
-
-            
-
-        })
+        pingsCount = pingsCount + 1
+        self.updateCount(finished: pingsCount)
     }
 
 }

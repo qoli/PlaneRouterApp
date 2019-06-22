@@ -13,7 +13,6 @@ import SwiftyJSON
 import Charts
 import SafariServices
 import Localize_Swift
-import JGProgressHUD
 
 class Net_ViewController: UIViewController {
 
@@ -94,16 +93,8 @@ class Net_ViewController: UIViewController {
 
     // MARK: - Tap Chart
 
-    var hud: JGProgressHUD!
 
     @IBAction func tapChart(_ sender: UITapGestureRecognizer) {
-//        if self.isViewAppear {
-//            self.isViewAppear = false
-//        } else {
-//            self.isViewAppear = true
-//            self.NetSpeed_Update()
-//        }
-//
         print("tapChart \(isViewAppear)")
     }
 
@@ -160,9 +151,9 @@ class Net_ViewController: UIViewController {
         chtChart.rightAxis.enabled = true
         chtChart.rightAxis.drawAxisLineEnabled = false
         chtChart.rightAxis.drawLabelsEnabled = false
-        chtChart.rightAxis.gridColor = UIColor.gray92
+        chtChart.rightAxis.gridColor = UIColor(named: "Gray92") ?? UIColor.gray92
         chtChart.rightAxis.gridLineDashLengths = [5, 5]
-        chtChart.rightAxis.labelTextColor = UIColor.gray80
+        chtChart.rightAxis.labelTextColor = UIColor(named: "gray80") ?? UIColor.gray80
         chtChart.rightAxis.labelFont = UIFont.chartRightFont
 
         chtChart.autoScaleMinMaxEnabled = true
@@ -296,13 +287,13 @@ class Net_ViewController: UIViewController {
                         } else {
                             // rxtx 無有效數據
                             self.isViewAppear = false
-                            messageNotification(message: "Data invalid", title: "Net Speed")
+                            self.chrysan.show(.plain, message: "Data invalid", hideDelay: 1)
                         }
                     }
 
                     //404
                     if value.hasPrefix("<HTML><HEAD><TITLE>404 Not Found</TITLE></HEAD>") {
-                        messageNotification(message: "Update 404", title: "Net Speed")
+                        self.chrysan.show(.plain, message: "Update 404", hideDelay: 1)
                         self.isViewAppear = false
                     }
 

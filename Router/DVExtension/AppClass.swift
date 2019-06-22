@@ -12,6 +12,14 @@ class appClass {
     // MARK: - var
     
     var appListON: Bool = true
+    var appDataneedUpdate = false
+    
+    func appDataNeedUpdate(isUpdate: Bool = false) {
+        self.appDataneedUpdate = isUpdate
+        delay(5) {
+            self.appDataneedUpdate = false
+        }
+    }
 }
 
 let App = appClass()

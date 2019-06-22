@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Chrysan
 import Hero
 
 class ServiceiconCollectionViewCell: UICollectionViewCell {
@@ -17,9 +18,9 @@ class ServiceiconCollectionViewCell: UICollectionViewCell {
 }
 
 class App_ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    
+
     // MARK: - IBOutlet
-    
+
     @IBOutlet weak var PanSwipe: UIPanGestureRecognizer!
     @IBOutlet weak var appTitle: UILabel!
     @IBOutlet weak var childViewTop: NSLayoutConstraint!
@@ -37,39 +38,46 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @IBOutlet weak var childAddView: UIView!
 
     // MARK: - var
-    
+
     var selectServiceNumber: Int = 0
-    var lastScreenID = ""
+    var lastCollectionID = ""
 
     // MARK: - view
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //goWalkSegue
-        delay {
-            if UserDefaults.standard.bool(forKey: "isApp") == false {
-                self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
-            }
-        }
-        
-        // update
-        updateNotes()
 
+        // Chrysan
+        ChrysanConfig.default().hudStyle = .dark
+        ChrysanConfig.default().color = .white
+        ChrysanConfig.default().chrysanStyle = .whiteIndicator
+        
         self.appTitle.alpha = 0
-
+        
         collection_init()
-
+        
         // Notification
         addNotification()
         
+        // goWalkSegue
         delay {
-            self.collection_select(selected: 0)
+            if UserDefaults.standard.bool(forKey: "isApp") == false {
+                self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
+            } else {
+                // update
+                self.showUpdateNotes()
+                
+                // select collection
+                self.collection_select(selected: 0)
+            }
+            
         }
+
+        
 
     }
 
-    
+
     // MARK: - Notification
 
     func addNotification() {
@@ -92,7 +100,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             object: nil
         )
     }
-    
+
     @objc func updateCollection(_ notification: Notification) {
         self.collection_update()
         self.collection_select(selected: self.items.count - 1)
@@ -101,24 +109,28 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     @objc func serviceListActionNotification(_ notification: Notification) {
         servicePanelOnOff((notification.object != nil))
     }
-    
+
     @objc func collectionSelectNotification(_ notification: Notification) {
         self.collection_select(selected: notification.object as! Int)
     }
 
     // MARK: - SettingAction
-    
+
     @IBAction func SettingAction(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+        //self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let nextView = storyBoard.instantiateViewController(withIdentifier: "SettingTableView") as! SettingTable_ViewController
+        nextView.modalPresentationStyle = .fullScreen
+        self.present(nextView, animated: true, completion: nil)
     }
-    
+
     // MARK: - Update Notes
-    
-    func updateNotes() {
+
+    func showUpdateNotes() {
         setCacheBool(value: false, Key: "isUpdate")
         let updateTimeCacheKey = "updateTime"
         let updateTime = CacheString(Key: updateTimeCacheKey)
-        
+
         fetchRequestString(
             api: "https://raw.githubusercontent.com/qoli/AtomicR/master/Update/updatetime.txt",
             isRefresh: true,
@@ -134,11 +146,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     }
                 }
                 print("Update Time Remote: \(valueDate) · Loacl: \(updateTime) · isUpdate: \(isUpdate)")
-        })
+            })
     }
 
     // MARK: - Service Panel ON or OFF
-    
+
     @IBAction func PanSwipeAction(_ sender: UIPanGestureRecognizer) {
         if self.PanSwipe.state == .changed {
             let offY = self.PanSwipe.velocity(in: childViews).y
@@ -150,11 +162,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
         }
     }
-    
+
     @IBAction func serviceListMenuAction(_ sender: UIButton) {
         servicePanelOnOff(App.appListON)
     }
-    
+
     func servicePanelOnOff(_ isON: Bool) {
         App.appListON = isON
         // 200 / 60
@@ -177,12 +189,12 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.menuButton.setBackgroundImage(UIImage(named: "iconMenuActive"), for: .normal)
             })
         }
-        
+
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonList"), object: App.appListON)
     }
 
     // MARK: - collectionView
-    
+
     // collectionView
     var previousSelected: IndexPath?
     var currentSelected: Int?
@@ -203,11 +215,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.delegate = self
 
         Fixed()
-        
+
         collection_update()
         collection_select()
     }
-    
+
     func Fixed() {
         let r = ServiceList.buildFixed(name: "Net Speed")
         let c = ServiceList.buildFixed(name: "Connect")
@@ -215,11 +227,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.itemsFixed.append(r)
         self.itemsFixed.append(c)
         self.itemsFixed.append(s)
-        
+
     }
 
     // MARK: - item Update
-    
+
     func collection_update() {
         self.items = self.itemsFixed
         let list = ServiceList.getSerivces()
@@ -236,7 +248,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.selectServiceNumber = indexPath.row
                 self.appTitle.text = self.items[self.selectServiceNumber].name
 
-                cell?.cellView.backgroundColor = UIColor.mainBlue
+                cell?.cellView.backgroundColor = UIColor(named: "mainBlue")
                 cell?.shadowImage.image = UIImage(named: "serviceShadowActive")
                 cell?.shadowImage.frame.origin.y = 6
 
@@ -255,7 +267,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     cell?.nameLabel.textColor = UIColor.white
                 }
             } else {
-                cell?.cellView.backgroundColor = UIColor.white
+                cell?.cellView.backgroundColor = UIColor(named: "CollectionColor")
                 cell?.shadowImage.image = UIImage(named: "serviceShadow")
                 cell?.shadowImage.frame.origin.y = 0
 
@@ -320,7 +332,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: false)
             NotificationCenter.default.post(name: NSNotification.Name.init("NetViewonShow"), object: false)
 
-            if self.lastScreenID != self.items[indexPath.item].identifier {
+            if self.lastCollectionID != self.items[indexPath.item].identifier {
                 // tap collection action
                 switch self.items[indexPath.item].name {
                 case "Net Speed":
@@ -340,11 +352,11 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
             }
 
-            self.lastScreenID = self.items[indexPath.item].identifier
+            self.lastCollectionID = self.items[indexPath.item].identifier
         }
 
     }
-    
+
     // MARK: Switch View
 
     func switchView(showView: UIView) {

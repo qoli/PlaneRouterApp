@@ -212,7 +212,6 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
                             completionHandler(value, nil)
                         } else {
                             print("fetchRequestString \(api) [need login]")
-                            messageNotification(message: "Need Router Login")
                             completionHandler(nil, nil)
                         }
 

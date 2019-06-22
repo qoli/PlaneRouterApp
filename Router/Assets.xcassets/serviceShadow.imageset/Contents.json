@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "serviceShadow.png"
+      "filename" : "serviceShadow.pdf"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "serviceShadow@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "serviceShadow@3x.png"
+      "filename" : "serviceShadowDark.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

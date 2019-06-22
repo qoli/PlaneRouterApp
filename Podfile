@@ -12,10 +12,9 @@ target 'Router' do
   # UI
   pod 'Hero'
   pod 'Charts'
-  pod 'JGProgressHUD'
   pod 'NewPopMenu'
-  pod 'NotificationBannerSwift'
   pod 'MarkdownKit'
+  pod 'Chrysan'
   
   # Func
   pod 'NMSSH'

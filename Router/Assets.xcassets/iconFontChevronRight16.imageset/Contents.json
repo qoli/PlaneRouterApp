@@ -2,18 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "iconFontChevronRight16.png"
+      "filename" : "iconFontChevronRight16.pdf"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "iconFontChevronRight16@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "iconFontChevronRight16@3x.png"
+      "filename" : "iconFontChevronRight16Dark.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

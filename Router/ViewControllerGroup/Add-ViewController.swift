@@ -26,9 +26,9 @@ class addCell: UITableViewCell {
         self.selectionStyle = .none
 
         if selected {
-            self.serviceName.textColor = UIColor.mainBlue
+            self.serviceName.textColor = UIColor(named: "mainBlue")
             delay(0.8) {
-                self.serviceName.textColor = UIColor.gray29
+                self.serviceName.textColor = UIColor(named: "gray29")
             }
         }
     }

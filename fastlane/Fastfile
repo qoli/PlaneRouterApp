@@ -4,6 +4,7 @@ platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
     sh("open","/Users/qoli/GitHub/AtomicR/Update/Update.md")
+    sh("open","/Users/qoli/GitHub/AtomicR/Update/changelog.txt")
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
   	increment_build_number
@@ -11,8 +12,9 @@ platform :ios do
     	workspace: "Router.xcworkspace",
     	scheme: "Router"
     	)
+    changelog = File.read("/Users/qoli/GitHub/AtomicR/Update/changelog.txt")
     upload_to_testflight(
-      changelog: "New build for testing",
+      changelog: changelog,
       distribute_external: true,
       groups: "Open Beta"
       )

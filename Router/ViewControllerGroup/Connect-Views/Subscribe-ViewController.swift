@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import JGProgressHUD
+import Chrysan
 
 class Subscribe_ViewController: UIViewController,UITextViewDelegate {
 
@@ -82,16 +82,16 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     }
 
     func saveRadio(check: saveOptin) {
-        saveButton.layer.borderColor = UIColor.gray92.cgColor
-        saveUpdateButton.layer.borderColor = UIColor.gray92.cgColor
-        removeButton.layer.borderColor = UIColor.gray92.cgColor
+        saveButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
+        saveUpdateButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
+        removeButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
         switch check {
         case .remove:
-            removeButton.layer.borderColor = UIColor.coralPink.cgColor
+            removeButton.layer.borderColor = UIColor(named: "coralPink")?.cgColor
         case .saveOnly:
-            saveButton.layer.borderColor = UIColor.mainBlue.cgColor
+            saveButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
         case .saveUpdate:
-            saveUpdateButton.layer.borderColor = UIColor.mainBlue.cgColor
+            saveUpdateButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
         }
         
         self.applyButton.isEnabled = true
@@ -108,15 +108,12 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     @IBAction func RemoveAction(_ sender: Any) {
         saveRadio(check: .remove)
     }
-    
-    var hud: JGProgressHUD!
 
     @IBAction func applyAction(_ sender: UIButton) {
         self.linkb64 = self.addressTextView.text.base64Encoded()
         
         delay(0) {
-            self.hud = JGProgressHUD(style: .dark)
-            self.hud.show(in: self.view)
+            self.chrysan.show()
         }
         
         delay {
@@ -132,7 +129,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
         }
         
         delay {
-            self.hud.dismiss(afterDelay: 1.0)
+            self.chrysan.show(hideDelay: 1)
         }
 
     }

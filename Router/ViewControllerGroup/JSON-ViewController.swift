@@ -10,9 +10,7 @@ import UIKit
 import Hero
 import Alamofire
 import SwiftyJSON
-import JGProgressHUD
 import PopMenu
-import NotificationBannerSwift
 import SafariServices
 import Localize_Swift
 
@@ -193,7 +191,11 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
                         title: "Add Hosts".localized(),
                         didSelect: { action in
                             delay {
-                                self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+                                // self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+                                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                                let nextView = storyBoard.instantiateViewController(withIdentifier: "SettingTableView") as! SettingTable_ViewController
+                                nextView.modalPresentationStyle = .fullScreen
+                                self.present(nextView, animated: true, completion: nil)
                             }
                         }))
                     managerSSH.present(on: self)
@@ -228,9 +230,6 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     // MARK: Run command
     func runCommand(indexPath: Int) {
-
-        let hud = JGProgressHUD(style: .dark)
-        hud.vibrancyEnabled = true
         self.passCommand = tableData["data"][indexPath]["action"].stringValue + " \n"
         self.performSegue(withIdentifier: "goTerminalViewandRun", sender: nil)
     }
