@@ -7,17 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "A8F98896-B3DD-44FC-9A03-AB9B00FCEDBB"
+            uuid = "A58BE3B1-F9F6-44E5-B7D4-143B42A8F0B5"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/PlainPing/Pod/Classes/SimplePingAdapter.swift"
-            timestampString = "581545602.900363"
+            filePath = "Router/ViewControllerGroup/Connect-Views/List-ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
-            landmarkName = "startPing(_:timeout:)"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
+            landmarkName = "pingNext()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

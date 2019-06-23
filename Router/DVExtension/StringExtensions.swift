@@ -21,8 +21,7 @@ extension String {
         do {
             let text = self
             let regex = try NSRegularExpression(pattern: regexPattern)
-            let matches = regex.matches(in: text,
-                                        range: NSRange(text.startIndex..., in: text))
+            let matches = regex.matches(in: text, range: NSRange(text.startIndex..., in: text))
             return matches.map { match in
                 return (0..<match.numberOfRanges).map {
                     let rangeBounds = match.range(at: $0)

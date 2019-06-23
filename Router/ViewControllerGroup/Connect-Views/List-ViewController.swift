@@ -168,9 +168,8 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             cell.desc.text = "\(type) · \(dataDict["ssconf_basic_server_\(self.sourceData[indexPath.row][1])"] ?? "")"
 
-            if self.delayData.count != 0 || isPing {
+            if self.delayData.count != 0 {
                 let domain: String = self.dataDict["ssconf_basic_server_\(sourceData[indexPath.row][1])"] ?? ""
-//                cell.delayLabel.text = "\((self.delayData[domain] ?? "0")) ms"
                 cell.delayLabel.text = self.delayData[domain]
             }
         }
@@ -491,16 +490,17 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.delayData[self.pingHostName] = "unexpected packet"
     }
 
-    var isPing = false
+    // MARK: Ping Action Button
+    
     var pings: [String] = []
     var delayData: [String: String] = [:]
     var pingsCount: Int = 0
     var pingsCountTotal: Int = 0
     @IBOutlet weak var pingButton: UIButton!
-
+    
     @IBAction func PingAction(_ sender: UIButton) {
         buttonTapAnimate(button: pingButton)
-        self.isPing = true
+        self.pingButton.isEnabled = false
         ping()
     }
 
@@ -509,6 +509,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "127.0.0.1")
         }
         
+        pingsCount = 0
         pingsCountTotal = pings.count
         
         pingNext()
@@ -523,12 +524,12 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         guard pings.count > 0 else {
             // ping 的數量小於或等於 0
 
-            self.chrysan.show(.succeed, message: nil, hideDelay: 0.4)
+            self.chrysan.show(.succeed, message: nil, hideDelay: 1)
+            self.pingButton.isEnabled = true
             
             UserDefaults.standard.set(self.delayData, forKey: "ssPing")
             return
         }
-        
         
         
         let indexPath = IndexPath(row: pingsCount, section: 0)
