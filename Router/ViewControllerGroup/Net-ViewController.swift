@@ -68,7 +68,7 @@ class Net_ViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         self.isViewAppear = false
-        // NotificationCenter.default.removeObserver(self)
+         NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {

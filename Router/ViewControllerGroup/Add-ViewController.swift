@@ -45,8 +45,6 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         //
         self.tableView_init()
-
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -65,9 +63,6 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                 }
             })
     }
-
-
-    // MARK: -
 
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()

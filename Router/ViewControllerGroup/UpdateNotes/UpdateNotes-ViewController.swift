@@ -9,17 +9,20 @@
 import UIKit
 import Alamofire
 import Chrysan
+import Hero
 
 class UpdateNotes_ViewController: UIViewController {
 
+    @IBOutlet weak var pageTitle: UILabel!
+    
     @IBOutlet weak var updateTextView: UITextView!
 
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        self.chrysan.show(.running, message: nil, hideDelay: 1)
-        
+        super.viewDidLoad()        
         getUpdateNotes()
+        
+        // hero
+        pageTitle.hero.modifiers = [.fade, .translate(x: -25)]
     }
 
     @IBAction func goAction(_ sender: UIButton) {

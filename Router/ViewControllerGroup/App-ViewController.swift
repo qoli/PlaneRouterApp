@@ -43,8 +43,9 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     var lastCollectionID = ""
 
     // MARK: - view
-    
+
     override func viewDidLoad() {
+        print("App View: viewDidLoad")
         super.viewDidLoad()
 
         // Chrysan
@@ -55,26 +56,26 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.appTitle.alpha = 0
 
         collection_init()
-
+        
         // Notification
         addNotification()
         
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        // NotificationCenter.default.removeObserver(self)
+        print("App View: viewWillDisappear")
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        print("App View: viewWillAppear")
         if UserDefaults.standard.bool(forKey: "isApp") == false {
             // goWalkSegue
             self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
         } else {
-            // select collection
-//            self.collection_select(selected: 0)
-
             self.showUpdateNotes(isForce: false)
         }
+        
     }
 
 
@@ -130,7 +131,10 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
 
         if isForce {
             delay(2) {
-                self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextView = storyBoard.instantiateViewController(withIdentifier: "UpdateNotesView") as! UpdateNotes_ViewController
+                nextView.modalPresentationStyle = .overCurrentContext
+                self.present(nextView, animated: true, completion: nil)
             }
             return
         }
@@ -151,7 +155,10 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                         setCacheBool(value: true, Key: "isUpdate")
                         _ = CacheString(text: valueDate, Key: updateTimeCacheKey)
                         delay(2) {
-                            self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
+                            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                            let nextView = storyBoard.instantiateViewController(withIdentifier: "UpdateNotesView") as! UpdateNotes_ViewController
+                            nextView.modalPresentationStyle = .overCurrentContext
+                            self.present(nextView, animated: true, completion: nil)
                         }
                     }
                 }
@@ -215,6 +222,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     var itemsFixed: [serviceListClass.serviceStruct] = []
 
     func collection_select(selected: Int = 0) {
+        print("collection_select: \(selected)")
         let indexPath = IndexPath(row: selected, section: 0)
         self.collectionView(self.collectionView, didSelectItemAt: indexPath)
     }
@@ -224,13 +232,15 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         collectionView.dataSource = self
         collectionView.delegate = self
 
-        Fixed()
+        fixedItem()
 
         collection_update()
-        collection_select()
+        delay(0.1) {
+            self.collection_select()
+        }
     }
 
-    func Fixed() {
+    func fixedItem() {
         let r = ServiceList.buildFixed(name: "Net Speed")
         let c = ServiceList.buildFixed(name: "Connect")
         let s = ServiceList.buildFixed(name: "Shadowsock")
@@ -258,7 +268,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.selectServiceNumber = indexPath.row
                 self.appTitle.text = self.items[self.selectServiceNumber].name
 
-                cell?.cellView.backgroundColor = UIColor(named: "mainBlue")
                 cell?.shadowImage.image = UIImage(named: "serviceShadowActive")
                 cell?.shadowImage.frame.origin.y = 6
 
@@ -273,11 +282,13 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     }
                 }
 
+
                 delay(0) {
+                    cell?.cellView.backgroundColor = UIColor(named: "mainBlue") ?? UIColor.mainBlue
                     cell?.nameLabel.textColor = UIColor.white
                 }
             } else {
-                cell?.cellView.backgroundColor = UIColor(named: "CollectionColor")
+                
                 cell?.shadowImage.image = UIImage(named: "serviceShadow")
                 cell?.shadowImage.frame.origin.y = 0
 
@@ -293,6 +304,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 }
 
                 delay(0) {
+                    cell?.cellView.backgroundColor = UIColor(named: "CollectionColor")
                     cell?.nameLabel.textColor = UIColor.brownGrey
                 }
             }
@@ -349,7 +361,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     NotificationCenter.default.post(name: NSNotification.Name.init("NetViewonShow"), object: true)
                     self.switchView(showView: self.childNetView)
                 case "Connect":
-                    NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
+//                    NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
                     self.switchView(showView: self.childSSView)
                 case "Shadowsock":
                     NotificationCenter.default.post(name: NSNotification.Name.init("JSONCall"), object: self.items[indexPath.item])

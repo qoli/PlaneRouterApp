@@ -28,6 +28,7 @@ class Connect_ViewController: UIViewController {
     var isLooping = false
 
     override func viewDidLoad() {
+        print("Connect View: viewDidLoad")
         super.viewDidLoad()
 
         //添加通知
@@ -53,31 +54,29 @@ class Connect_ViewController: UIViewController {
         )
     }
 
-    // MARK: When Connect View on Appear
-    
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
+        print("NotificationCenter: ConnectViewonShow \(String(describing: notification.object))")
         if notification.object! as! Bool {
-            delay(0.4) {
-                print("ConnectViewonShowNotification")
+            delay {
                 self.updateRunningNodeButton()
             }
         }
     }
 
-
     @objc func ConnectViewonListNotification(_ notification: Notification) {
-//        pageDesc.text = "\(App.appListON)"
+        print("NotificationCenter: ConnectViewonList \(String(describing: App.appListON))")
     }
 
     //MARK: - View 生命週期處理
 
     override func viewWillDisappear(_ animated: Bool) {
+        print("Connect View: viewWillDisappear")
         isLooping = false
-        print("Connect: viewWillDisappear")
-        // NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        print("Connect View: viewWillAppear")
         if checkSSInstall() {
             updateRunningNodeButton()
         }
@@ -267,12 +266,12 @@ class Connect_ViewController: UIViewController {
             self.loopLabel.text = "Pause, Tap to Continue"
             self.updateStatusView(isSuccess: true, text: "", isPause: true)
         }
-        
+
     }
 
-    
+
     @IBOutlet weak var loopLabel: UILabel!
-    
+
     @IBAction func tapStatus(_ sender: UITapGestureRecognizer) {
         if self.isLooping == true {
             self.loopUpdateStatus(isLoop: false)
@@ -281,24 +280,24 @@ class Connect_ViewController: UIViewController {
             self.loopUpdateStatus(isLoop: true)
         }
     }
-    
-    
+
+
     func Status_inAppUpdate() {
 
         let StartTime = Date.timeIntervalSinceReferenceDate
         self.loopLabel.text = "···"
-        
+
         Alamofire.request("https://www.google.com.hk/generate_204")
             .responseString { response in
                 let EndTime = Date.timeIntervalSinceReferenceDate
                 let delayTime = (EndTime - StartTime) * 1000
-                
+
                 switch response.result {
                 case .success(_):
                     if let headers = response.response?.allHeaderFields as? [String: String] {
                         print("\(headers["Date"] ?? "") \(EndTime) \(StartTime) \(delayTime)")
                         self.updateStatusView(isSuccess: true, text: "\(String(format: "%.3f", delayTime)) ms")
-                        
+
                         delay(1) {
                             self.loopLabel.text = "*··"
                             delay(1) {
@@ -323,13 +322,12 @@ class Connect_ViewController: UIViewController {
     }
 
     func updateStatusView(isSuccess: Bool, text: String, isPause: Bool = false) {
-        
+
         if isPause {
             UIView.animate(withDuration: 0.6, animations: {
                 self.statusView.backgroundColor = UIColor(named: "gray80")
                 self.statusView.layer.shadowColor = UIColor(named: "gray80")?.cgColor
             })
-            
         } else {
             if isSuccess {
                 UIView.animate(withDuration: 0.3, animations: {

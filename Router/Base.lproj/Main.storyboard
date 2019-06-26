@@ -538,16 +538,23 @@
         <!--Update Notes View Controller-->
         <scene sceneID="i1U-6h-yzk">
             <objects>
-                <viewController id="Pin-Gz-bTq" customClass="UpdateNotes_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UpdateNotesView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Pin-Gz-bTq" customClass="UpdateNotes_ViewController" customModule="Router" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sgi-ZE-qOS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ruJ-jB-QmD">
-                                <rect key="frame" x="20" y="106.5" width="374" height="661.5"/>
-                                <color key="backgroundColor" name="BackgroundPanel"/>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Snq-my-8cL">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aeG-ts-Vyl">
+                                    <rect key="frame" x="0.0" y="0.0" width="348" height="204.5"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ruJ-jB-QmD">
+                                <rect key="frame" x="15" y="86.5" width="384" height="691.5"/>
                                 <color key="textColor" name="gray29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Yx-46-0zw">
@@ -569,30 +576,38 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCp-YV-jAr">
-                                <rect key="frame" x="20" y="59" width="148" height="27.5"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <rect key="frame" x="20" y="66" width="110" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                 <color key="textColor" name="gray29"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" name="BackgroundPanel"/>
                         <constraints>
-                            <constraint firstItem="TCp-YV-jAr" firstAttribute="top" secondItem="gM9-vb-Ksn" secondAttribute="top" constant="15" id="03m-F7-l0m"/>
-                            <constraint firstItem="gM9-vb-Ksn" firstAttribute="trailing" secondItem="ruJ-jB-QmD" secondAttribute="trailing" constant="20" id="1YK-tf-dV4"/>
+                            <constraint firstItem="TCp-YV-jAr" firstAttribute="top" secondItem="gM9-vb-Ksn" secondAttribute="top" constant="22" id="03m-F7-l0m"/>
+                            <constraint firstItem="gM9-vb-Ksn" firstAttribute="trailing" secondItem="ruJ-jB-QmD" secondAttribute="trailing" constant="15" id="1YK-tf-dV4"/>
                             <constraint firstItem="2Yx-46-0zw" firstAttribute="leading" secondItem="gM9-vb-Ksn" secondAttribute="leading" constant="20" id="8ju-Ij-VAp"/>
+                            <constraint firstItem="ruJ-jB-QmD" firstAttribute="top" secondItem="TCp-YV-jAr" secondAttribute="bottom" id="Agz-x8-zJG"/>
+                            <constraint firstItem="2Yx-46-0zw" firstAttribute="top" secondItem="ruJ-jB-QmD" secondAttribute="bottom" id="BzD-61-iEZ"/>
+                            <constraint firstItem="Snq-my-8cL" firstAttribute="bottom" secondItem="sgi-ZE-qOS" secondAttribute="bottom" id="DY1-Va-MBM"/>
                             <constraint firstItem="gM9-vb-Ksn" firstAttribute="bottom" secondItem="2Yx-46-0zw" secondAttribute="bottom" constant="40" id="Gyd-hl-T2L"/>
                             <constraint firstItem="gM9-vb-Ksn" firstAttribute="trailing" secondItem="2Yx-46-0zw" secondAttribute="trailing" constant="20" id="Ha8-J0-VPt"/>
-                            <constraint firstItem="ruJ-jB-QmD" firstAttribute="top" secondItem="TCp-YV-jAr" secondAttribute="bottom" constant="20" id="U27-TJ-Lwl"/>
                             <constraint firstItem="TCp-YV-jAr" firstAttribute="leading" secondItem="gM9-vb-Ksn" secondAttribute="leading" constant="20" id="fdl-y9-qmc"/>
-                            <constraint firstItem="ruJ-jB-QmD" firstAttribute="leading" secondItem="gM9-vb-Ksn" secondAttribute="leading" constant="20" id="h0r-Fy-2Wz"/>
-                            <constraint firstItem="2Yx-46-0zw" firstAttribute="top" secondItem="ruJ-jB-QmD" secondAttribute="bottom" constant="10" id="nZq-hN-gQ4"/>
+                            <constraint firstItem="ruJ-jB-QmD" firstAttribute="leading" secondItem="gM9-vb-Ksn" secondAttribute="leading" constant="15" id="h0r-Fy-2Wz"/>
+                            <constraint firstItem="Snq-my-8cL" firstAttribute="top" secondItem="sgi-ZE-qOS" secondAttribute="top" id="lVg-40-BtM"/>
+                            <constraint firstItem="Snq-my-8cL" firstAttribute="leading" secondItem="gM9-vb-Ksn" secondAttribute="leading" id="vya-x0-Vil"/>
+                            <constraint firstItem="gM9-vb-Ksn" firstAttribute="trailing" secondItem="Snq-my-8cL" secondAttribute="trailing" id="woH-Jc-GJL"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="gM9-vb-Ksn"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabledForSubviews" value="YES"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="isHeroEnabled" value="YES"/>
                     </userDefinedRuntimeAttributes>
                     <connections>
+                        <outlet property="pageTitle" destination="TCp-YV-jAr" id="iey-Vj-GhJ"/>
                         <outlet property="updateTextView" destination="ruJ-jB-QmD" id="ete-iW-XPw"/>
                     </connections>
                 </viewController>
@@ -694,7 +709,7 @@ You can configure more with JSON scripts</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-7c-vkB">
-                                <rect key="frame" x="20" y="416" width="168" height="183"/>
+                                <rect key="frame" x="20" y="416" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="HMT-l0-3Gp"/>
                                     <constraint firstAttribute="width" constant="168" id="coe-ac-qWh"/>
@@ -767,7 +782,7 @@ You can configure more with JSON scripts</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="Hmw-eG-y5B">
-                                <rect key="frame" x="20" y="64" width="168" height="183"/>
+                                <rect key="frame" x="20" y="64" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="fhm-yV-E6p"/>
                                     <constraint firstAttribute="width" constant="168" id="pxH-Lb-4uR"/>
@@ -1173,7 +1188,7 @@ You can configure more with JSON scripts</string>
                         <outlet property="menuButton" destination="2CK-p5-Ks6" id="7O3-u6-lQj"/>
                         <outlet property="serviceListView" destination="9kb-Qp-7dj" id="aOp-1d-d2g"/>
                         <outlet property="settingButton" destination="MkJ-MP-yv2" id="Sd5-e9-bMa"/>
-                        <segue destination="Pin-Gz-bTq" kind="presentation" identifier="goUpdateNotesSegue" modalPresentationStyle="fullScreen" id="tBz-cL-OxW"/>
+                        <segue destination="Pin-Gz-bTq" kind="presentation" identifier="goUpdateNotesSegue" modalPresentationStyle="overFullScreen" id="tBz-cL-OxW"/>
                         <segue destination="ugE-Zi-erk" kind="presentation" identifier="goWalkSegue" modalPresentationStyle="fullScreen" id="5Fb-qb-QJ1"/>
                     </connections>
                 </viewController>
@@ -1967,7 +1982,7 @@ admin@AC68U:/tmp/home/root# </string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCx-8s-ZO7">
-                                        <rect key="frame" x="215" y="9" width="96" height="48"/>
+                                        <rect key="frame" x="239" y="21" width="72" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Latency" image="iconFontStopwatch">
                                             <color key="titleColor" name="gray29"/>
@@ -2553,7 +2568,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="QFF-NK-Mks">
-                                <rect key="frame" x="123" y="356.5" width="168" height="183"/>
+                                <rect key="frame" x="123" y="356.5" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="2K9-At-Lkw"/>
                                     <constraint firstAttribute="width" constant="168" id="TCJ-ot-Y1A"/>

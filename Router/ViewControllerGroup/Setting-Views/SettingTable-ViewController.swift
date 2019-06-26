@@ -279,6 +279,11 @@ class SettingTable_ViewController: UIViewController, UITableViewDelegate, UITabl
                 if UIApplication.shared.canOpenURL(url! as URL) {
                     UIApplication.shared.open(url! as URL)
                 }
+            case "updateNotes":
+                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let nextView = storyBoard.instantiateViewController(withIdentifier: "UpdateNotesView") as! UpdateNotes_ViewController
+                nextView.modalPresentationStyle = .overCurrentContext
+                self.present(nextView, animated: true, completion: nil)
             default:
                 break
             }

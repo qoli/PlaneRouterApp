@@ -77,10 +77,17 @@
         {
             "type": "row",
             "title": "Update Notes",
-            "titlesc": "更新日志",
-            "titletc": "更新日誌",
+            "titlesc": "完整更新日志",
+            "titletc": "完整更新日誌",
             "do": "openweb",
             "value": "https://github.com/qoli/AtomicR/blob/master/Update/Update.md"
+        },
+        {
+            "type": "row",
+            "title": "Last Update",
+            "titlesc": "最后更新",
+            "titletc": "最後更新",
+            "do": "updateNotes"
         },
         {
             "type": "row",
