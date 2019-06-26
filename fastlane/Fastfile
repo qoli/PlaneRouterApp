@@ -22,4 +22,11 @@ platform :ios do
       )
   end
 
+  desc "Push a new release build to the App Store"
+  lane :store do
+    increment_build_number
+    build_app(workspace: "Router.xcworkspace", scheme: "Router")
+    upload_to_app_store
+  end
+
 end

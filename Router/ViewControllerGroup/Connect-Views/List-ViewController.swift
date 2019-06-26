@@ -92,10 +92,10 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.tableView.dataSource = self
 
         if !goBottom {
-            
+
             print("App.appDataneedUpdate: \(App.appDataneedUpdate)")
-            
-            table_update(isRefresh: App.appDataneedUpdate)
+
+            table_update(isRefresh: App.appDatadoUpdate())
         } else {
             table_update(isRefresh: true)
         }
@@ -105,27 +105,25 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
         refreshControl.beginRefreshing()
 
-        delay {
-            updateSSData(isRefresh: isRefresh, completionHandler: { value, error in
-                self.refreshControl.endRefreshing()
-                self.sourceData = []
+        updateSSData(isRefresh: isRefresh, completionHandler: { value, error in
+            self.refreshControl.endRefreshing()
+            self.sourceData = []
 
-                if value != [:] {
-                    for v in value {
-                        if v.key.hasPrefix("ssconf_basic_name_") {
-                            let tmp = "\(v.key)=\(v.value)"
-                            let ssconfBasicNames = tmp.groups(for: "ssconf_basic_name_(.*?)=(.*?)$")
-                            self.sourceData.append(ssconfBasicNames[0])
-                        }
+            if value != [:] {
+                for v in value {
+                    if v.key.hasPrefix("ssconf_basic_name_") {
+                        let tmp = "\(v.key)=\(v.value)"
+                        let ssconfBasicNames = tmp.groups(for: "ssconf_basic_name_(.*?)=(.*?)$")
+                        self.sourceData.append(ssconfBasicNames[0])
                     }
-                    self.dataDict = value
-                    self.sourceData = self.sourceData.sorted(by: { ($0[1] as NSString).integerValue < ($1[1] as NSString).integerValue })
-                    self.tableView.reloadData()
-                } else {
-                    self.chrysan.show(.error, message: error?.localizedDescription ?? "error", hideDelay: 1)
                 }
-            })
-        }
+                self.dataDict = value
+                self.sourceData = self.sourceData.sorted(by: { ($0[1] as NSString).integerValue < ($1[1] as NSString).integerValue })
+                self.tableView.reloadData()
+            } else {
+                self.chrysan.show(.error, message: error?.localizedDescription ?? "error", hideDelay: 1)
+            }
+        })
 
     }
 
@@ -236,7 +234,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         delay(0.1) {
             let ssNumber = self.sourceData[indexPath.row][1]
 
-            switch ModelPage.runningModel {
+            switch routerModel.runningModel {
             case .arm:
                 let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
                 let password = self.dataDict["ssconf_basic_password_\(ssNumber)"] ?? ""
@@ -271,7 +269,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - remove Node
 
     func removeNode(number: Int) {
-        switch ModelPage.runningModel {
+        switch routerModel.runningModel {
         case .arm:
             let urlParams = [
                 "use_rm": "1",
@@ -390,12 +388,12 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func pingStart(forceIPv4: Bool, forceIPv6: Bool, hostName: String) {
         self.pingHostName = hostName
-        
+
         print("start \(hostName)")
         self.delayData[self.pingHostName] = "..."
         self.tableView.reloadData()
 
-        
+
 
         let pinger = SimplePing(hostName: hostName)
         self.pinger = pinger
@@ -461,7 +459,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func simplePing(_ pinger: SimplePing, didSendPacket packet: Data, sequenceNumber: UInt16) {
         sentTime = Date().timeIntervalSince1970
         print("\(sequenceNumber) sent")
-        
+
         if sequenceNumber == 6 {
             self.delayData[self.pingHostName] = "-"
             self.pingStop()
@@ -476,10 +474,10 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     func simplePing(_ pinger: SimplePing, didReceivePingResponsePacket packet: Data, sequenceNumber: UInt16) {
         let some = Int(((Date().timeIntervalSince1970 - sentTime).truncatingRemainder(dividingBy: 1)) * 1000)
         print("PING: \(some) MS \(sequenceNumber) received size=\(packet.count)")
-        
+
         self.delayData[self.pingHostName] = "\(String(some)) ms"
         self.tableView.reloadData()
-        
+
         if sequenceNumber >= 3 {
             self.pingStop()
         }
@@ -491,13 +489,13 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
 
     // MARK: Ping Action Button
-    
+
     var pings: [String] = []
     var delayData: [String: String] = [:]
     var pingsCount: Int = 0
     var pingsCountTotal: Int = 0
     @IBOutlet weak var pingButton: UIButton!
-    
+
     @IBAction func PingAction(_ sender: UIButton) {
         buttonTapAnimate(button: pingButton)
         self.pingButton.isEnabled = false
@@ -508,30 +506,30 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         for i in self.sourceData {
             pings.append(self.dataDict["ssconf_basic_server_\(i[1])"] ?? "127.0.0.1")
         }
-        
+
         pingsCount = 0
         pingsCountTotal = pings.count
-        
+
         pingNext()
     }
-    
+
     func updateCount(finished: Int) {
         let progress = CGFloat(finished) / CGFloat(pingsCountTotal)
         chrysan.show(progress: progress, message: nil, progressText: "\(finished)/\(pingsCountTotal)")
     }
-    
+
     func pingNext() {
         guard pings.count > 0 else {
             // ping 的數量小於或等於 0
 
             self.chrysan.show(.succeed, message: nil, hideDelay: 1)
             self.pingButton.isEnabled = true
-            
+
             UserDefaults.standard.set(self.delayData, forKey: "ssPing")
             return
         }
-        
-        
+
+
         let indexPath = IndexPath(row: pingsCount, section: 0)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
 

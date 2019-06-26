@@ -13,7 +13,7 @@ import SwiftyJSON
 // MARK: - Model Page Setting
 // hnd: logPage:"_temp/ss_log.txt" PostPage:"_api/"
 
-class modelPageClass {
+class routerModelClass {
     var ApplyPost: String = "applydb.cgi?p=ss"
     var Log: String = "cmdRet_check.htm"
     var Status: String = "ss_status"
@@ -28,7 +28,7 @@ class modelPageClass {
     }
 
     func updateStatus() {
-        switch ModelPage.runningModel {
+        switch routerModel.runningModel {
         case .arm:
             print("Model: ARM")
         case .hnd:
@@ -58,7 +58,7 @@ class modelPageClass {
         self.modelName = model.removingWhitespacesAndNewlines
 
         print("Model: \(self.modelName)")
-        
+
         switch self.modelName {
         case "RT-AC86U":
             setModel(model: .hnd)
@@ -67,66 +67,118 @@ class modelPageClass {
         default:
             setModel(model: .arm)
         }
-
-        // Send Device Token
-        userToken(model: self.modelName)
     }
-}
+    
+    // MARK: Test Merlin Router
 
-let ModelPage = modelPageClass()
-
-// MARK: - Get Cookie
-
-func GetRouterCookie(name: String = "", pass: String = "") {
-    /**
-     GetRouterCookie
-     post http://router.asus.com/login.cgi
-     */
-
-    // user
-    var auth: String?
-    let uConfig = ConnectConfig.getRouter()
-
-    if name != "" {
-        auth = (name) + ":" + (pass)
-    } else {
-        auth = (uConfig.loginName) + ":" + (uConfig.loginPassword)
-    }
-
-
-    // Add Headers
-    let headers = [
-        "Referer": "\(buildUserURL())/index.asp",
-        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-    ]
-
-    // Form URL-Encoded Body
-    let body = [
-        "login_authorization": "\(auth?.base64Encoded() ?? "")",
-    ]
-
-    // auth
-    if auth != ":" {
+    var isMerlin: Bool = false
+    
+    func TryRouter() {
+        
+        /**
+         update_clients.asp
+         get http://router.asus.com/update_clients.asp
+         */
+        
+        // Add Headers
+        let headers = [
+            "Referer":"http://router.asus.com/index.asp"
+        ]
+        
         // Fetch Request
-        Alamofire.request("\(buildUserURL())/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
+        Alamofire.request("http://router.asus.com/update_clients.asp", method: .get, headers: headers)
             .responseString { response in
-                if (response.result.error == nil) {
-                    if name != "" {
-                        print("login...by", name)
-                    } else {
-                        print("login...by", uConfig)
-                    }
-                    //
-                    delay(0.4) {
-                        ModelPage.autoSetModel()
-                    }
+                switch response.result {
+                case .success(let value):
+                    print(value)
+                    self.isMerlin = true
+                case .failure(let error):
+                    print(error)
                 }
+                print("[TryRouter] \(self.isMerlin)")
         }
-    } else {
-        print("Settings not found")
+    }
+    
+    
+
+    
+    // MARK: Get Cookie
+
+    var loginTimes: Int = 0
+    var isLogin: Bool = false
+
+    func GetRouterCookie(name: String = "", pass: String = "", completionHandler: @escaping () -> Void) {
+        /**
+         GetRouterCookie
+         post http://router.asus.com/login.cgi
+         */
+
+        print("[Login] GetRouterCookie: Login ...")
+
+        // user
+        var auth: String?
+        let uConfig = ConnectConfig.getRouter()
+
+        if name != "" {
+            auth = (name) + ":" + (pass)
+        } else {
+            auth = (uConfig.loginName) + ":" + (uConfig.loginPassword)
+        }
+
+
+        // Add Headers
+        let headers = [
+            "Referer": "\(buildUserURL())/index.asp",
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+        ]
+
+        // Form URL-Encoded Body
+        let body = [
+            "login_authorization": "\(auth?.base64Encoded() ?? "")",
+        ]
+
+        // auth
+        if auth != ":" {
+            // Fetch Request
+            Alamofire.request("\(buildUserURL())/login.cgi", method: .post, parameters: body, encoding: URLEncoding.default, headers: headers)
+                .responseString { response in
+
+                    switch response.result {
+                    case .success(let value):
+                        self.loginTimes = self.loginTimes + 1
+                        
+                        if !value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp';</script>") {
+                            if (response.result.error == nil) {
+                                
+                                // only run login once
+                                if self.isLogin == false {
+                                    self.isLogin = true
+                                    
+                                    completionHandler()
+                                    
+                                    //
+                                    delay(0.4) {
+                                        self.autoSetModel()
+                                    }
+                                }
+            
+                            }
+                        } else {
+                            print("[Loign] Need login")
+                        }
+
+                    case .failure(let error):
+                        print("[Loign] [\(error.localizedDescription)]")
+                    }
+
+            }
+        } else {
+            print("Settings not found")
+        }
     }
 }
 
+let routerModel = routerModelClass()
 
 // MARK: - SS Data
 
@@ -186,7 +238,7 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
 
 func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler: @escaping (String?, Error?) -> Void) {
     var cacheObject = UserDefaults.standard.object(forKey: api)
-    
+
     if isRefresh == true || getCacheBool(Key: "isUpdate") {
         cacheObject = nil
     }
@@ -225,30 +277,6 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
 
 }
 
-
-// MARK: - Post User Token
-func userToken(model: String) {
-    // Form URL-Encoded Body
-    let token = CacheString(Key: "DeviceToken")
-
-    print("DeviceToken: \(token)")
-    
-    if token != "" {
-        let body = [
-            model: token,
-        ]
-
-        // Fetch Request
-        Alamofire.request("https://pushmore.io/webhook/GmbRBGLzZciHamwt8Ax2ydSC", method: .post, parameters: body, encoding: URLEncoding.default)
-            .validate(statusCode: 200..<300)
-            .responseJSON { response in
-                if (response.result.error == nil) {
-                    print(response.description)
-                }
-        }
-    }
-
-}
 
 
 

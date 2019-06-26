@@ -1344,7 +1344,9 @@ admin@AC68U:/tmp/home/root# </string>
                                     <constraint firstAttribute="width" constant="78" id="nXf-Cu-GvP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="Restart WAN"/>
+                                <state key="normal" title="Restart WAN">
+                                    <color key="titleColor" name="mainBlue"/>
+                                </state>
                                 <connections>
                                     <action selector="RestartWAN:" destination="dHL-Fk-HCH" eventType="touchUpInside" id="dLq-Bp-z5a"/>
                                 </connections>

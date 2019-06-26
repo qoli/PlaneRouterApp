@@ -43,7 +43,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     var lastCollectionID = ""
 
     // MARK: - view
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,20 +51,20 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         ChrysanConfig.default().hudStyle = .dark
         ChrysanConfig.default().color = .white
         ChrysanConfig.default().chrysanStyle = .whiteIndicator
-        
+
         self.appTitle.alpha = 0
-        
+
         collection_init()
-        
+
         // Notification
         addNotification()
         
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         // NotificationCenter.default.removeObserver(self)
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         if UserDefaults.standard.bool(forKey: "isApp") == false {
             // goWalkSegue
@@ -72,7 +72,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         } else {
             // select collection
 //            self.collection_select(selected: 0)
-            
+
             self.showUpdateNotes(isForce: false)
         }
     }
@@ -127,14 +127,14 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     // MARK: - Update Notes
 
     func showUpdateNotes(isForce: Bool = false) {
-        
+
         if isForce {
             delay(2) {
                 self.performSegue(withIdentifier: "goUpdateNotesSegue", sender: nil)
             }
             return
         }
-        
+
         setCacheBool(value: false, Key: "isUpdate")
         let updateTimeCacheKey = "updateTime"
         let updateTime = CacheString(Key: updateTimeCacheKey)
@@ -376,17 +376,17 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             self.childSSView.alpha = 0
             self.childJSONView.alpha = 0
             self.childAddView.alpha = 0
-            
+
             delay(0) {
                 UIView.animate(withDuration: 0.4, animations: {
                     showView.alpha = 1
                 })
             }
         })
-        
-        
 
-        
+
+
+
 
     }
 

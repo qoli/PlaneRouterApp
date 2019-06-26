@@ -139,11 +139,11 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         pageGetSrouce()
 
         if jsonName == "Shadowsock" {
-            switch ModelPage.runningModel {
+            switch routerModel.runningModel {
             case .arm:
-                pageDesc.text = "Router: ARM Model · \(ModelPage.modelName)"
+                pageDesc.text = "Router: ARM Model · \(routerModel.modelName)"
             case .hnd:
-                pageDesc.text = "Router: HND Model  · \(ModelPage.modelName)"
+                pageDesc.text = "Router: HND Model  · \(routerModel.modelName)"
             }
 
             pageButton.isHidden = true

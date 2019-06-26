@@ -38,7 +38,6 @@ func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isR
     }
 
     if cacheKey == "" || getCacheBool(Key: "isUpdate") {
-//        print("[SSHRun] getCacheBool(Key: 'isUpdate'): \(getCacheBool(Key: "isUpdate"))")
         isR = true
     }
 
@@ -90,7 +89,7 @@ func setCacheBool(value: Bool, Key: String) {
     UserDefaults.standard.set(value, forKey: Key)
 }
 
-func getCacheBool(Key: String) -> Bool{
+func getCacheBool(Key: String) -> Bool {
     return UserDefaults.standard.bool(forKey: Key)
 }
 
@@ -119,11 +118,11 @@ func delay(_ delay: Double = 0.2, closure: @escaping () -> ()) {
 // MARK: - UI
 
 func messageNotification(message: String, title: String = "Plane Router App") {
-    
+
     print("Message Notification: \(message)")
-    
+
 //    self.chrysan.show(.plain, message: message, hideDelay: 2)
-    
+
 //    let banner = NotificationBanner(title: title, subtitle: message, style: .info)
 //    banner.duration = 2
 //    banner.dismiss()
@@ -150,13 +149,13 @@ func buttonTapAnimate(button: UIButton) {
 func getCurrentLanguage() -> String {
     let preferredLang = Bundle.main.preferredLocalizations.first! as NSString
     print("OS Language: \(preferredLang)")
-    
+
     switch String(describing: preferredLang) {
     case "en-US", "en-CN":
         return "en"//英文
-    case "zh-Hans-US","zh-Hans-CN","zh-Hans":
+    case "zh-Hans-US", "zh-Hans-CN", "zh-Hans":
         return "sc"//中文
-    case "zh-TW","zh-HK","zh-Hant","zh-Hant-CN":
+    case "zh-TW", "zh-HK", "zh-Hant", "zh-Hant-CN":
         return "tc"//中文
     default:
         return "en"

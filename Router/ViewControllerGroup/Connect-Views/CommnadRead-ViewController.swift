@@ -53,7 +53,7 @@ class CommnadRead_ViewController: UIViewController {
         //释放所有下级视图
         NotificationCenter.default.post(name: NSNotification.Name.init("collectionSelect"), object: 1)
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
-        App.appDataNeedUpdate(isUpdate: true)
+        App.appDataSetNeedUpdate(isUpdate: true)
         rootVC?.dismiss(animated: true, completion: nil)
     }
 
@@ -68,13 +68,40 @@ class CommnadRead_ViewController: UIViewController {
         }
     }
 
-    // MARK: Apply Page
+    func CommnadReadAjax() {
+        let timestamp = Date().timeIntervalSince1970
+        
+        fetchRequestString(
+            api: "\(buildUserURL())/\(routerModel.Log)?_=\(Int(timestamp))",
+            isRefresh: true,
+            completionHandler: { value, error in
+                self.textView.text = value
+                delay {
+                    let textViewBottom = NSMakeRange(self.textView.text.count - 1, 1)
+                    self.textView.scrollRangeToVisible(textViewBottom)
+                    self.textView.isScrollEnabled = false
+                    self.textView.isScrollEnabled = true
+                }
+                
+                if value?.contains("XU6J03M6") ?? false {
+                    self.isAppear = false
+                    self.pageTitle.text = "Finish".localized()
+                    self.chrysan.show(.succeed, hideDelay: 1)
+                    delay(2) {
+                        self.returnToRoot()
+                    }
+                }
+        })
+        
+    }
+    
+    // MARK: - Apply Page
 
     func ApplydbSS() {
 
-        print("applyPost: \(buildUserURL())/\(ModelPage.ApplyPost)")
+        print("applyPost: \(buildUserURL())/\(routerModel.ApplyPost)")
 
-        switch ModelPage.runningModel {
+        switch routerModel.runningModel {
         case .arm:
 
             var body: [String: String]?
@@ -97,7 +124,7 @@ class CommnadRead_ViewController: UIViewController {
             }
 
             // Fetch Request
-            Alamofire.request("\(buildUserURL())/\(ModelPage.ApplyPost)", method: .post, parameters: body, encoding: URLEncoding.default)
+            Alamofire.request("\(buildUserURL())/\(routerModel.ApplyPost)", method: .post, parameters: body, encoding: URLEncoding.default)
                 .responseString { response in
                     switch response.result {
                     case .success(_):
@@ -138,7 +165,7 @@ class CommnadRead_ViewController: UIViewController {
 
 
             // Fetch Request
-            Alamofire.request("\(buildUserURL())/\(ModelPage.ApplyPost)", method: .post, parameters: body, encoding: JSONEncoding.default)
+            Alamofire.request("\(buildUserURL())/\(routerModel.ApplyPost)", method: .post, parameters: body, encoding: JSONEncoding.default)
                 .validate(statusCode: 200..<300)
                 .responseJSON { response in
                     if (response.result.error == nil) {
@@ -150,36 +177,4 @@ class CommnadRead_ViewController: UIViewController {
             }
         }
     }
-
-
-    func CommnadReadAjax() {
-        let timestamp = Date().timeIntervalSince1970
-
-        fetchRequestString(
-            api: "\(buildUserURL())/\(ModelPage.Log)?_=\(Int(timestamp))",
-            isRefresh: true,
-            completionHandler: { value, error in
-                self.textView.text = value
-                delay {
-                    let textViewBottom = NSMakeRange(self.textView.text.count - 1, 1)
-                    self.textView.scrollRangeToVisible(textViewBottom)
-                    self.textView.isScrollEnabled = false
-                    self.textView.isScrollEnabled = true
-                }
-
-                if value?.contains("XU6J03M6") ?? false {
-                    self.isAppear = false
-                    self.pageTitle.text = "Finish".localized()
-                    self.chrysan.show(.succeed, hideDelay: 1)
-                    delay(2) {
-                        self.returnToRoot()
-                    }
-                }
-            })
-
-    }
-
-
-
-
 }

@@ -1,0 +1,26 @@
+Plane Router is an app to manage your home network.
+
+Function is introduced
+Router (based on merlin firmware released by Koolshare)
+Shadowsock client can be installed and managed
+
+Server oriented (Ubuntu/Debian)
+Install and manage the Shadowsock server side
+Restart the server
+You can configure more with JSON scripts
+
+Devices with SSH access
+The corresponding administrative functions can be configured through JSON scripts
+
+Plane Router is currently compatible with the following routers.
+
+-
+HDN Model:
+ASUS: GT-AC5300/RT-AC86U
+
+-
+ARM Model: 
+ASUS：RT-AC56U RT-AC68U RT-AC66U-B1 RT-AC1900P RT-AC87U RT-AC88U RT-AC3100 RT-AC3200 RT-AC5300
+NETGEAR：R6300V2 R6400 R6900 R7000 R8000 R8500
+linksys EA：EA6200 EA6400 EA6500v2 EA6700 EA6900
+Huawei：ws880

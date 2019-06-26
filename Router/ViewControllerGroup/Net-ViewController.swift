@@ -40,12 +40,12 @@ class Net_ViewController: UIViewController {
 
         self.Chart_Setup()
         self.getWANIP()
-        
+
         delay(1) {
             print("viewDidLoad: NetSpeed_Update")
-            self.NetSpeed_Update()
+//            self.NetSpeed_Update()
         }
-        
+
         //添加通知
         NotificationCenter.default.addObserver(
             self,
@@ -74,11 +74,11 @@ class Net_ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.isViewAppear = true
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
 
     }
-    
+
     var isViewAppear = false
     var lastViewAppearBool = false
 
@@ -185,23 +185,23 @@ class Net_ViewController: UIViewController {
 
         let lineDownload = LineChartDataSet(entries: lineDownloadChartEntry, label: "Download Speed") //Here we convert lineChartEntry to a LineChartDataSet
         lineDownload.axisDependency = .left
-        lineDownload.colors = [UIColor.appleGreen]
+        lineDownload.colors = [UIColor(named: "appleGreen")] as! [NSUIColor]
         lineDownload.mode = .cubicBezier
         lineDownload.lineWidth = 2.0
-        lineDownload.circleColors = [UIColor.appleGreen]
+        lineDownload.circleColors = [UIColor(named: "appleGreen")] as! [NSUIColor]
         lineDownload.drawCirclesEnabled = true
         lineDownload.drawFilledEnabled = true
-        lineDownload.fillColor = UIColor.greenApple50
+        lineDownload.fillColor = UIColor(named: "appleGreen50") ?? UIColor.appleGreen50
         lineDownload.fillAlpha = 0.5
         lineDownload.drawValuesEnabled = false
         lineDownload.drawCircleHoleEnabled = true
 
         let lineUpload = LineChartDataSet(entries: lineUploadChartEntry, label: "Upload Speed") //Here we convert lineChartEntry to a LineChartDataSet
         lineUpload.axisDependency = .left
-        lineUpload.colors = [UIColor.mainBlue]
+        lineUpload.colors = [UIColor(named: "mainBlue")] as! [NSUIColor]
         lineUpload.mode = .cubicBezier
         lineUpload.lineWidth = 2.0
-        lineUpload.circleColors = [UIColor.mainBlue]
+        lineUpload.circleColors = [UIColor(named: "mainBlue")] as! [NSUIColor]
         lineUpload.drawFilledEnabled = false
         lineUpload.drawValuesEnabled = false
         lineUpload.drawCirclesEnabled = false
@@ -245,10 +245,10 @@ class Net_ViewController: UIViewController {
             .responseString { response in
                 switch response.result {
                 case .success(let value):
-
                     // 網速
                     if value.hasPrefix("\nnetdev = {") {
                         let rxtx = value.groups(for: "'INTERNET':\\{rx:(.*?),tx:(.*?)\\}")
+
                         if rxtx != [] {
                             self.upNow = hexTodec(number: rxtx[0][2])
                             self.downNow = hexTodec(number: rxtx[0][1])
@@ -276,14 +276,14 @@ class Net_ViewController: UIViewController {
                                 self.DownloadNumbers.append(downSpeed)
                                 self.UploadNumbers.append(upSpeed)
                                 self.Chart_Update()
+                            }
 
-                                // MARK: Loop
-                                delay(1) {
-                                    if self.isViewAppear {
-                                        self.NetSpeed_Update()
-                                    } else {
-                                        self.updateTextLabel.text = "Pause".localized()
-                                    }
+                            // MARK: Loop
+                            delay(1) {
+                                if self.isViewAppear {
+                                    self.NetSpeed_Update()
+                                } else {
+                                    self.updateTextLabel.text = "Pause".localized()
                                 }
                             }
                         } else {
@@ -301,23 +301,23 @@ class Net_ViewController: UIViewController {
 
                     // not login
                     if value.hasPrefix("<HTML><HEAD><script>top.location.href='/Main_Login.asp'") {
-                        print(value)
-                        print("net speed: need login")
                         self.updateTextLabel.text = "Waiting for login".localized()
                         //try login
-                        GetRouterCookie()
-
-                        // MARK: Loop
-                        delay(1) {
-                            if self.isViewAppear {
-                                self.NetSpeed_Update()
+                        routerModel.GetRouterCookie(completionHandler: {
+                            // MARK: Loop
+                            delay(1) {
+                                if self.isViewAppear {
+                                    self.NetSpeed_Update()
+                                }
                             }
-                        }
+                        })
+
                     }
 
 
 
                 case .failure(let error):
+                    print("[NetSpeed_Update] failure")
                     self.updateTextLabel.text = error.localizedDescription
                 }
         }

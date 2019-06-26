@@ -303,7 +303,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
 
         delay {
-            switch ModelPage.runningModel {
+            switch routerModel.runningModel {
             case .arm:
 
                 var urlParams = ["": ""]

@@ -117,7 +117,7 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
         }
         
         delay {
-            switch ModelPage.runningModel {
+            switch routerModel.runningModel {
             case .arm:
                 _ = SSHRun(command: "dbus set ss_online_links=\(self.linkb64 ?? "")")
                 _ = SSHRun(command: "dbus set ss_online_action=\(self.updateOptionwithUserDefaults().rawValue)")

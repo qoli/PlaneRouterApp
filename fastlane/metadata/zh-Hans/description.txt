@@ -1,0 +1,27 @@
+Plane Router 是一款基于 JSON 脚本运作的 App。
+可用于管理路由器、树莓派、服务器等透过 SSH 访问的设备。
+AtomicR 项目是 PlaneR 的脚本存放位置。
+
+面向路由器（基于 Koolshare 发布的梅林固件）
+可安装、管理路由器上的插件
+
+面向服务器（Ubuntu / Debian）
+安装、管理服务器端上的插件
+重启服务器
+可透过 JSON 脚本配置更多功能
+
+具备 SSH 访问的设备
+可透过 JSON 脚本配置对应的管理功能
+
+Plane Router is currently compatible with the following routers.
+
+-
+HDN Model:
+ASUS: GT-AC5300/RT-AC86U
+
+-
+ARM Model: 
+ASUS：RT-AC56U RT-AC68U RT-AC66U-B1 RT-AC1900P RT-AC87U RT-AC88U RT-AC3100 RT-AC3200 RT-AC5300
+NETGEAR：R6300V2 R6400 R6900 R7000 R8000 R8500
+linksys EA：EA6200 EA6400 EA6500v2 EA6700 EA6900
+Huawei：ws880

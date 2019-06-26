@@ -419,7 +419,7 @@ class AddNode_ViewController: UIViewController {
             "ssconf_basic_ss_obfs_host_\(lastNumber)":"\(ss_obfs_host)",
             ]
         
-        switch ModelPage.runningModel {
+        switch routerModel.runningModel {
         case .arm:
             // Fetch Request
             Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)
@@ -489,7 +489,7 @@ class AddNode_ViewController: UIViewController {
             "ssconf_basic_rss_obfs_param_\(lastNumber)":"\(rss_protocol_param)",
             ]
         
-        switch ModelPage.runningModel {
+        switch routerModel.runningModel {
         case .arm:
             // Fetch Request
             Alamofire.request("\(buildUserURL())/applydb.cgi", method: .get, parameters: urlParams)

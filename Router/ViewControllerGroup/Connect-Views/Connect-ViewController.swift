@@ -325,24 +325,24 @@ class Connect_ViewController: UIViewController {
     func updateStatusView(isSuccess: Bool, text: String, isPause: Bool = false) {
         
         if isPause {
-            UIView.animate(withDuration: 0.8, animations: {
-                self.statusView.backgroundColor = UIColor.gray80
-                self.statusView.layer.shadowColor = UIColor.gray80.cgColor
+            UIView.animate(withDuration: 0.6, animations: {
+                self.statusView.backgroundColor = UIColor(named: "gray80")
+                self.statusView.layer.shadowColor = UIColor(named: "gray80")?.cgColor
             })
             
         } else {
             if isSuccess {
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.statusLabel.text = "Google.com".localized()
-                    self.statusView.backgroundColor = UIColor.appleGreen
-                    self.statusView.layer.shadowColor = UIColor.appleGreen.cgColor
+                    self.statusView.backgroundColor = UIColor(named: "appleGreen")
+                    self.statusView.layer.shadowColor = UIColor(named: "appleGreen")?.cgColor
                     self.statusTimeLabel.text = text
                 })
             } else {
-                UIView.animate(withDuration: 0.4, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     self.statusLabel.text = "Failure".localized()
-                    self.statusView.backgroundColor = UIColor.coralPink
-                    self.statusView.layer.shadowColor = UIColor.coralPink.cgColor
+                    self.statusView.backgroundColor = UIColor(named: "coralPink")
+                    self.statusView.layer.shadowColor = UIColor(named: "coralPink")?.cgColor
                     self.statusTimeLabel.text = text
                 })
             }
