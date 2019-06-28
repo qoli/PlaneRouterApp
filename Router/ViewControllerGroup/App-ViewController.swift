@@ -206,6 +206,8 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.menuButton.setBackgroundImage(UIImage(named: "iconMenuActive"), for: .normal)
             })
         }
+        
+        UIColor.gray29
 
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonList"), object: App.appListON)
     }

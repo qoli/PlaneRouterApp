@@ -546,7 +546,7 @@
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Snq-my-8cL">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aeG-ts-Vyl">
-                                    <rect key="frame" x="0.0" y="0.0" width="348" height="204.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="light"/>
@@ -637,7 +637,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A GUI for Merlin Router Shadowsock" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pES-Wx-fkY">
-                                <rect key="frame" x="20" y="119" width="216.5" height="16"/>
+                                <rect key="frame" x="20" y="119" width="217" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" name="gray35"/>
                                 <nil key="highlightedColor"/>
@@ -709,7 +709,7 @@ You can configure more with JSON scripts</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-7c-vkB">
-                                <rect key="frame" x="20" y="416" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="20" y="416" width="168" height="183"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="HMT-l0-3Gp"/>
                                     <constraint firstAttribute="width" constant="168" id="coe-ac-qWh"/>
@@ -782,7 +782,7 @@ You can configure more with JSON scripts</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="Hmw-eG-y5B">
-                                <rect key="frame" x="20" y="64" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="20" y="64" width="168" height="183"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="fhm-yV-E6p"/>
                                     <constraint firstAttribute="width" constant="168" id="pxH-Lb-4uR"/>
@@ -1982,7 +1982,7 @@ admin@AC68U:/tmp/home/root# </string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCx-8s-ZO7">
-                                        <rect key="frame" x="239" y="21" width="72" height="24"/>
+                                        <rect key="frame" x="215" y="9" width="96" height="48"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Latency" image="iconFontStopwatch">
                                             <color key="titleColor" name="gray29"/>
@@ -2568,7 +2568,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="QFF-NK-Mks">
-                                <rect key="frame" x="123" y="356.5" width="168" height="183.00000000000006"/>
+                                <rect key="frame" x="123" y="356.5" width="168" height="183"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="2K9-At-Lkw"/>
                                     <constraint firstAttribute="width" constant="168" id="TCJ-ot-Y1A"/>
@@ -2583,7 +2583,7 @@ admin@AC68U:/tmp/home/root# </string>
                                 <color key="textColor" name="gray29"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect Config Saved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWd-E4-D9N">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connect Config Saved" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rWd-E4-D9N">
                                 <rect key="frame" x="123" y="540.5" width="168" height="16"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
                                 <color key="textColor" name="gray35"/>
