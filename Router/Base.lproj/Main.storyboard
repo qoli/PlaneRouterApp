@@ -709,7 +709,7 @@ You can configure more with JSON scripts</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-7c-vkB">
-                                <rect key="frame" x="20" y="416" width="168" height="183"/>
+                                <rect key="frame" x="20" y="416" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="HMT-l0-3Gp"/>
                                     <constraint firstAttribute="width" constant="168" id="coe-ac-qWh"/>
@@ -782,7 +782,7 @@ You can configure more with JSON scripts</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="Hmw-eG-y5B">
-                                <rect key="frame" x="20" y="64" width="168" height="183"/>
+                                <rect key="frame" x="20" y="64" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="fhm-yV-E6p"/>
                                     <constraint firstAttribute="width" constant="168" id="pxH-Lb-4uR"/>
@@ -1982,7 +1982,7 @@ admin@AC68U:/tmp/home/root# </string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="left" semanticContentAttribute="forceLeftToRight" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCx-8s-ZO7">
-                                        <rect key="frame" x="215" y="9" width="96" height="48"/>
+                                        <rect key="frame" x="239" y="21" width="72" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <state key="normal" title="Latency" image="iconFontStopwatch">
                                             <color key="titleColor" name="gray29"/>
@@ -2568,7 +2568,7 @@ admin@AC68U:/tmp/home/root# </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageRouter" translatesAutoresizingMaskIntoConstraints="NO" id="QFF-NK-Mks">
-                                <rect key="frame" x="123" y="356.5" width="168" height="183"/>
+                                <rect key="frame" x="123" y="356.5" width="168" height="183.00000000000006"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="183" id="2K9-At-Lkw"/>
                                     <constraint firstAttribute="width" constant="168" id="TCJ-ot-Y1A"/>

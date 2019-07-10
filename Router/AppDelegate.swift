@@ -40,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         App.appDataSetNeedUpdate(isUpdate: true)
         App.PostToken()
         
-//        routerModel.TryRouter()
-        
         return true
     }
 
