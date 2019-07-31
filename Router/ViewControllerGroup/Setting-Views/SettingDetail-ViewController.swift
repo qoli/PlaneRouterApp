@@ -88,14 +88,14 @@ class SettingDetail_ViewController: UIViewController {
     }
     
     func radioSelected(selected: radioButton) {
-        radioHttpButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
-        radioHttpsButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
+        radioHttpButton.layer.borderColor = UIColor(named: "gray92")?.cgColor ?? UIColor.gray92.cgColor
+        radioHttpsButton.layer.borderColor = UIColor(named: "gray92")?.cgColor ?? UIColor.gray92.cgColor
         switch selected {
         case .http:
-            radioHttpButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
+            radioHttpButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor ?? UIColor.mainBlue.cgColor
             radioButtonValue = .http
         case .https:
-            radioHttpsButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
+            radioHttpsButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor ?? UIColor.mainBlue.cgColor
             radioButtonValue = .https
         case .ssh:
             radioButtonValue = .ssh

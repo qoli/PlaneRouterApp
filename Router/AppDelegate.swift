@@ -20,25 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         
+        App.appDataSetNeedUpdate(isUpdate: true)
+        App.PostToken()
+        
         Bugly.start(withAppId: "7629fe96e8")
         
         // Override point for customization after application launch.
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = false
 
-        NSSetUncaughtExceptionHandler { exception in
-            print("Error Handling: ", exception)
-            print("Error Handling callStackSymbols: ", exception.callStackSymbols)
-
-            UserDefaults.standard.set(exception.callStackSymbols, forKey: "ExceptionHandler")
-            UserDefaults.standard.synchronize()
-        }
-
         registerForPushNotifications()
         UNUserNotificationCenter.current().delegate = self
-
-        App.appDataSetNeedUpdate(isUpdate: true)
-        App.PostToken()
         
         return true
     }
@@ -118,7 +110,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let tokenParts = deviceToken.map { data in String(format: "%02.2hhx", data) }
         let token = tokenParts.joined()
-//        print("Device Token: \(token)")
         _ = CacheString(text: token, Key: "DeviceToken")
     }
 

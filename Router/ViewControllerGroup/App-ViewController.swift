@@ -47,37 +47,35 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         print("App View: viewDidLoad")
         super.viewDidLoad()
-
+        self.appTitle.alpha = 0
+        
         // Chrysan
         ChrysanConfig.default().hudStyle = .dark
         ChrysanConfig.default().color = .white
         ChrysanConfig.default().chrysanStyle = .whiteIndicator
 
-        self.appTitle.alpha = 0
-
+        if UserDefaults.standard.bool(forKey: "isApp") == false {
+            // goWalkSegue
+            print("goWalkSegue")
+            
+            delay(0) {
+//                gotoNext(vc: self, withIdentifier: "walkView")
+                self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
+            }
+        } else {
+            self.showUpdateNotes(isForce: false)
+            
+            // Notification
+            addNotification()
+        }
+        
         collection_init()
-        
-        // Notification
-        addNotification()
-        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         print("App View: viewWillDisappear")
         NotificationCenter.default.removeObserver(self)
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        print("App View: viewWillAppear")
-        if UserDefaults.standard.bool(forKey: "isApp") == false {
-            // goWalkSegue
-            self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
-        } else {
-            self.showUpdateNotes(isForce: false)
-        }
-        
-    }
-
 
     // MARK: - Notification
 
@@ -123,6 +121,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         let nextView = storyBoard.instantiateViewController(withIdentifier: "SettingTableView") as! SettingTable_ViewController
         nextView.modalPresentationStyle = .fullScreen
         self.present(nextView, animated: true, completion: nil)
+        
     }
 
     // MARK: - Update Notes
@@ -206,8 +205,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                 self.menuButton.setBackgroundImage(UIImage(named: "iconMenuActive"), for: .normal)
             })
         }
-        
-        UIColor.gray29
 
         NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonList"), object: App.appListON)
     }

@@ -130,6 +130,7 @@ class CommnadRead_ViewController: UIViewController {
                     case .success(_):
                         self.LoopLoadText()
                     case .failure(let error):
+                        App.sendMessage(type: "Error", title: routerModel.ApplyPost, text: error.localizedDescription)
                         self.chrysan.show(.error, message: error.localizedDescription, hideDelay: 1)
                     }
             }

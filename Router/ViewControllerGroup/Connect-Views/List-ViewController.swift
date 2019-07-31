@@ -261,7 +261,6 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
 
         delay(0.2) {
-//            self.hud.dismiss(afterDelay: 1.0)
             self.chrysan.show(hideDelay: 0.4)
         }
     }
@@ -451,6 +450,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func simplePing(_ pinger: SimplePing, didFailWithError error: Error) {
         print(error)
+//        self.delayData[self.pingHostName] = error.localizedDescription
         self.delayData[self.pingHostName] = "error"
         self.pingStop()
     }

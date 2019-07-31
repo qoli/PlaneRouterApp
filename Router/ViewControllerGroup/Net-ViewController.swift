@@ -318,6 +318,7 @@ class Net_ViewController: UIViewController {
 
                 case .failure(let error):
                     print("[NetSpeed_Update] failure")
+                    App.sendMessage(type: "Error", title: "NetSpeed_Update failure", text: error.localizedDescription)
                     self.updateTextLabel.text = error.localizedDescription
                 }
         }

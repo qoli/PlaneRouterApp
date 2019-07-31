@@ -229,7 +229,7 @@ class Connect_ViewController: UIViewController {
     func checkSSInstall() -> Bool {
 
         let cacheData = UserDefaults.standard.dictionary(forKey: "ssData") as? [String: String]
-
+        
         if cacheData == nil {
             let ssEnable = SSHRun(command: "dbus get ss_basic_enable", isRefresh: true)
             if ssEnable == "\n" {
@@ -239,6 +239,7 @@ class Connect_ViewController: UIViewController {
                 return false
             } else {
                 if ssEnable == "0" {
+                    print("Shadowsock not enable")
                     delay(0) {
                         self.statusLabel.text = "Shadowsock not enable".localized()
                     }
@@ -350,8 +351,8 @@ class Connect_ViewController: UIViewController {
     //MARK: - Line Button
 
     func updateRunningNodeButton() {
-        self.lineListButton.setTitle("...", for: .disabled)
         self.lineListButton.isEnabled = false
+        self.lineListButton.setTitle("...", for: .disabled)
         //
         updateSSData(isRefresh: App.appDataneedUpdate, completionHandler: { value, error in
             if value != [:] {

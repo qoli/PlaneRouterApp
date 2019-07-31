@@ -1,3 +1,20 @@
 # The Deliverfile allows you to store various App Store Connect metadata
 # For more information, check out the docs
 # https://docs.fastlane.tools/actions/deliver/
+
+submission_information({
+    add_id_info_uses_idfa: true,
+    add_id_info_tracks_install: true,
+    add_id_info_limits_tracking: true,
+
+    add_id_info_serves_ads: false,
+    add_id_info_tracks_action: false,
+    content_rights_has_rights: false,
+    content_rights_contains_third_party_content: false,
+    export_compliance_uses_encryption: false,
+    export_compliance_contains_proprietary_cryptography: false,
+    export_compliance_contains_third_party_cryptography: false,
+    export_compliance_encryption_updated: false
+})
+
+automatic_release(true)

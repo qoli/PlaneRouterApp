@@ -82,16 +82,17 @@ class Subscribe_ViewController: UIViewController,UITextViewDelegate {
     }
 
     func saveRadio(check: saveOptin) {
-        saveButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
-        saveUpdateButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
-        removeButton.layer.borderColor = UIColor(named: "gray92")?.cgColor
+        saveButton.layer.borderColor = UIColor(named: "gray92")?.cgColor ?? UIColor.gray92.cgColor
+        saveUpdateButton.layer.borderColor = UIColor(named: "gray92")?.cgColor ?? UIColor.gray92.cgColor
+        removeButton.layer.borderColor = UIColor(named: "gray92")?.cgColor ?? UIColor.gray92.cgColor
+        
         switch check {
         case .remove:
-            removeButton.layer.borderColor = UIColor(named: "coralPink")?.cgColor
+            removeButton.layer.borderColor = UIColor(named: "coralPink")?.cgColor ?? UIColor.coralPink.cgColor
         case .saveOnly:
-            saveButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
+            saveButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor ?? UIColor.mainBlue.cgColor
         case .saveUpdate:
-            saveUpdateButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor
+            saveUpdateButton.layer.borderColor = UIColor(named: "mainBlue")?.cgColor ?? UIColor.mainBlue.cgColor
         }
         
         self.applyButton.isEnabled = true

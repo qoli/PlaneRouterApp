@@ -93,6 +93,7 @@ class routerModelClass {
                     print(value)
                     self.isMerlin = true
                 case .failure(let error):
+                    App.sendMessage(type: "Error", title: "update_clients.asp", text: error.localizedDescription)
                     print(error)
                 }
                 print("[TryRouter] \(self.isMerlin)")
@@ -168,6 +169,7 @@ class routerModelClass {
                         }
 
                     case .failure(let error):
+                        App.sendMessage(type: "Error", title: "login.cgi", text: error.localizedDescription)
                         print("[Loign] [\(error.localizedDescription)]")
                     }
 
@@ -229,6 +231,7 @@ func fetchRequest(api: String, isRefresh: Bool = false, completionHandler: @esca
 
                 case .failure(let error):
                     print("\(api) [\(error.localizedDescription)]")
+                    App.sendMessage(type: "fetchRequest Error", title: api, text: error.localizedDescription)
                     completionHandler(nil, error)
                 }
         }
@@ -269,6 +272,7 @@ func fetchRequestString(api: String, isRefresh: Bool = false, completionHandler:
 
                     case .failure(let error):
                         print("\(api) [\(error.localizedDescription)]")
+                        App.sendMessage(type: "fetchRequestString Error", title: api, text: error.localizedDescription)
                         completionHandler(nil, error)
                     }
                 }

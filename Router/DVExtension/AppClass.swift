@@ -17,7 +17,7 @@ class appClass {
     
     func appDataSetNeedUpdate(isUpdate: Bool = false) {
         self.appDataneedUpdate = isUpdate
-        delay(30) {
+        delay(15) {
             self.appDataneedUpdate = false
         }
     }
@@ -33,26 +33,25 @@ class appClass {
     
     // MARK: - Post User Token
     func PostToken() {
-        // Form URL-Encoded Body
-        let token = CacheString(Key: "DeviceToken")
+        var token = CacheString(Key: "DeviceToken")
         
-        print("DeviceToken: \(token)")
+        let model: String = SSHRun(command: "nvram get model", cacheKey: "nvramGetModel")
+        let appVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as? String
+        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+        let versionText = "Version \(appVersion ?? "1.0") Build \(buildNumber ?? "0")"
         
-        if token != "" {
-            let body = [
-                "Token": token,
-            ]
-            
-            // Fetch Request
-            Alamofire.request("https://pushmore.io/webhook/GmbRBGLzZciHamwt8Ax2ydSC", method: .post, parameters: body, encoding: URLEncoding.default)
-                .validate(statusCode: 200..<300)
-                .responseJSON { response in
-                    if (response.result.error == nil) {
-                        print(response.description)
-                    }
-            }
+        if token == "" {
+            token = "空白或模擬器"
         }
         
+        self.sendMessage(type: "\(model.removingWhitespacesAndNewlines)", title: versionText, text: token)
+    }
+    
+    func sendMessage(type: String, title: String, text: String) {
+        let urlParams = [
+            "text":"[Router App]\n\r- \(type) \n\r- \(title) \n\r- \(text)"
+        ]
+        Alamofire.request("https://tgbot.lbyczf.com/sendMessage/9qvmshonjxf5csk5", method: .get, parameters: urlParams)
     }
 }
 

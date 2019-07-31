@@ -11,6 +11,16 @@ import NMSSH
 import Alamofire
 import SwiftyJSON
 
+// MARK: -
+
+func gotoNext(vc: UIViewController, withIdentifier: String) {
+    //self.performSegue(withIdentifier: "goSettingTableSegue", sender: nil)
+    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    let nextView = storyBoard.instantiateViewController(withIdentifier: withIdentifier)
+    nextView.modalPresentationStyle = .fullScreen
+    vc.present(nextView, animated: true, completion: nil)
+}
+
 // MARK: - run in ssh
 
 func SSHRun(command: String, cacheKey: String = "", isRefresh: Bool = false, isRouter: Bool = true, isShowResponse: Bool = false, isTest: Bool = false) -> String {

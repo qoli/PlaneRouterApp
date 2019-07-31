@@ -348,6 +348,7 @@ class ACL_ViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.isNeedApply = true
                             self.table_update(isRefresh: true)
                         case .failure(let error):
+                            App.sendMessage(type: "Error", title: "applydb.cgi", text: error.localizedDescription)
                             print(error.localizedDescription)
                         }
                 }
