@@ -41,11 +41,6 @@ class Net_ViewController: UIViewController {
         self.Chart_Setup()
         self.getWANIP()
 
-        delay(1) {
-            print("viewDidLoad: NetSpeed_Update")
-//            self.NetSpeed_Update()
-        }
-
         //添加通知
         NotificationCenter.default.addObserver(
             self,
@@ -58,8 +53,8 @@ class Net_ViewController: UIViewController {
     // MARK: - 通知
 
     @objc func netViewonShowNotification(_ notification: Notification) {
-        print("NotificationCenter: netViewonShowNotification \(String(describing: notification.object))")
-        delay(1) {
+        print("NotificationCenter: netViewonShowNotification Bool: \(notification.object ?? 0)")
+        delay {
             self.dataAppear(Appear: notification.object! as! Bool)
         }
     }
@@ -278,7 +273,6 @@ class Net_ViewController: UIViewController {
                                 self.Chart_Update()
                             }
 
-                            // MARK: Loop
                             delay(1) {
                                 if self.isViewAppear {
                                     self.NetSpeed_Update()
@@ -287,7 +281,7 @@ class Net_ViewController: UIViewController {
                                 }
                             }
                         } else {
-                            // rxtx 無有效數據
+                            // rxtx 無效數據
                             self.isViewAppear = false
                             self.chrysan.show(.plain, message: "Data invalid", hideDelay: 1)
                         }
@@ -304,7 +298,6 @@ class Net_ViewController: UIViewController {
                         self.updateTextLabel.text = "Waiting for login".localized()
                         //try login
                         routerModel.GetRouterCookie(completionHandler: {
-                            // MARK: Loop
                             delay(1) {
                                 if self.isViewAppear {
                                     self.NetSpeed_Update()

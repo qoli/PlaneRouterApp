@@ -125,7 +125,6 @@ class Add_ViewController: UIViewController, UITableViewDelegate, UITableViewData
             didSelect: { action in
                 delay {
                     ServiceList.addService(service: self.tableSource["data"][selected]["name"].stringValue, connectType: .Server)
-//                    addServiceList(serviceName: )
                     NotificationCenter.default.post(name: NSNotification.Name.init("updateCollection"), object: nil)
                 }
         }))

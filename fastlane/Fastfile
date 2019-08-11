@@ -6,6 +6,7 @@ platform :ios do
     
     sh("open","/Users/qoli/GitHub/AtomicR/Update/Update.md")
     sh("open","/Users/qoli/GitHub/AtomicR/Update/changelog.txt")
+    xcode_select("/Applications/Xcode-beta.app")
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
   	increment_build_number
@@ -24,6 +25,7 @@ platform :ios do
   desc "Push a new release build to the App Store"
   lane :store do
     sh("open","./changelog.txt")
+    xcversion(version: "10.3") # Selects Xcode 8.1.0
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
     increment_build_number

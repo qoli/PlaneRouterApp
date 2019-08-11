@@ -155,7 +155,7 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func updateService() {
         Service = ServiceList.getSerivce(identifier: Service.identifier)
-        print(Service ?? "")
+        
         var name = Service.connectID
         if name == "" {
             name = "No Setup.".localized()
@@ -214,9 +214,8 @@ class JSON_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
             image: UIImage(named: "iconFontEraser"),
             didSelect: { action in
                 delay {
-//                    removeServiceList(serviceName: self.jsonName)
                     ServiceList.removeSerice(identifier: self.Service.identifier)
-                    NotificationCenter.default.post(name: NSNotification.Name.init("updateCollection"), object: nil)
+                    NotificationCenter.default.post(name: NSNotification.Name.init("startCollection"), object: nil)
                 }
             }))
         manager.present(sourceView: self.pageButton)

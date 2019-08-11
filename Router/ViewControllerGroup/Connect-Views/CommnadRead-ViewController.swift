@@ -174,6 +174,7 @@ class CommnadRead_ViewController: UIViewController {
                     }
                     else {
                         self.chrysan.show(.error, message: response.result.error?.localizedDescription, hideDelay: 1)
+                        App.sendMessage(type: "Error", title: routerModel.ApplyPost, text: response.result.error?.localizedDescription ?? "responseJSON Error")
                     }
             }
         }

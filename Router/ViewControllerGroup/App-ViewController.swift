@@ -59,7 +59,6 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             print("goWalkSegue")
             
             delay(0) {
-//                gotoNext(vc: self, withIdentifier: "walkView")
                 self.performSegue(withIdentifier: "goWalkSegue", sender: nil)
             }
         } else {
@@ -88,6 +87,12 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
         )
         NotificationCenter.default.addObserver(
             self,
+            selector: #selector(startCollection(_:)),
+            name: NSNotification.Name(rawValue: "startCollection"),
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
             selector: #selector(serviceListActionNotification(_:)),
             name: NSNotification.Name(rawValue: "appServiceList"),
             object: nil
@@ -99,10 +104,15 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
             object: nil
         )
     }
-
+    
     @objc func updateCollection(_ notification: Notification) {
         self.collection_update()
         self.collection_select(selected: self.items.count - 1)
+    }
+    
+    @objc func startCollection(_ notification: Notification) {
+        self.collection_update()
+        self.collection_select(selected: 0)
     }
 
     @objc func serviceListActionNotification(_ notification: Notification) {
@@ -360,7 +370,7 @@ class App_ViewController: UIViewController, UICollectionViewDataSource, UICollec
                     NotificationCenter.default.post(name: NSNotification.Name.init("NetViewonShow"), object: true)
                     self.switchView(showView: self.childNetView)
                 case "Connect":
-//                    NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
+                    NotificationCenter.default.post(name: NSNotification.Name.init("ConnectViewonShow"), object: true)
                     self.switchView(showView: self.childSSView)
                 case "Shadowsock":
                     NotificationCenter.default.post(name: NSNotification.Name.init("JSONCall"), object: self.items[indexPath.item])

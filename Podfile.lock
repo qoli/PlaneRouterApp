@@ -1,13 +1,13 @@
 PODS:
   - Alamofire (4.8.2)
-  - BaiduMobStatCodeless (5.0.2)
+  - BaiduMobStatCodeless (5.0.5)
   - Bugly (2.5.0)
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
   - Chrysan (1.5.0)
   - Hero (1.4.0)
-  - IQKeyboardManagerSwift (6.4.0)
+  - IQKeyboardManagerSwift (6.4.1)
   - Localize-Swift (2.0.0)
   - NewPopMenu (2.1.2)
   - NMSSH (2.3.1)
@@ -45,12 +45,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
-  BaiduMobStatCodeless: 8f786558168e5af04c7dab92d0f314ca9f043007
+  BaiduMobStatCodeless: d88efbc97e63d6cc5312d0ddf15b5e9f401e7364
   Bugly: 3ca9f255c01025582df26f9222893b383c7e4b4e
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
   Chrysan: 6bf6682adb2db76f7f5c103930a8c6670f54eebe
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
-  IQKeyboardManagerSwift: ed9b04ee0e3067ffba543283462d619f944b05e5
+  IQKeyboardManagerSwift: d2df660d0b8d64a15cb2537c9ff303213fa515b2
   Localize-Swift: c798ec9286494866f7068f85f7c71283ac5bdab4
   NewPopMenu: c6129e08e8192f6257ceb5f9a4357e1b59c6e2e7
   NMSSH: cd689ae535a1581a6dd9fd4600ff71247df510a6
@@ -59,4 +59,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e9353f6d284f9f248e034cf7ea778e5809e95b10
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.7.5

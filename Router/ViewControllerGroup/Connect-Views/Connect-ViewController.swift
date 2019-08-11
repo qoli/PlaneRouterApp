@@ -55,10 +55,12 @@ class Connect_ViewController: UIViewController {
     }
 
     @objc func ConnectViewonShowNotification(_ notification: Notification) {
-        print("NotificationCenter: ConnectViewonShow \(String(describing: notification.object))")
+        print("NotificationCenter: ConnectViewonShow Bool: \(notification.object ?? 0)")
         if notification.object! as! Bool {
-            delay {
-                self.updateRunningNodeButton()
+            if checkSSInstall() {
+                delay {
+                    self.updateRunningNodeButton()
+                }
             }
         }
     }
@@ -77,9 +79,6 @@ class Connect_ViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         print("Connect View: viewWillAppear")
-        if checkSSInstall() {
-            updateRunningNodeButton()
-        }
     }
 
     //MARK: - page more action
@@ -360,6 +359,7 @@ class Connect_ViewController: UIViewController {
                 let name = value["ssconf_basic_name_\(node)"] ?? ""
                 self.lineListButton.setTitle(name, for: .normal)
                 self.lineListButton.isEnabled = true
+                print("updateRunningNodeButton() \(name)")
             }
         })
     }

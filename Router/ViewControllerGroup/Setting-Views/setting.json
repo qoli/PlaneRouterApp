@@ -68,14 +68,6 @@
         },
         {
             "type": "row",
-            "title": "Join TestFlight",
-            "titlesc": "加入 TestFlight",
-            "titletc": "加入 TestFlight",
-            "do": "openweb",
-            "value": "https://testflight.apple.com/join/6Sh4OA2b"
-        },
-        {
-            "type": "row",
             "title": "Update Notes",
             "titlesc": "完整更新日志",
             "titletc": "完整更新日誌",

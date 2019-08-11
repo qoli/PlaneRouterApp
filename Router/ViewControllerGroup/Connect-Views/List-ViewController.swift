@@ -236,20 +236,30 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
             switch routerModel.runningModel {
             case .arm:
-                let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
-                let password = self.dataDict["ssconf_basic_password_\(ssNumber)"] ?? ""
-                let port = self.dataDict["ssconf_basic_port_\(ssNumber)"] ?? ""
-                let param = self.dataDict["ssconf_basic_rss_protocol_param_\(ssNumber)"] ?? ""
+
                 let server = self.dataDict["ssconf_basic_server_\(ssNumber)"] ?? ""
+                let port = self.dataDict["ssconf_basic_port_\(ssNumber)"] ?? ""
+                let method = self.dataDict["ssconf_basic_method_\(ssNumber)"] ?? ""
+                let v2ray_plugin = self.dataDict["ssconf_basic_ss_v2ray_plugin_\(ssNumber)"] ?? ""
+                let rss_protocol = self.dataDict["ssconf_basic_rss_protocol_\(ssNumber)"] ?? ""
+                let rss_param = self.dataDict["ssconf_basic_rss_protocol_param_\(ssNumber)"] ?? ""
+                let obfs = self.dataDict["ssconf_basic_rss_obfs_\(ssNumber)"] ?? ""
+                let obfs_param = self.dataDict["ssconf_basic_rss_obfs_param_\(ssNumber)"] ?? ""
+                let password = self.dataDict["ssconf_basic_password_\(ssNumber)"] ?? ""
+                let type = self.dataDict["ssconf_basic_type_\(ssNumber)"] ?? "0"
 
-                _ = SSHRun(command: "dbus set ss_basic_enable=1")
-                _ = SSHRun(command: "dbus set ss_basic_method=\(method)")
-                _ = SSHRun(command: "dbus set ss_basic_password=\(password)")
-                _ = SSHRun(command: "dbus set ss_basic_port=\(port)")
-                _ = SSHRun(command: "dbus set ss_basic_rss_protocol_param=\(param)")
-                _ = SSHRun(command: "dbus set ss_basic_server=\(server)")
                 _ = SSHRun(command: "dbus set ssconf_basic_node=\(ssNumber)")
-
+                _ = SSHRun(command: "dbus set ss_basic_enable=1")
+                _ = SSHRun(command: "dbus set ss_basic_server=\(server)")
+                _ = SSHRun(command: "dbus set ss_basic_port=\(port)")
+                _ = SSHRun(command: "dbus set ss_basic_method=\(method)")
+                _ = SSHRun(command: "dbus set ss_basic_ss_v2ray_plugin=\(v2ray_plugin)")
+                _ = SSHRun(command: "dbus set ss_basic_rss_protocol=\(rss_protocol)")
+                _ = SSHRun(command: "dbus set ss_basic_rss_protocol_param=\(rss_param)")
+                _ = SSHRun(command: "dbus set ss_basic_rss_obfs=\(obfs)")
+                _ = SSHRun(command: "dbus set ss_basic_rss_obfs_param=\(obfs_param)")
+                _ = SSHRun(command: "dbus set ss_basic_password=\(password)")
+                _ = SSHRun(command: "dbus set ss_basic_type=\(type)")
 
             case .hnd:
                 _ = SSHRun(command: "dbus set ss_basic_enable=1")
