@@ -5,42 +5,42 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.005701">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.009178">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: open ./changelog.txt" time="0.072115">
+      <testcase classname="fastlane.lanes" name="1: open ./changelog.txt" time="0.131054">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: xcversion" time="30.473383">
+      <testcase classname="fastlane.lanes" name="2: xcode_select" time="0.004695">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="3: get_certificates" time="7.960717">
+      <testcase classname="fastlane.lanes" name="3: get_certificates" time="29.310461">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="4: get_provisioning_profile" time="6.396318">
+      <testcase classname="fastlane.lanes" name="4: get_provisioning_profile" time="28.300273">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="5: increment_build_number" time="1.951695">
+      <testcase classname="fastlane.lanes" name="5: increment_build_number" time="1.182812">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="6: build_app" time="181.753944">
+      <testcase classname="fastlane.lanes" name="6: build_app" time="159.367542">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="7: upload_to_app_store" time="904.156793">
+      <testcase classname="fastlane.lanes" name="7: upload_to_app_store" time="1792.237083">
         
       </testcase>
     
