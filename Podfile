@@ -21,8 +21,8 @@ target 'Router' do
   pod 'SwiftyJSON'
   pod 'IQKeyboardManagerSwift'
   pod 'PlainPing'
+  pod 'Bagel', '~>  1.3.2'
 
-  
   # 百度统计
   pod 'BaiduMobStatCodeless'
   

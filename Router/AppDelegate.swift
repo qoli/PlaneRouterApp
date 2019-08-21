@@ -11,6 +11,7 @@ import CoreData
 import IQKeyboardManagerSwift
 import UserNotifications
 import Bugly
+import Bagel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         App.appDataSetNeedUpdate(isUpdate: true)
         App.PostToken()
         
+        Bagel.start()
         Bugly.start(withAppId: "7629fe96e8")
         
         // Override point for customization after application launch.
