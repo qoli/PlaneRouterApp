@@ -23,10 +23,6 @@ target 'Router' do
   pod 'PlainPing'
   pod 'Bagel', '~>  1.3.2'
 
-  # 百度统计
-  
-      
-  
   # Crash
   pod 'Bugly'
   

@@ -396,9 +396,10 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     var pingHostName: String = "127.0.0.1"
 
     func pingStart(forceIPv4: Bool, forceIPv6: Bool, hostName: String) {
+        
         self.pingHostName = hostName
 
-        print("start \(hostName)")
+        print("Start \(hostName)")
         self.delayData[self.pingHostName] = "..."
         self.tableView.reloadData()
 
@@ -448,8 +449,6 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
     // MARK: - pinger delegate callback
 
     func simplePing(_ pinger: SimplePing, didStartWithAddress address: Data) {
-        print("pinging \(address as NSData)")
-
         // Send the first ping straight away.
         self.sendPing()
 
@@ -460,17 +459,16 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     func simplePing(_ pinger: SimplePing, didFailWithError error: Error) {
         print(error)
-//        self.delayData[self.pingHostName] = error.localizedDescription
-        self.delayData[self.pingHostName] = "error"
+        self.delayData[self.pingHostName] = "Error"
         self.pingStop()
     }
 
     var sentTime: TimeInterval = 0
     func simplePing(_ pinger: SimplePing, didSendPacket packet: Data, sequenceNumber: UInt16) {
         sentTime = Date().timeIntervalSince1970
-        print("\(sequenceNumber) sent")
+        print("didSendPacket \(sequenceNumber) Sent")
 
-        if sequenceNumber == 6 {
+        if sequenceNumber == 4 {
             self.delayData[self.pingHostName] = "-"
             self.pingStop()
         }
@@ -488,7 +486,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         self.delayData[self.pingHostName] = "\(String(some)) ms"
         self.tableView.reloadData()
 
-        if sequenceNumber >= 3 {
+        if sequenceNumber >= 1 {
             self.pingStop()
         }
     }
@@ -510,6 +508,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         buttonTapAnimate(button: pingButton)
         self.pingButton.isEnabled = false
         ping()
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     func ping() {
@@ -532,6 +531,7 @@ class List_ViewController: UIViewController, UITableViewDelegate, UITableViewDat
         guard pings.count > 0 else {
             // ping 的數量小於或等於 0
 
+            UIApplication.shared.isIdleTimerDisabled = false
             self.chrysan.show(.succeed, message: nil, hideDelay: 1)
             self.pingButton.isEnabled = true
 
