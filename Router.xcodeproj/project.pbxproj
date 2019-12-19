@@ -223,9 +223,9 @@
 		F984A950220A9D6C0037FE29 /* Router */ = {
 			isa = PBXGroup;
 			children = (
+				F91C3036220BE9E200703AF2 /* ViewControllerGroup */,
 				F974F6CB223624AE00F57DD8 /* Router.entitlements */,
 				F984A951220A9D6C0037FE29 /* AppDelegate.swift */,
-				F91C3036220BE9E200703AF2 /* ViewControllerGroup */,
 				F984A955220A9D6C0037FE29 /* Main.storyboard */,
 				F984A95D220A9D6C0037FE29 /* LaunchScreen.storyboard */,
 				F984A95B220A9D6C0037FE29 /* Assets.xcassets */,
